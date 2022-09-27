@@ -1,6 +1,6 @@
 import Header from 'components/Header/Header';
 import About from 'pages/About';
-import Main from 'pages/Main';
+import Main from 'pages/main/Main';
 import Page404 from 'pages/Page404';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
