@@ -1,0 +1,28 @@
+.loader__container{
+    width: 75px;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    border-radius: 30px;
+
+}
+
+.loader__item{
+    width: 35px;
+    height: 35px;
+    background-color: #505050;
+    border-radius: 50px;
+    animation: 0.6s infinite alternate loading;
+}
+
+@keyframes loading {
+    from {
+      transform: rotateY(0deg);
+    }
+  
+    to {
+        transform: rotateY(360deg);
+    }
+}

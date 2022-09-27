@@ -1,0 +1,12 @@
+.cards-list{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    font-size: 2rem;
+}
+
+.cards-list_loading {
+    align-items: center;
+    justify-content: center;
+}
