@@ -1,4 +1,5 @@
 import API from 'api/API';
+import Card from 'components/Card/Card';
 import Loader from 'components/Loader/Loader';
 import React, { Component } from 'react';
 import { IProduct } from 'ts/interfaces';
@@ -45,7 +46,7 @@ export default class ClassList extends Component {
     ) : isLoading ? (
       <Loader />
     ) : (
-      <div>Loaded</div>
+      products.map((data) => <Card key={data.id} data={data} />)
     );
     const classNames = isLoading ? 'cards-list cards-list_loading' : 'cards-list';
     return <div className={classNames}>{content}</div>;

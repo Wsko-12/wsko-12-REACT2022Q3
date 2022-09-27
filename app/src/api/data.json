@@ -1,0 +1,122 @@
+[
+    {
+        "id": 1,
+        "image": "https://www.mobilephonemuseum.com/assets/static/023d29d2ead30af6732c0f7a49e3a7b1/9d75f/eb92b877-5df2-4ddc-a708-a9667cbc598b.png",
+        "brand": "Nokia",
+        "year": 2000,
+        "model": "3310",
+        "weight": 133
+    },
+    {
+        "id": 2,
+        "image": "https://www.mobilephonemuseum.com/assets/static/d7c49f60d18880641ea35579d2b85b04/9d75f/677bc7f4-31b7-4957-b5a1-f6b6176b9080.png",
+        "brand": "Nokia",
+        "year": 2005,
+        "model": "1600",
+        "weight": 85
+    },
+    {
+        "id": 3,
+        "image": "https://www.mobilephonemuseum.com/assets/static/cd57cd9988582cd6b0bc4afa1f25b6d4/9d75f/2bc614dd-7bdd-4e32-8f7d-36f115e86e56.png",
+        "brand": "Nokia",
+        "year": 2007,
+        "model": "5700 XPRESSMUSIC",
+        "weight": 155
+    },
+    {
+        "id": 4,
+        "image": "https://www.mobilephonemuseum.com/assets/static/fd60bb82be1f4f5a5ab9cc29368c1c25/9d75f/9148bdb4-5cc8-4b42-bc21-8d106f317797.png",
+        "brand": "Nokia",
+        "year": 2005,
+        "model": "3250",
+        "weight": 130
+    },
+    {
+        "id": 5,
+        "image": "https://www.mobilephonemuseum.com/assets/static/37606df2bf5c58f1f77701694ef4b5b9/9d75f/5e12e4bf-5c9e-44e8-96cf-726859933d4f.png",
+        "brand": "Nokia",
+        "year": 1999,
+        "model": "7110",
+        "weight": 141
+    },
+    {
+        "id": 6,
+        "image": "https://www.mobilephonemuseum.com/assets/static/c27e41a27897e553214c946deb320a3d/9d75f/bd986216-eb83-4545-a047-ff810fe1d7cd.png",
+        "brand": "Nokia",
+        "year": 2009,
+        "model": "6700 CLASSIC",
+        "weight": 117
+    },
+    {
+        "id": 7,
+        "image": "https://www.mobilephonemuseum.com/assets/static/67e7c4148304aed23014c2b279bb8429/9d75f/59e93c8d-22f1-45c8-b0a6-2742226ae187.png",
+        "brand": "Nokia",
+        "year": 2008,
+        "model": "5800 XPRESSMUSIC",
+        "weight": 109
+    },
+    {
+        "id": 8,
+        "image": "https://www.mobilephonemuseum.com/assets/static/39912b7fad7010f85087c674dca2d1f5/9d75f/6e3f0d29-f0c9-4a71-9e7e-1caaec43b49d.png",
+        "brand": "SAMSUNG",
+        "year": 2002,
+        "model": "T100",
+        "weight": 94
+    },
+    {
+        "id": 9,
+        "image": "https://www.mobilephonemuseum.com/assets/static/44d32c21b8eaa840746c917f5a85831a/9d75f/f106468f-93a4-4134-a793-ca6687957825.png",
+        "brand": "SONY ERICSSON",
+        "year": 2006,
+        "model": "K800I",
+        "weight": 115
+    },
+    {
+        "id": 10,
+        "image": "https://www.mobilephonemuseum.com/assets/static/ee1c9db920e364a1ec8d26c3953e9b2a/9d75f/b9137b31-f6f0-411c-87cb-99b7d66fe48f.png",
+        "brand": "SONY ERICSSON",
+        "year": 2005,
+        "model": "W800",
+        "weight": 99
+    },
+    {
+        "id": 11,
+        "image": "https://www.mobilephonemuseum.com/assets/static/13a22331f2836f4edf96cf6d94449789/9d75f/6d7165d4-1d22-41dc-a0f4-98abb6ee9670.png",
+        "brand": "Nokia",
+        "year": 2005,
+        "model": "8800",
+        "weight": 134
+    },
+    {
+        "id": 12,
+        "image": "https://www.mobilephonemuseum.com/assets/static/1025f46dec8fb37b10bc9510dd006306/bf689/3dc93ca0-890a-4b2e-83ed-1a4a7042116e.png",
+        "brand": "SIEMENS",
+        "year": 2003,
+        "model": "SX1",
+        "weight": 110
+    },
+    {
+        "id": 13,
+        "image": "https://www.mobilephonemuseum.com/assets/static/4b1c4d79957dab81edee5ac6646eea8b/9d75f/224637fa-551c-4028-b5bb-a1c66c176aac.png",
+        "brand": "MOTOROLA",
+        "year": 2004,
+        "model": "RAZR V3",
+        "weight": 95
+    },
+    {
+        "id": 14,
+        "image": "https://www.mobilephonemuseum.com/assets/static/7b2e67afc0ff2b9a83166b48f3257b6d/9d75f/01bd2584-132d-4e98-bd2f-c739cc98bed2.png",
+        "brand": "SAMSUNG",
+        "year": 2005,
+        "model": "I300",
+        "weight": 121
+    },
+    {
+        "id": 15,
+        "image": "https://www.mobilephonemuseum.com/assets/static/d473426da4e58f9268a4a4bf00897e9f/9d75f/0d0cc176-2dde-4dbc-887f-b28c465e0f2c.png",
+        "brand": "NOKIA",
+        "year": 2001,
+        "model": "5210",
+        "weight": 92
+    }
+]
