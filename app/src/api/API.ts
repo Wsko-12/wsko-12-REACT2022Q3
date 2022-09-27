@@ -1,6 +1,6 @@
 import { IProduct } from 'ts/interfaces';
 
-const url = 'https://api.escuelajs.co/api/v1/';
+const url = 'https://dummyjson.com/';
 
 export default class API {
   private static async fetchData<T>(url: string): Promise<T> {
@@ -13,14 +13,19 @@ export default class API {
     }
   }
 
-  public static async getProducts(limit = 20) {
+  public static async getProducts() {
     const endpoint = 'products';
-    const query = `?offset=0&limit=${limit}`;
-    const link = `${url}${endpoint}${query}`;
+    const link = `${url}${endpoint}`;
 
     try {
-      const data = await this.fetchData<IProduct[]>(link);
-      return data;
+      const data = await this.fetchData<{
+        limit: number;
+        products: IProduct[];
+        skip: number;
+        total: number;
+      }>(link);
+      console.log(data.products[0]);
+      return data.products;
     } catch (err) {
       if (err instanceof Error) {
         console.error(err.message);
