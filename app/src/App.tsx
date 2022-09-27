@@ -1,3 +1,4 @@
+import Header from 'components/Header/Header';
 import About from 'pages/About';
 import Main from 'pages/Main';
 import Page404 from 'pages/Page404';
@@ -8,6 +9,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
+      <Header />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/about" element={<About />} />
