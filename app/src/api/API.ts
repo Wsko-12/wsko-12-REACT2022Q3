@@ -5,18 +5,26 @@ const url = 'https://api.escuelajs.co/api/v1/';
 export default class API {
   private static async fetchData<T>(url: string): Promise<T> {
     const response = await fetch(url);
-    const data: T = await response.json();
-    if (!data) {
-      throw new Error("[API fetchData] can't load data");
+    if (response.ok) {
+      const data: T = await response.json();
+      return data;
+    } else {
+      throw new Error(`[API fetchData] can't load data ${url}`);
     }
-    return data;
   }
 
   public static async getProducts(limit = 20) {
     const endpoint = 'products';
     const query = `?offset=0&limit=${limit}`;
     const link = `${url}${endpoint}${query}`;
-    const data = await this.fetchData<IProduct[]>(link);
-    return data;
+
+    try {
+      const data = await this.fetchData<IProduct[]>(link);
+      return data;
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error(err.message);
+      }
+    }
   }
 }
