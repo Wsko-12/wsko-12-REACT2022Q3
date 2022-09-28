@@ -5,8 +5,7 @@ interface ICardBodyProps {
   year: number;
 }
 
-export default function CardBody(props: ICardBodyProps) {
-  const { weight, year } = props;
+export default function CardBody({ weight, year }: ICardBodyProps) {
   return (
     <div className="card__body">
       <div className="card__info">

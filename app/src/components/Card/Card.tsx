@@ -11,7 +11,6 @@ interface ICardProps {
 export default class Card extends Component<ICardProps> {
   constructor(props: ICardProps) {
     super(props);
-    console.log(props.data);
   }
 
   render() {

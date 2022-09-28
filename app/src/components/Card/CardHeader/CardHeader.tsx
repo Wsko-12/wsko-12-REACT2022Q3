@@ -4,9 +4,7 @@ interface ICardHeaderProps {
   brand: string;
   model: string;
 }
-export default function CardHeader(props: ICardHeaderProps) {
-  const { brand, model } = props;
-
+export default function CardHeader({ brand, model }: ICardHeaderProps) {
   return (
     <div className="card__header">
       <h3 className="card__title">{brand}</h3>
