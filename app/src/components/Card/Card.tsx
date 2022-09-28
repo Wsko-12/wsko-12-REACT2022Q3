@@ -14,7 +14,7 @@ export default class Card extends Component<ICardProps> {
   }
 
   render() {
-    const { image, model, brand, weight, year } = this.props.data;
+    const { image, model, brand, weight, year, camera, sizes, battery } = this.props.data;
     return (
       <div className="card">
         <div className="card__image_container">
@@ -22,7 +22,7 @@ export default class Card extends Component<ICardProps> {
         </div>
         <div className="card__content">
           <CardHeader brand={brand} model={model} />
-          <CardBody year={year} weight={weight} />
+          <CardBody year={year} weight={weight} camera={camera} sizes={sizes} battery={battery} />
         </div>
       </div>
     );
