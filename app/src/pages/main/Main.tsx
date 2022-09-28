@@ -20,39 +20,38 @@ export default class Main extends Component {
     products: [],
   };
 
-  fetchProducts() {
+  async fetchProducts() {
     this.setState({
       isError: false,
       isLoading: true,
     });
 
-    API.getProducts()
-      .then((data) => {
-        if (!data) {
-          this.setState({
-            isError: true,
-          });
-          console.error(`[Main componentDidMount] can't receive products data`);
-          return;
-        }
-
-        if (!isProductDataArr(data)) {
-          this.setState({
-            isError: true,
-          });
-          console.error(`[Main componentDidMount] receive incorrect products data`);
-          return;
-        }
-        this.setState({ products: data });
-      })
-      .catch(() => {
+    try {
+      const products = await API.getProducts();
+      if (!products) {
         this.setState({
           isError: true,
         });
-      })
-      .finally(() => {
-        this.setState({ isLoading: false });
+        console.error(`[Main componentDidMount] can't receive products data`);
+        return;
+      }
+
+      if (!isProductDataArr(products)) {
+        this.setState({
+          isError: true,
+        });
+        console.error(`[Main componentDidMount] receive incorrect products data`);
+        return;
+      }
+
+      this.setState({ products });
+    } catch {
+      this.setState({
+        isError: true,
       });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
 
   componentDidMount() {
