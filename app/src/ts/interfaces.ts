@@ -19,4 +19,8 @@ export interface IProduct {
   year: number;
   model: string;
   weight: number;
+  rating: number;
+  camera: number | null;
+  sizes: [number, number, number];
+  battery: number;
 }
