@@ -32,7 +32,7 @@ export default class Main extends Component {
         this.setState({
           isError: true,
         });
-        console.error(`[Main componentDidMount] can't receive products data`);
+        console.error(`[Main fetchProducts] can't receive products data`);
         return;
       }
 
@@ -40,7 +40,7 @@ export default class Main extends Component {
         this.setState({
           isError: true,
         });
-        console.error(`[Main componentDidMount] receive incorrect products data`);
+        console.error(`[Main fetchProducts] receive incorrect products data`);
         return;
       }
 
