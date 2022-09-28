@@ -1,0 +1,12 @@
+.p404__wrapper{
+    margin: auto;
+    padding-top: 20px;
+}
+
+.p404__content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #303030;
+}
