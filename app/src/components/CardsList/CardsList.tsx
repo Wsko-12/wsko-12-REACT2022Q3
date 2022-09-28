@@ -23,6 +23,9 @@ export default class ClassList extends Component {
       isError: false,
       isLoading: true,
     });
+
+    // Or would it be better to store products state in MainPage
+    //  so as not to receive data every time?
     API.getProducts()
       .then((data) => {
         if (!data) {
