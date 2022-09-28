@@ -7,7 +7,9 @@
         "model": "3310",
         "weight": 133,
         "rating": 5,
-        "camera": null
+        "camera": null,
+        "sizes": [133, 48, 22],
+        "battery": 900
     },
     {
         "id": 2,
@@ -17,7 +19,9 @@
         "model": "1600",
         "weight": 85,
         "rating": 3.7,
-        "camera": null
+        "camera": null,
+        "sizes": [104, 45, 17],
+        "battery": 900
     },
     {
         "id": 3,
@@ -27,7 +31,9 @@
         "model": "5700 XPRESSMUSIC",
         "weight": 155,
         "rating": 4,
-        "camera": 2.0
+        "camera": 2.0,
+        "sizes": [108.2, 50.5, 17.3],
+        "battery": 900
     },
     {
         "id": 4,
@@ -37,8 +43,9 @@
         "model": "3250",
         "weight": 130,
         "rating": 4.2,
-        "camera": 2.0
-
+        "camera": 2.0,
+        "sizes": [103.80, 50.00, 19.80],
+        "battery": 1100
     },
     {
         "id": 5,
@@ -48,7 +55,9 @@
         "model": "7110",
         "weight": 141,
         "rating": 4.6,
-        "camera": null
+        "camera": null,
+        "sizes": [125, 53, 24],
+        "battery": 500
     },
     {
         "id": 6,
@@ -58,8 +67,9 @@
         "model": "6700 CLASSIC",
         "weight": 117,
         "rating": 3.7,
-        "camera": 5.0
-
+        "camera": 5.0,
+        "sizes": [109.8, 45, 11],
+        "battery": 800
     },
     {
         "id": 7,
@@ -69,7 +79,9 @@
         "model": "5800 XPRESSMUSIC",
         "weight": 109,
         "rating": 4,
-        "camera": 3.2
+        "camera": 3.2,
+        "sizes": [111, 51.7, 15.5],
+        "battery": 1320
     },
     {
         "id": 8,
@@ -79,7 +91,9 @@
         "model": "T100",
         "weight": 94,
         "rating": 4.5,
-        "camera": null
+        "camera": null,
+        "sizes":[80, 50, 23],
+        "battery": 720
     },
     {
         "id": 9,
@@ -89,8 +103,9 @@
         "model": "K800I",
         "weight": 115,
         "rating": 4.8,
-        "camera": 3.2
-
+        "camera": 3.2,
+        "sizes": [106, 47, 20],
+        "battery": 950
     },
     {
         "id": 10,
@@ -100,7 +115,9 @@
         "model": "W800",
         "weight": 99,
         "rating": 4.8,
-        "camera": 2.0
+        "camera": 2.0,
+        "sizes": [100, 46, 21],
+        "battery": 900
     },
     {
         "id": 11,
@@ -110,8 +127,9 @@
         "model": "8800",
         "weight": 134,
         "rating": 3.7,
-        "camera": 0.4
-
+        "camera": 0.4,
+        "sizes": [107, 45, 17],
+        "battery": 600
     },
     {
         "id": 12,
@@ -121,7 +139,9 @@
         "model": "SX1",
         "weight": 110,
         "rating": 4.5,
-        "camera": 0.3
+        "camera": 0.3,
+        "sizes": [109, 56, 19],
+        "battery": 1000
     },
     {
         "id": 13,
@@ -131,7 +151,9 @@
         "model": "RAZR V3",
         "weight": 95,
         "rating": 3.2,
-        "camera": 0.3
+        "camera": 0.3,
+        "sizes": [98, 53, 14],
+        "battery": 680
     },
     {
         "id": 14,
@@ -141,7 +163,9 @@
         "model": "I300",
         "weight": 121,
         "rating": 3.7,
-        "camera": 1.3
+        "camera": 1.3,
+        "sizes": [113, 48, 20],
+        "battery": 1000
     },
     {
         "id": 15,
@@ -151,6 +175,8 @@
         "model": "5210",
         "weight": 92,
         "rating": 4.7,
-        "camera": null
+        "camera": null,
+        "sizes": [105.5, 47.5, 22.5],
+        "battery": 830
     }
 ]
