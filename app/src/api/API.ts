@@ -36,10 +36,10 @@ import products from './data.json';
 // }
 
 export default class API {
-  public static getProducts() {
+  public static getProducts(): Promise<IProduct[]> {
     return new Promise(async (res) => {
       setTimeout(() => {
-        res(products);
+        res(products as IProduct[]);
       }, 1000);
     });
   }

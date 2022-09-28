@@ -1,57 +1,18 @@
-import API from 'api/API';
 import Card from 'components/Card/Card';
-import Loader from 'components/Loader/Loader';
-import React, { Component } from 'react';
+import React from 'react';
 import { IProduct } from 'ts/interfaces';
 import './cards-list.css';
 
-interface ClassListStates {
-  isLoading: boolean;
-  isError: boolean;
+interface ClassListProps {
   products: IProduct[];
 }
 
-export default class ClassList extends Component {
-  state: ClassListStates = {
-    isLoading: false,
-    isError: false,
-    products: [],
-  };
-
-  componentDidMount() {
-    this.setState({
-      isError: false,
-      isLoading: true,
-    });
-
-    // Or would it be better to store products state in MainPage
-    //  so as not to receive data every time?
-    API.getProducts()
-      .then((data) => {
-        if (!data) {
-          this.setState({
-            isError: true,
-          });
-          return;
-        }
-        this.setState({ products: data });
-      })
-      .finally(() => {
-        this.setState({ isLoading: false });
-      });
-  }
-
-  render() {
-    const { isLoading, isError, products } = this.state;
-
-    const content = isError ? (
-      <div>Something went wrong :( </div>
-    ) : isLoading ? (
-      <Loader />
-    ) : (
-      products.map((data) => <Card key={data.id} data={data} />)
-    );
-    const classNames = isLoading ? 'cards-list cards-list_loading' : 'cards-list';
-    return <div className={classNames}>{content}</div>;
-  }
+export default function ClassList({ products }: ClassListProps) {
+  return (
+    <div className="cards-list">
+      {products.map((data) => (
+        <Card key={data.id} data={data} />
+      ))}
+    </div>
+  );
 }
