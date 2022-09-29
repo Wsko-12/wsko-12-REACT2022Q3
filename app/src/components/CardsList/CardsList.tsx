@@ -10,9 +10,11 @@ interface ClassListProps {
 export default function ClassList({ products }: ClassListProps) {
   return (
     <div className="cards-list">
-      {products.map((data) => (
-        <Card key={data.id} data={data} />
-      ))}
+      {products.length > 0 ? (
+        products.map((data) => <Card key={data.id} data={data} />)
+      ) : (
+        <div>Nothing found :(</div>
+      )}
     </div>
   );
 }
