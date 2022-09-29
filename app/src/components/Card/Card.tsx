@@ -19,7 +19,7 @@ export default class Card extends Component<ICardProps> {
     return (
       <div className="card">
         <div className="card__image_container">
-          <img src={image} alt={model} className="card__image" />
+          <img src={image} alt={`${brand} ${model}`} className="card__image" />
         </div>
         <div className="card__content">
           <CardHeader brand={brand} model={model} />

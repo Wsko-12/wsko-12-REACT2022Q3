@@ -26,7 +26,7 @@ export default function CardBody({ weight, year, camera, sizes, battery }: ICard
         <span>{year}</span>
       </div>
       {camera && (
-        <div className="card__info">
+        <div data-testid="card-camera-info" className="card__info">
           <span className="material-symbols-outlined">photo_camera</span>
           <span>{camera}Mp</span>
         </div>
