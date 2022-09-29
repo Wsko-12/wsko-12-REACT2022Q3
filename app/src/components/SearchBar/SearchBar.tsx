@@ -7,7 +7,6 @@ export default class SearchBar extends Component {
     value: '',
   };
 
-  // Why in React.StrictMode it calls 2 times
   // And calls componentWillUnmount and saves to LS empty value
   componentDidMount() {
     const savedValue = localStorage.getItem(ELSKeys.search);
