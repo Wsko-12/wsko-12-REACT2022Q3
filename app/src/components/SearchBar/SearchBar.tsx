@@ -14,7 +14,7 @@ export default class SearchBar extends Component {
   }
 
   inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e?.target.value;
+    const { value } = e.target;
     this.setState({ value });
   };
 
