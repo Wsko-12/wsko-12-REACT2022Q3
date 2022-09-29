@@ -43,7 +43,6 @@ export default class Main extends Component {
         console.error(`[Main fetchProducts] receive incorrect products data`);
         return;
       }
-
       this.setState({ products });
     } catch {
       this.setState({
