@@ -81,12 +81,9 @@
 }
 
 .card__rating-container {
-    display: flex;
-    align-items: center;
     width: 40%;
 }
 
-.card__rating{
-    color: gold;
+.card__rating-container > .rating__star{
     font-size: 2rem;
 }
