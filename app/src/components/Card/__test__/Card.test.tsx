@@ -35,12 +35,37 @@ describe('Card', () => {
     expect(imageElement).toBeInTheDocument();
   });
 
+  test('should render all card info', () => {
+    render(<Card data={fakeCardData} />);
+
+    const brandInfo = screen.queryByText(/test-brand/i);
+    expect(brandInfo).toBeInTheDocument();
+
+    const modelInfo = screen.queryByText(/test-model/i);
+    expect(modelInfo).toBeInTheDocument();
+
+    const yearInfo = screen.queryByText(/1000/i);
+    expect(yearInfo).toBeInTheDocument();
+
+    const weightInfo = screen.queryByText(/200g/i);
+    expect(weightInfo).toBeInTheDocument();
+
+    const batterInfo = screen.queryByText(/2500mAh/i);
+    expect(batterInfo).toBeInTheDocument();
+
+    const sizesInfo = screen.queryByText(/10x10x10mm/i);
+    expect(sizesInfo).toBeInTheDocument();
+
+    const cameraInfo = screen.queryByText(/2Mp/i);
+    expect(cameraInfo).toBeInTheDocument();
+  });
+
   test('should not render camera info if data have camera property with null', () => {
     fakeCardData.camera = null;
     render(<Card data={fakeCardData} />);
     fakeCardData.camera = camera;
 
-    const cameraInfo = screen.queryByTestId(`card-camera-info`);
+    const cameraInfo = screen.queryByText(/2Mp/i);
     expect(cameraInfo).not.toBeInTheDocument();
   });
 

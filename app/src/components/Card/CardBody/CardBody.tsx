@@ -12,7 +12,7 @@ interface ICardBodyProps {
 export default function CardBody({ weight, year, camera, sizes, battery }: ICardBodyProps) {
   return (
     <div className="card__body">
-      <CardInfoRow icon="weight" value={weight} />
+      <CardInfoRow icon="weight" value={`${weight}g`} />
       <CardInfoRow icon="straighten" value={`${sizes[0]}x${sizes[1]}x${sizes[2]}mm`} />
       <CardInfoRow icon="celebration" value={year} />
       {camera && <CardInfoRow icon="photo_camera" value={`${camera}Mp`} />}
