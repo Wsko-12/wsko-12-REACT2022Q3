@@ -5,7 +5,7 @@ import SearchBar from 'components/SearchBar/SearchBar';
 import React, { Component } from 'react';
 import { IProduct } from 'ts/interfaces';
 import { isProductDataArr } from 'ts/typeguards';
-import './main-page.css';
+import styles from './main-page.module.css';
 
 interface IMainPageStates {
   isLoading: boolean;
@@ -60,9 +60,9 @@ export default class Main extends Component {
   render() {
     const { isError, isLoading, products } = this.state;
     return (
-      <section className="wrapper main__wrapper">
+      <section className={styles.main__wrapper}>
         <SearchBar />
-        <div className="main__content">
+        <div className={styles.main__content}>
           {isError ? (
             <h3>Sorry, something went wrong :(</h3>
           ) : isLoading ? (

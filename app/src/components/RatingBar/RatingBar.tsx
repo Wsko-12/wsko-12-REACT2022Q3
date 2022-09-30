@@ -1,5 +1,5 @@
 import React from 'react';
-import './rating-bar.css';
+import styles from './rating-bar.module.css';
 
 interface RatingBarProps {
   rating: number;
@@ -8,12 +8,12 @@ interface RatingBarProps {
 
 export default function RatingBar({ rating, classes = '' }: RatingBarProps) {
   return (
-    <div className={'rating__container ' + classes}>
+    <div className={`${styles.rating__container} ${classes}`}>
       {new Array(Math.floor(rating)).fill(1).map((value, index) => (
         <span
           key={index}
           data-testid="card-rating-star"
-          className="material-symbols-outlined rating__star"
+          className={`material-symbols-outlined ${styles.rating__star}`}
         >
           stars
         </span>

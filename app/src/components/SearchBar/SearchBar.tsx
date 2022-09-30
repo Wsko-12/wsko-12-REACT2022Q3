@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ELSKeys } from 'ts/enums';
-import './search-bar.css';
+import styles from './search-bar.module.css';
 
 export default class SearchBar extends Component {
   state = {
@@ -24,13 +24,13 @@ export default class SearchBar extends Component {
 
   render() {
     return (
-      <div className="search-bar">
-        <span className="material-symbols-outlined search-bar__icon">search</span>
+      <div className={styles['search-bar']}>
+        <span className={`material-symbols-outlined ${styles['search-bar__icon']}`}>search</span>
         <input
           type="text"
           value={this.state.value}
           onChange={this.inputHandler}
-          className="search-bar__input"
+          className={styles['search-bar__input']}
           placeholder="Search..."
         />
       </div>

@@ -6,8 +6,3 @@
     font-size: 2rem;
     display: flex;
 }
-
-.cards-list_loading {
-    align-items: center;
-    justify-content: center;
-}

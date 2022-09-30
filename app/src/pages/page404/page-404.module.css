@@ -1,9 +1,13 @@
-.main__wrapper{
+.p404__wrapper{
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+    
     margin: auto;
     padding-top: 20px;
 }
 
-.main__content{
+.p404__content{
     display: flex;
     align-items: center;
     justify-content: center;

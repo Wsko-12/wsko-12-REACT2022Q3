@@ -68,8 +68,8 @@
     gap: 5px;
     color: #707070;
 }
-.card__info > .material-symbols-outlined{
-    font-size: 1.7rem;
+.card__info span:first-child{
+    font-size: 1.7rem ;
     color: #505050;
 }
 
@@ -84,6 +84,6 @@
     width: 40%;
 }
 
-.card__rating-container > .rating__star{
+.card__rating-container > span{
     font-size: 2rem;
 }

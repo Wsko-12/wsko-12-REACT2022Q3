@@ -1,9 +1,13 @@
-.about__wrapper{
+.main__wrapper{
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+
     margin: auto;
     padding-top: 20px;
 }
 
-.about__content{
+.main__content{
     display: flex;
     align-items: center;
     justify-content: center;

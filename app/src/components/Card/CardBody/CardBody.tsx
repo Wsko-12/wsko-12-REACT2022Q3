@@ -1,5 +1,6 @@
 import React from 'react';
 import CardInfoRow from './CardInfoRow/CardInfoRow';
+import styles from '../card.module.css';
 
 interface ICardBodyProps {
   weight: number;
@@ -11,7 +12,7 @@ interface ICardBodyProps {
 
 export default function CardBody({ weight, year, camera, sizes, battery }: ICardBodyProps) {
   return (
-    <div className="card__body">
+    <div className={styles.card__body}>
       <CardInfoRow icon="weight" value={`${weight}g`} />
       <CardInfoRow icon="straighten" value={`${sizes[0]}x${sizes[1]}x${sizes[2]}mm`} />
       <CardInfoRow icon="celebration" value={year} />

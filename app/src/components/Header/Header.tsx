@@ -1,11 +1,11 @@
 import HeaderNav from 'components/Header/HeaderNav/HeaderNav';
 import React from 'react';
-import './header.css';
+import styles from './header.module.css';
 
 export default function Header() {
   return (
-    <div className="header">
-      <div className="wrapper header__wrapper">
+    <div className={styles.header}>
+      <div className={styles.header__wrapper}>
         <HeaderNav />
       </div>
     </div>

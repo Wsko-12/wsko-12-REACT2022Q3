@@ -1,9 +1,9 @@
 import React from 'react';
-import './loader.css';
+import styles from './loader.module.css';
 export default function Loader() {
   return (
-    <div data-testid="loader" className="loader__container">
-      <div className="loader__item"></div>
+    <div data-testid="loader" className={styles.loader__container}>
+      <div className={styles.loader__item}></div>
     </div>
   );
 }
