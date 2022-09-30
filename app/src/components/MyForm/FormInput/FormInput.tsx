@@ -7,6 +7,7 @@ interface IFormInputProps {
   pattern?: string;
   type?: React.HTMLInputTypeAttribute;
   title?: string;
+  required?: boolean;
 }
 
 export default function FormInput({
@@ -15,6 +16,7 @@ export default function FormInput({
   placeholder,
   pattern,
   title,
+  required,
 }: IFormInputProps) {
   if (!placeholder) {
     placeholder = label;
@@ -27,6 +29,7 @@ export default function FormInput({
         pattern={pattern}
         className={styles.form__input}
         type={type}
+        required={required}
         placeholder={placeholder}
       ></input>
     </label>

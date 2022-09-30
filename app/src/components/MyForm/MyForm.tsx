@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { nameReg } from 'utils/regex/regex';
+import { nameReg, zipCodeReg } from 'utils/regex/regex';
 import styles from './form.module.css';
 import FormInput from './FormInput/FormInput';
 export default class MyForm extends Component {
@@ -10,16 +10,23 @@ export default class MyForm extends Component {
           label="Name"
           placeholder="James"
           pattern={nameReg}
-          title="Only letters (min: 2, max: 15)"
+          required={true}
+          title="Name can only contain letters and must be longer than two characters and shorter than fifteen"
         />
         <FormInput
           label="Surname"
           placeholder="Smith"
           pattern={nameReg}
-          title="Only letters (min: 2, max: 15)"
+          required={true}
+          title="Surname can only contain letters and must be longer than two characters and shorter than fifteen"
         />
-        <FormInput label="Zip-code" placeholder="111-111" />
-        <button type="submit">Send</button>
+        <FormInput
+          label="Zip-code"
+          placeholder="000-000"
+          pattern={zipCodeReg}
+          required={true}
+          title="Only numbers or number with dash (example: 000 or 000-000)"
+        />
       </form>
     );
   }

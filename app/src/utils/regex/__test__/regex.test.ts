@@ -1,4 +1,4 @@
-import { nameReg } from '../regex';
+import { nameReg, zipCodeReg } from '../regex';
 
 describe('Regexps', () => {
   describe('Name regexps', () => {
@@ -51,6 +51,26 @@ describe('Regexps', () => {
       expect(reg.test('a!')).toBe(false);
       expect(reg.test('a$')).toBe(false);
       expect(reg.test('a%')).toBe(false);
+    });
+  });
+
+  describe('Zip-code regexps', () => {
+    test('should return true correct zip', () => {
+      const reg = new RegExp(zipCodeReg);
+      expect(reg.test('111')).toBe(true);
+      expect(reg.test('111-111')).toBe(true);
+    });
+
+    test('min length should be 3 without dash and 2 with dash', () => {
+      const reg = new RegExp(zipCodeReg);
+      expect(reg.test('11')).toBe(false);
+      expect(reg.test('1-1')).toBe(false);
+    });
+
+    test('should block letters', () => {
+      const reg = new RegExp(zipCodeReg);
+      const str = 'aaa-aaa';
+      expect(reg.test(str)).toBe(false);
     });
   });
 });
