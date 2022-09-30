@@ -5,7 +5,7 @@ export default class MyForm extends Component {
   render() {
     return (
       <div className={styles.form__container}>
-        <FormInput label="Name" />
+        <FormInput />
       </div>
     );
   }

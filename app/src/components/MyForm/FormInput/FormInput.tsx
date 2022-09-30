@@ -2,10 +2,10 @@ import React from 'react';
 import styles from '../form.module.css';
 
 interface IFormInputProps {
-  label: string;
+  label?: string;
 }
 
-export default function FormInput({ label }: IFormInputProps) {
+export default function FormInput({ label = '' }: IFormInputProps) {
   return (
     <label className={styles.form__label}>
       {label}
