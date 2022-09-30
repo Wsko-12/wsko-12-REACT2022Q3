@@ -12,6 +12,9 @@ export default class HeaderNav extends Component {
         <NavLink to="/about" className={`${styles['header-nav__link']} ${styles.link}`}>
           About us
         </NavLink>
+        <NavLink to="/form" className={`${styles['header-nav__link']} ${styles.link}`}>
+          Form
+        </NavLink>
       </nav>
     );
   }
