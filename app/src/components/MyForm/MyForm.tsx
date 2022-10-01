@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { emailReg, nameReg, zipCodeReg } from 'utils/regex/regex';
+import DatePicker from './DatePicker/DatePicker';
 import styles from './form.module.css';
 import FormInput from './FormInput/FormInput';
 export default class MyForm extends Component {
@@ -37,6 +38,10 @@ export default class MyForm extends Component {
           required={true}
           title="Only numbers or number with dash (example: 000 or 000-000)"
         />
+
+        <DatePicker label="Birthday" direction="past" />
+        <DatePicker label="Delivery" direction="future" />
+
         <button type="submit">Send</button>
       </form>
     );
