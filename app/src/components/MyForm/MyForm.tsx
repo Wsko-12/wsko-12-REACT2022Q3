@@ -3,6 +3,7 @@ import { emailReg, nameReg, zipCodeReg } from 'utils/regex/regex';
 import DatePicker from './DatePicker/DatePicker';
 import styles from './form.module.css';
 import FormInput from './FormInput/FormInput';
+import SelectInput from './SelectInput/SelectInput';
 export default class MyForm extends Component {
   render() {
     return (
@@ -42,6 +43,12 @@ export default class MyForm extends Component {
         <DatePicker label="Birthday" direction="past" />
         <DatePicker label="Delivery" direction="future" />
 
+        <SelectInput
+          label="Country"
+          required={true}
+          placeholder="Select country"
+          options={['Belarus', 'Ukraine', 'Georgia', 'Poland', 'Lithuania', 'Latvia']}
+        />
         <button type="submit">Send</button>
       </form>
     );
