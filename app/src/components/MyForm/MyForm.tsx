@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { emailReg, nameReg, zipCodeReg } from 'utils/regex/regex';
+import CheckboxInput from './CheckboxInput/CheckboxInput';
 import DatePicker from './DatePicker/DatePicker';
 import styles from './form.module.css';
 import FormInput from './FormInput/FormInput';
@@ -49,6 +50,10 @@ export default class MyForm extends Component {
           placeholder="Select country"
           options={['Belarus', 'Ukraine', 'Georgia', 'Poland', 'Lithuania', 'Latvia']}
         />
+
+        <CheckboxInput label="I consent to my personal data" />
+        <CheckboxInput label="Install Amigo and Yandex browser" checked={true} />
+
         <button type="submit">Send</button>
       </form>
     );

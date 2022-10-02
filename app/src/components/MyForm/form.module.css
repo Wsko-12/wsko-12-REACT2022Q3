@@ -12,3 +12,9 @@
     display: block;
     margin: 5px 0px 15px;
 }
+
+.form__label_checkbox {
+    display: block;
+    font-size: 1.4rem;
+    margin: 5px 0px 15px;
+}
