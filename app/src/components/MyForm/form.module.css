@@ -1,6 +1,10 @@
-.form__container{
+.form{
     padding: 15px;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
+.form__body{
+    display: flex;
+    gap: 50px;
 }
 
 .form__label {
