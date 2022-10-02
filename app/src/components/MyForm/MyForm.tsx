@@ -5,6 +5,7 @@ import DatePicker from './DatePicker/DatePicker';
 import styles from './form.module.css';
 import FormInput from './FormInput/FormInput';
 import SelectInput from './SelectInput/SelectInput';
+import SwitcherInput from './SwitcherInput/SwitcherInput';
 export default class MyForm extends Component {
   render() {
     return (
@@ -36,6 +37,7 @@ export default class MyForm extends Component {
             />
 
             <DatePicker label="Birthday" direction="past" />
+            <SwitcherInput firstLabel="male" secondLabel="female" alwaysColored={true} />
           </div>
           <div>
             <FormInput
@@ -57,10 +59,15 @@ export default class MyForm extends Component {
 
             <CheckboxInput label="I consent to my personal data" />
             <CheckboxInput label="Install Amigo and Yandex browser" checked={true} />
+            <SwitcherInput
+              firstLabel="I want to receive notifications about promo, sales, etc."
+              checked={true}
+            />
           </div>
-          <div></div>
         </div>
-        <button type="submit">Send</button>
+        <div className={styles.form__footer}>
+          <button type="submit">Send</button>
+        </div>
       </form>
     );
   }
