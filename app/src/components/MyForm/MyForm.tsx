@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { emailReg, nameReg, zipCodeReg } from 'utils/regex/regex';
 import CheckboxInput from './CheckboxInput/CheckboxInput';
 import DatePicker from './DatePicker/DatePicker';
+import FileInput from './FileInput/FileInput';
 import styles from './form.module.css';
 import FormInput from './FormInput/FormInput';
 import RadioSwitcher from './RadioSwitcher/RadioSwitcher';
@@ -39,6 +40,7 @@ export default class MyForm extends Component {
 
             <DatePicker label="birthday" direction="past" />
             <RadioSwitcher label="gender" values={['Male', 'Female']} name="gender" />
+            <FileInput label="Load avatar" />
           </div>
           <div>
             <FormInput
@@ -71,7 +73,9 @@ export default class MyForm extends Component {
           </div>
         </div>
         <div className={styles.form__footer}>
-          <button type="submit">Send</button>
+          <button className={styles.form__button} type="submit" disabled>
+            Send
+          </button>
         </div>
       </form>
     );
