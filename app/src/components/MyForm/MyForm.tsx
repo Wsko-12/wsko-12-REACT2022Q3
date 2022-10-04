@@ -4,8 +4,9 @@ import CheckboxInput from './CheckboxInput/CheckboxInput';
 import DatePicker from './DatePicker/DatePicker';
 import styles from './form.module.css';
 import FormInput from './FormInput/FormInput';
+import RadioSwitcher from './RadioSwitcher/RadioSwitcher';
 import SelectInput from './SelectInput/SelectInput';
-import SwitcherInput from './SwitcherInput/SwitcherInput';
+
 export default class MyForm extends Component {
   render() {
     return (
@@ -13,14 +14,14 @@ export default class MyForm extends Component {
         <div className={styles.form__body}>
           <div>
             <FormInput
-              label="Name"
+              label="name"
               placeholder="James"
               pattern={nameReg}
               required={true}
               title="Name can only contain letters and must be longer than two characters and shorter than fifteen"
             />
             <FormInput
-              label="Surname"
+              label="surname"
               placeholder="Smith"
               pattern={nameReg}
               required={true}
@@ -28,7 +29,7 @@ export default class MyForm extends Component {
             />
 
             <FormInput
-              label="Email"
+              label="email"
               placeholder="example@example.com"
               required={true}
               type={'email'}
@@ -36,22 +37,22 @@ export default class MyForm extends Component {
               title="example@example.com or example.example@example.com or .by/.ua/.ru"
             />
 
-            <DatePicker label="Birthday" direction="past" />
-            <SwitcherInput firstLabel="male" secondLabel="female" alwaysColored={true} />
+            <DatePicker label="birthday" direction="past" />
+            <RadioSwitcher label="gender" values={['Male', 'Female']} name="gender" />
           </div>
           <div>
             <FormInput
-              label="Zip-code"
+              label="zip-code"
               placeholder="000-000"
               pattern={zipCodeReg}
               required={true}
               title="Only numbers or number with dash (example: 000 or 000-000)"
             />
 
-            <DatePicker label="Delivery" direction="future" />
+            <DatePicker label="delivery" direction="future" />
 
             <SelectInput
-              label="Country"
+              label="country"
               required={true}
               placeholder="Select country"
               options={['Belarus', 'Ukraine', 'Georgia', 'Poland', 'Lithuania', 'Latvia']}
@@ -59,9 +60,13 @@ export default class MyForm extends Component {
 
             <CheckboxInput label="I consent to my personal data" />
             <CheckboxInput label="Install Amigo and Yandex browser" checked={true} />
-            <SwitcherInput
-              firstLabel="I want to receive notifications about promo, sales, etc."
-              checked={true}
+            <RadioSwitcher
+              label="Notifications"
+              values={[
+                'I want to receive notifications about promo, sales, etc.',
+                "I don't want to receive notifications about promo, sales, etc.",
+              ]}
+              name="notifications"
             />
           </div>
         </div>
