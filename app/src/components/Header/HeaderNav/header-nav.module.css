@@ -3,7 +3,7 @@
     align-items: center;
     height: 100%;
 }
-.header-nav__link{
+.header-nav a{
     padding: 0 10px;
     height: 100%;
     display: flex;
@@ -13,14 +13,14 @@
     font-size: 1.5rem;
 }
 
-.header-nav__link:visited{
-    color: white;
-}
-
-.header-nav__link.active{
+.header-nav a.active{
     background-color: #404040;
 }
 
-.header-nav__link:hover{
+.header-nav a:visited{
+    color: white;
+}
+
+.header-nav a:hover{
     background-color: #505050;
 }
