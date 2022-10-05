@@ -19,6 +19,7 @@ export default function Delivery({ onChange }: IDeliveryFormProps) {
         required={true}
         onChange={onChange('zip')}
         title="Only numbers or number with dash (example: 000 or 000-000)"
+        errorMessage="Invalid zip-code"
       />
 
       <DatePicker label="delivery" direction="future" />
@@ -29,6 +30,7 @@ export default function Delivery({ onChange }: IDeliveryFormProps) {
         placeholder="Select country"
         options={['Belarus', 'Ukraine', 'Georgia', 'Poland', 'Lithuania', 'Latvia']}
         onChange={onChange('country')}
+        errorMessage="Please, select your country"
       />
     </>
   );

@@ -10,6 +10,7 @@ interface IFormInputProps {
   title?: string;
   required?: boolean;
   onChange?: (e: React.SyntheticEvent) => void;
+  errorMessage?: string;
 }
 
 interface IFormInputStates {
@@ -32,7 +33,7 @@ export default class FormInput extends Component<IFormInputProps, IFormInputStat
   };
 
   render() {
-    const { label, pattern, type, title, required } = this.props;
+    const { label, pattern, type, title, required, errorMessage } = this.props;
     let { placeholder } = this.props;
     if (!placeholder) {
       placeholder = label;
@@ -40,7 +41,7 @@ export default class FormInput extends Component<IFormInputProps, IFormInputStat
 
     const { isValid } = this.state;
     return (
-      <InputWithMessage isValid={isValid} label={label}>
+      <InputWithMessage isValid={isValid} label={label} message={errorMessage}>
         <input
           title={title}
           pattern={pattern}

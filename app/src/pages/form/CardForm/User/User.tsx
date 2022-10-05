@@ -5,7 +5,6 @@ import RadioSwitcher from 'components/form/RadioSwitcher/RadioSwitcher';
 import React from 'react';
 import { nameReg, emailReg } from 'utils/regex/regex';
 import { onChangeCarried } from '../CardForm';
-
 interface IUserFormProps {
   onChange: onChangeCarried;
 }
@@ -20,6 +19,7 @@ export default function User({ onChange }: IUserFormProps) {
         required={true}
         onChange={onChange('name')}
         title="Name can only contain letters and must be longer than two characters and shorter than fifteen"
+        errorMessage="Invalid name"
       />
       <FormInput
         label="surname"
@@ -28,6 +28,7 @@ export default function User({ onChange }: IUserFormProps) {
         required={true}
         onChange={onChange('surname')}
         title="Surname can only contain letters and must be longer than two characters and shorter than fifteen"
+        errorMessage="Invalid surname"
       />
 
       <FormInput
@@ -38,6 +39,7 @@ export default function User({ onChange }: IUserFormProps) {
         pattern={emailReg}
         onChange={onChange('email')}
         title="example@example.com or example.example@example.com or .by/.ua/.ru"
+        errorMessage="Invalid email"
       />
 
       <DatePicker label="birthday" direction="past" />

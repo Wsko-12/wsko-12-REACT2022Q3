@@ -8,6 +8,7 @@ interface ISelectInputProps {
   options: string[];
   required?: boolean;
   onChange?: (e: React.SyntheticEvent) => void;
+  errorMessage?: string;
 }
 
 interface ISelectInputStates {
@@ -24,13 +25,14 @@ export default class SelectInput extends Component<ISelectInputProps, ISelectInp
 
   onChange = (e: React.SyntheticEvent) => {
     this.setState({ isValid: true });
+    this.props.onChange && this.props.onChange(e);
   };
 
   render() {
-    const { label, required, placeholder, options } = this.props;
+    const { label, required, placeholder, options, errorMessage } = this.props;
     const { isValid } = this.state;
     return (
-      <InputWithMessage isValid={isValid} label={label}>
+      <InputWithMessage isValid={isValid} label={label} message={errorMessage}>
         <select
           className={styles.form__input}
           required={required}

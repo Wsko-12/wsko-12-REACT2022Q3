@@ -33,7 +33,7 @@ export default class DatePicker extends Component<IDatePickerProps, IDatePickerS
     const min = !direction ? '' : direction !== 'future' ? '' : today;
 
     return (
-      <InputWithMessage isValid={isValid} label={label}>
+      <InputWithMessage isValid={isValid} label={label} message="Invalid date">
         <input
           className={styles.form__input}
           type="date"
