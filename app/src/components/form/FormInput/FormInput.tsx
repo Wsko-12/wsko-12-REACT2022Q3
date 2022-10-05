@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styles from '../form-components.module.css';
+import InputWithMessage from '../InputWithMessage/InputWithMessage';
 
 interface IFormInputProps {
   label?: string;
@@ -39,22 +40,18 @@ export default class FormInput extends Component<IFormInputProps, IFormInputStat
 
     const { isValid } = this.state;
     return (
-      <div className={styles.form__item}>
-        <label className={styles.form__label}>
-          {label}
-          <input
-            title={title}
-            pattern={pattern}
-            className={styles.form__input}
-            type={type || 'text'}
-            required={required}
-            placeholder={placeholder}
-            onChange={this.onChange}
-            onInvalid={() => this.setState({ isValid: false })}
-          ></input>
-        </label>
-        {!isValid && <p className={styles.form__message}>Incorrect data</p>}
-      </div>
+      <InputWithMessage isValid={isValid} label={label}>
+        <input
+          title={title}
+          pattern={pattern}
+          className={styles.form__input}
+          type={type || 'text'}
+          required={required}
+          placeholder={placeholder}
+          onChange={this.onChange}
+          onInvalid={() => this.setState({ isValid: false })}
+        ></input>
+      </InputWithMessage>
     );
   }
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styles from '../form-components.module.css';
+import InputWithMessage from '../InputWithMessage/InputWithMessage';
 
 interface IDatePickerProps {
   label?: string;
@@ -32,8 +33,7 @@ export default class DatePicker extends Component<IDatePickerProps, IDatePickerS
     const min = !direction ? '' : direction !== 'future' ? '' : today;
 
     return (
-      <label className={styles.form__label}>
-        {label}
+      <InputWithMessage isValid={isValid} label={label}>
         <input
           className={styles.form__input}
           type="date"
@@ -44,8 +44,7 @@ export default class DatePicker extends Component<IDatePickerProps, IDatePickerS
           onChange={this.onChange}
           onInvalid={() => this.setState({ isValid: false })}
         />
-        {!isValid && <p className={styles.form__message}>Incorrect data</p>}
-      </label>
+      </InputWithMessage>
     );
   }
 }
