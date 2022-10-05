@@ -1,7 +1,9 @@
+.form__item{
+    margin: 0 0 15px;
+}
 .form__label {
     display: block;
     font-size: 1.4rem;
-    margin: 0 0 15px;
     text-transform: lowercase;
 }
 

@@ -24,7 +24,9 @@ export default class FormInput extends Component<IFormInputProps, IFormInputStat
   }
 
   onChange = (e: React.SyntheticEvent) => {
-    this.setState({ isValid: true });
+    this.setState({
+      isValid: true,
+    });
     this.props.onChange && this.props.onChange(e);
   };
 
@@ -37,20 +39,22 @@ export default class FormInput extends Component<IFormInputProps, IFormInputStat
 
     const { isValid } = this.state;
     return (
-      <label className={styles.form__label}>
-        {label}
-        <input
-          title={title}
-          pattern={pattern}
-          className={styles.form__input}
-          type={type || 'text'}
-          required={required}
-          placeholder={placeholder}
-          onChange={this.onChange}
-          onInvalid={() => this.setState({ isValid: false })}
-        ></input>
+      <div className={styles.form__item}>
+        <label className={styles.form__label}>
+          {label}
+          <input
+            title={title}
+            pattern={pattern}
+            className={styles.form__input}
+            type={type || 'text'}
+            required={required}
+            placeholder={placeholder}
+            onChange={this.onChange}
+            onInvalid={() => this.setState({ isValid: false })}
+          ></input>
+        </label>
         {!isValid && <p className={styles.form__message}>Incorrect data</p>}
-      </label>
+      </div>
     );
   }
 }

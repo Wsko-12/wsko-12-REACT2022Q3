@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import FormInput from '../FormInput';
 
 const label = 'test-label';
@@ -33,7 +34,9 @@ describe('FormInput', () => {
     const value = 'test';
     render(<FormInput label={label} />);
     const result = screen.getByLabelText<HTMLInputElement>(label);
-    fireEvent.change(result, { target: { value } });
+    act(() => {
+      fireEvent.change(result, { target: { value } });
+    });
 
     expect(result.value).toBe(value);
   });
