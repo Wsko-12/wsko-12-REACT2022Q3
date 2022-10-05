@@ -19,8 +19,8 @@ export default class CardForm extends Component {
             <User onChange={this.onChange} />
           </div>
           <div>
-            <Delivery />
-            <Personal />
+            <Delivery onChange={this.onChange} />
+            <Personal onChange={this.onChange} />
           </div>
         </div>
         <div className={styles.form__footer}>

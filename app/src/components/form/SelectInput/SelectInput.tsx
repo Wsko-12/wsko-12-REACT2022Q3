@@ -7,6 +7,7 @@ interface ISelectInputProps {
   label?: string;
   options: string[];
   required?: boolean;
+  onChange?: (e: React.SyntheticEvent) => void;
 }
 
 interface ISelectInputStates {

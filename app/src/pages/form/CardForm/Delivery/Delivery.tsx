@@ -3,8 +3,13 @@ import FormInput from 'components/form/FormInput/FormInput';
 import SelectInput from 'components/form/SelectInput/SelectInput';
 import React from 'react';
 import { zipCodeReg } from 'utils/regex/regex';
+import { onChangeCarried } from '../CardForm';
 
-export default function Delivery() {
+interface IDeliveryFormProps {
+  onChange: onChangeCarried;
+}
+
+export default function Delivery({ onChange }: IDeliveryFormProps) {
   return (
     <>
       <FormInput
@@ -12,6 +17,7 @@ export default function Delivery() {
         placeholder="000-000"
         pattern={zipCodeReg}
         required={true}
+        onChange={onChange('zip')}
         title="Only numbers or number with dash (example: 000 or 000-000)"
       />
 
@@ -22,6 +28,7 @@ export default function Delivery() {
         required={true}
         placeholder="Select country"
         options={['Belarus', 'Ukraine', 'Georgia', 'Poland', 'Lithuania', 'Latvia']}
+        onChange={onChange('country')}
       />
     </>
   );

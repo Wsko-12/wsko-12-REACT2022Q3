@@ -10,9 +10,7 @@ interface IUserFormProps {
   onChange: onChangeCarried;
 }
 
-export default function User(props: IUserFormProps) {
-  const { onChange } = props;
-
+export default function User({ onChange }: IUserFormProps) {
   return (
     <>
       <FormInput
