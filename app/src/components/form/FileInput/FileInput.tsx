@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from '../../form.module.css';
+import styles from '../form-components.module.css';
 
 interface IFileInputProps {
   label?: string;

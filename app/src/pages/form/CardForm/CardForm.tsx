@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { emailReg, nameReg, zipCodeReg } from 'utils/regex/regex';
-import CheckboxInput from './components/CheckboxInput/CheckboxInput';
-import DatePicker from './components/DatePicker/DatePicker';
-import FileInput from './components/FileInput/FileInput';
-import styles from './form.module.css';
-import FormInput from './components/FormInput/FormInput';
-import RadioSwitcher from './components/RadioSwitcher/RadioSwitcher';
-import SelectInput from './components/SelectInput/SelectInput';
+import CheckboxInput from '../../../components/form/CheckboxInput/CheckboxInput';
+import DatePicker from '../../../components/form/DatePicker/DatePicker';
+import FileInput from '../../../components/form/FileInput/FileInput';
+import styles from './card-form.module.css';
+import FormInput from '../../../components/form/FormInput/FormInput';
+import RadioSwitcher from '../../../components/form/RadioSwitcher/RadioSwitcher';
+import SelectInput from '../../../components/form/SelectInput/SelectInput';
 
 export default class MyForm extends Component {
   render() {
@@ -74,7 +74,7 @@ export default class MyForm extends Component {
         </div>
         <div className={styles.form__footer}>
           <button className={styles.form__button} type="submit" disabled>
-            Send
+            Submit
           </button>
         </div>
       </form>

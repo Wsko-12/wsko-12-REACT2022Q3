@@ -1,16 +1,3 @@
-.form{
-    padding: 15px;
-    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: column;
-}
-.form__body{
-    display: flex;
-    gap: 50px;
-    justify-content: center;
-}
-
 .form__label {
     display: block;
     font-size: 1.4rem;
@@ -38,25 +25,7 @@
 .form__input_file{
     display: none;
 }
-.form__button {
-    display: block;
-    background-color: #0075ff;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    text-align: center;
-    font-size: 1.5rem;
-    border-radius: 25px;
-    cursor: pointer;
-    min-width: 100px;
-}
 
-.form__button:disabled{
-    background-color: #cae3ff;
-}
-.form__button:disabled:hover{
-    background-color: #cae3ff;
-}
 .form__button_add{
     display: block;
     background-color: none;
@@ -76,10 +45,6 @@
     background-color: #3d98ff;
     border: 1px solid #0075ff;
     color: white;
-}
-
-.form__button:hover{
-    background-color: #3d98ff;
 }
 
 .form__label_checkbox {
