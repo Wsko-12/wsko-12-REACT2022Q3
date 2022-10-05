@@ -23,7 +23,7 @@ export default class SelectInput extends Component<ISelectInputProps, ISelectInp
     };
   }
 
-  onChange = (e: React.SyntheticEvent) => {
+  handleChange = (e: React.SyntheticEvent) => {
     this.setState({ isValid: true });
     this.props.onChange && this.props.onChange(e);
   };
@@ -37,7 +37,7 @@ export default class SelectInput extends Component<ISelectInputProps, ISelectInp
           className={styles.form__input}
           required={required}
           defaultValue=""
-          onChange={this.onChange}
+          onChange={this.handleChange}
           onInvalid={() => this.setState({ isValid: false })}
         >
           {placeholder && (

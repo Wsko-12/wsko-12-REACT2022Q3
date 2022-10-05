@@ -19,7 +19,7 @@ export default class DatePicker extends Component<IDatePickerProps, IDatePickerS
     };
   }
 
-  onChange = (e: React.SyntheticEvent) => {
+  handleChange = (e: React.SyntheticEvent) => {
     this.setState({ isValid: true });
     this.props.onChange && this.props.onChange(e);
   };
@@ -41,7 +41,7 @@ export default class DatePicker extends Component<IDatePickerProps, IDatePickerS
           min={min}
           max={max}
           defaultValue={today}
-          onChange={this.onChange}
+          onChange={this.handleChange}
           onInvalid={() => this.setState({ isValid: false })}
         />
       </InputWithMessage>

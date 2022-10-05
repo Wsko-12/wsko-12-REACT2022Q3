@@ -25,7 +25,7 @@ export default class FormInput extends Component<IFormInputProps, IFormInputStat
     };
   }
 
-  onChange = (e: React.SyntheticEvent) => {
+  handleChange = (e: React.SyntheticEvent) => {
     this.setState({
       isValid: true,
     });
@@ -49,7 +49,7 @@ export default class FormInput extends Component<IFormInputProps, IFormInputStat
           type={type || 'text'}
           required={required}
           placeholder={placeholder}
-          onChange={this.onChange}
+          onChange={this.handleChange}
           onInvalid={() => this.setState({ isValid: false })}
         ></input>
       </InputWithMessage>

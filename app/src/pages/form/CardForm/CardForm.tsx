@@ -7,7 +7,7 @@ import Personal from './PersonalData/PersonalData';
 export type onChangeCarried = (name: string) => (e: React.SyntheticEvent) => void;
 
 export default class CardForm extends Component {
-  onChange: onChangeCarried = (name) => (e) => {
+  handleChangeCarry: onChangeCarried = (name) => (e) => {
     // console.log(name, e);
   };
 
@@ -16,11 +16,11 @@ export default class CardForm extends Component {
       <form className={styles.form}>
         <div className={styles.form__body}>
           <div>
-            <User onChange={this.onChange} />
+            <User onChange={this.handleChangeCarry} />
           </div>
           <div>
-            <Delivery onChange={this.onChange} />
-            <Personal onChange={this.onChange} />
+            <Delivery onChange={this.handleChangeCarry} />
+            <Personal onChange={this.handleChangeCarry} />
           </div>
         </div>
         <div className={styles.form__footer}>
