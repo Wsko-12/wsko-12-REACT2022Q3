@@ -13,6 +13,7 @@ export default function Delivery({ onChange }: IDeliveryFormProps) {
   return (
     <>
       <FormInput
+        name="zip"
         label="zip-code"
         placeholder="000-000"
         pattern={zipCodeReg}
@@ -22,7 +23,7 @@ export default function Delivery({ onChange }: IDeliveryFormProps) {
         errorMessage="Invalid zip-code"
       />
 
-      <DatePicker label="delivery" direction="future" />
+      <DatePicker label="delivery" direction="future" name="delivery" />
 
       <SelectInput
         label="country"
@@ -31,6 +32,7 @@ export default function Delivery({ onChange }: IDeliveryFormProps) {
         options={['Belarus', 'Ukraine', 'Georgia', 'Poland', 'Lithuania', 'Latvia']}
         onChange={onChange('country')}
         errorMessage="Please, select your country"
+        name="country"
       />
     </>
   );

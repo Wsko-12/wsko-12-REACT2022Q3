@@ -3,6 +3,7 @@ import styles from '../form-components.module.css';
 import InputWithMessage from '../InputWithMessage/InputWithMessage';
 
 interface ISelectInputProps {
+  name?: string;
   placeholder?: string;
   label?: string;
   options: string[];
@@ -29,7 +30,7 @@ export default class SelectInput extends Component<ISelectInputProps, ISelectInp
   };
 
   render() {
-    const { label, required, placeholder, options, errorMessage } = this.props;
+    const { label, required, placeholder, options, errorMessage, name } = this.props;
     const { isValid } = this.state;
     return (
       <InputWithMessage isValid={isValid} label={label} message={errorMessage}>
@@ -39,6 +40,7 @@ export default class SelectInput extends Component<ISelectInputProps, ISelectInp
           defaultValue=""
           onChange={this.handleChange}
           onInvalid={() => this.setState({ isValid: false })}
+          name={name}
         >
           {placeholder && (
             <option value="" disabled={true} hidden={true}>

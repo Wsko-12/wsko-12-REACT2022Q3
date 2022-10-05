@@ -11,9 +11,16 @@ export default class CardForm extends Component {
     // console.log(name, e);
   };
 
+  handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    console.log(Object.fromEntries(formData));
+  };
+
   render() {
     return (
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={this.handleSubmit}>
         <div className={styles.form__body}>
           <div>
             <User onChange={this.handleChangeCarry} />

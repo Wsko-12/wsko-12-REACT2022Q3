@@ -3,6 +3,7 @@ import styles from '../form-components.module.css';
 import InputWithMessage from '../InputWithMessage/InputWithMessage';
 
 interface IDatePickerProps {
+  name?: string;
   label?: string;
   direction?: 'future' | 'past';
   onChange?: (e: React.SyntheticEvent) => void;
@@ -25,7 +26,7 @@ export default class DatePicker extends Component<IDatePickerProps, IDatePickerS
   };
 
   render() {
-    const { direction, label } = this.props;
+    const { direction, label, name } = this.props;
     const { isValid } = this.state;
 
     const today = new Date().toLocaleDateString('en-CA');
@@ -35,6 +36,7 @@ export default class DatePicker extends Component<IDatePickerProps, IDatePickerS
     return (
       <InputWithMessage isValid={isValid} label={label} message="Invalid date">
         <input
+          name={name}
           className={styles.form__input}
           type="date"
           role="datepicker"

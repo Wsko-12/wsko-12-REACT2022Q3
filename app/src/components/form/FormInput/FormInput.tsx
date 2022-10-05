@@ -3,6 +3,7 @@ import styles from '../form-components.module.css';
 import InputWithMessage from '../InputWithMessage/InputWithMessage';
 
 interface IFormInputProps {
+  name?: string;
   label?: string;
   placeholder?: string;
   pattern?: string;
@@ -33,7 +34,7 @@ export default class FormInput extends Component<IFormInputProps, IFormInputStat
   };
 
   render() {
-    const { label, pattern, type, title, required, errorMessage } = this.props;
+    const { label, pattern, type, title, required, errorMessage, name } = this.props;
     let { placeholder } = this.props;
     if (!placeholder) {
       placeholder = label;
@@ -43,6 +44,7 @@ export default class FormInput extends Component<IFormInputProps, IFormInputStat
     return (
       <InputWithMessage isValid={isValid} label={label} message={errorMessage}>
         <input
+          name={name}
           title={title}
           pattern={pattern}
           className={styles.form__input}

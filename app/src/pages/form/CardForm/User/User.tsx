@@ -13,6 +13,7 @@ export default function User({ onChange }: IUserFormProps) {
   return (
     <>
       <FormInput
+        name="name"
         label="name"
         placeholder="James"
         pattern={nameReg}
@@ -22,6 +23,7 @@ export default function User({ onChange }: IUserFormProps) {
         errorMessage="Invalid name"
       />
       <FormInput
+        name="surname"
         label="surname"
         placeholder="Smith"
         pattern={nameReg}
@@ -32,6 +34,7 @@ export default function User({ onChange }: IUserFormProps) {
       />
 
       <FormInput
+        name="email"
         label="email"
         placeholder="example@example.com"
         required={true}
@@ -42,9 +45,9 @@ export default function User({ onChange }: IUserFormProps) {
         errorMessage="Invalid email"
       />
 
-      <DatePicker label="birthday" direction="past" />
+      <DatePicker label="birthday" direction="past" name="birthday" />
       <RadioSwitcher label="gender" values={['Male', 'Female']} name="gender" />
-      <FileInput label="Load avatar" />
+      <FileInput label="Load avatar" name="avatar" />
     </>
   );
 }

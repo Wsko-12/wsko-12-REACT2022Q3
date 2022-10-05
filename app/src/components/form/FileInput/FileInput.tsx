@@ -3,6 +3,7 @@ import styles from '../form-components.module.css';
 
 interface IFileInputProps {
   label?: string;
+  name?: string;
 }
 
 interface IFileInputStates {
@@ -25,12 +26,17 @@ export default class FileInput extends Component<IFileInputProps, IFileInputStat
   };
 
   render() {
-    const { label } = this.props;
+    const { label, name } = this.props;
     const { fileName } = this.state;
     return (
       <label className={styles.form__label_file}>
         <div className={styles.form__button_add}>{label}</div>
-        <input className={styles.form__input_file} type="file" onChange={this.changeHandler} />
+        <input
+          className={styles.form__input_file}
+          type="file"
+          onChange={this.changeHandler}
+          name={name}
+        />
         {fileName && <p>image: {fileName}</p>}
       </label>
     );

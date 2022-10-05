@@ -14,7 +14,7 @@ export default function RadioSwitcher({ values, label, name }: IRadioSwitcherPro
       {values.map((value) => {
         return (
           <label key={value} className={styles.form__label_checkbox}>
-            <input type="radio" name={name} />
+            <input type="radio" name={name} value={value.toLowerCase()} />
             {value}
           </label>
         );
