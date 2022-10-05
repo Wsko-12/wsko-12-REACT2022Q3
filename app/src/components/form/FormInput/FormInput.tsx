@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styles from '../form-components.module.css';
 
 interface IFormInputProps {
@@ -8,30 +8,49 @@ interface IFormInputProps {
   type?: React.HTMLInputTypeAttribute;
   title?: string;
   required?: boolean;
+  onChange?: (e: React.SyntheticEvent) => void;
 }
 
-export default function FormInput({
-  type = 'text',
-  label = '',
-  placeholder,
-  pattern,
-  title,
-  required,
-}: IFormInputProps) {
-  if (!placeholder) {
-    placeholder = label;
+interface IFormInputStates {
+  isValid: boolean;
+}
+
+export default class FormInput extends Component<IFormInputProps, IFormInputStates> {
+  constructor(props: IFormInputProps) {
+    super(props);
+    this.state = {
+      isValid: true,
+    };
   }
-  return (
-    <label className={styles.form__label}>
-      {label}
-      <input
-        title={title}
-        pattern={pattern}
-        className={styles.form__input}
-        type={type}
-        required={required}
-        placeholder={placeholder}
-      ></input>
-    </label>
-  );
+
+  onChange = (e: React.SyntheticEvent) => {
+    this.setState({ isValid: true });
+    this.props.onChange && this.props.onChange(e);
+  };
+
+  render() {
+    const { label, pattern, type, title, required } = this.props;
+    let { placeholder } = this.props;
+    if (!placeholder) {
+      placeholder = label;
+    }
+
+    const { isValid } = this.state;
+    return (
+      <label className={styles.form__label}>
+        {label}
+        <input
+          title={title}
+          pattern={pattern}
+          className={styles.form__input}
+          type={type || 'text'}
+          required={required}
+          placeholder={placeholder}
+          onChange={this.onChange}
+          onInvalid={() => this.setState({ isValid: false })}
+        ></input>
+        {!isValid && <p className={styles.form__message}>Incorrect data</p>}
+      </label>
+    );
+  }
 }

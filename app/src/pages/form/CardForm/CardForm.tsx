@@ -4,13 +4,19 @@ import User from './User/User';
 import Delivery from './Delivery/Delivery';
 import Personal from './PersonalData/PersonalData';
 
+export type onChangeCarried = (name: string) => (e: React.SyntheticEvent) => void;
+
 export default class CardForm extends Component {
+  onChange: onChangeCarried = (name) => (e) => {
+    // console.log(name, e);
+  };
+
   render() {
     return (
       <form className={styles.form}>
         <div className={styles.form__body}>
           <div>
-            <User />
+            <User onChange={this.onChange} />
           </div>
           <div>
             <Delivery />
@@ -18,7 +24,7 @@ export default class CardForm extends Component {
           </div>
         </div>
         <div className={styles.form__footer}>
-          <button className={styles.form__button} type="submit" disabled>
+          <button className={styles.form__button} type="submit">
             Submit
           </button>
         </div>

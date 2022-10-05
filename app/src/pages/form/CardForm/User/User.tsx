@@ -4,8 +4,15 @@ import FormInput from 'components/form/FormInput/FormInput';
 import RadioSwitcher from 'components/form/RadioSwitcher/RadioSwitcher';
 import React from 'react';
 import { nameReg, emailReg } from 'utils/regex/regex';
+import { onChangeCarried } from '../CardForm';
 
-export default function User() {
+interface IUserFormProps {
+  onChange: onChangeCarried;
+}
+
+export default function User(props: IUserFormProps) {
+  const { onChange } = props;
+
   return (
     <>
       <FormInput
@@ -13,6 +20,7 @@ export default function User() {
         placeholder="James"
         pattern={nameReg}
         required={true}
+        onChange={onChange('name')}
         title="Name can only contain letters and must be longer than two characters and shorter than fifteen"
       />
       <FormInput
@@ -20,6 +28,7 @@ export default function User() {
         placeholder="Smith"
         pattern={nameReg}
         required={true}
+        onChange={onChange('surname')}
         title="Surname can only contain letters and must be longer than two characters and shorter than fifteen"
       />
 
@@ -29,6 +38,7 @@ export default function User() {
         required={true}
         type={'email'}
         pattern={emailReg}
+        onChange={onChange('email')}
         title="example@example.com or example.example@example.com or .by/.ua/.ru"
       />
 
