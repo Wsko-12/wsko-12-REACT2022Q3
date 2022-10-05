@@ -1,25 +1,9 @@
 import React, { Component } from 'react';
-import styles from '../form.module.css';
+import styles from '../../form.module.css';
 
 interface IFileInputProps {
   label?: string;
 }
-
-// export default function FileInput({ label }: IFileInputProps) {
-//   function changeHandler(e: React.FormEvent<HTMLInputElement>) {
-//     if (e.currentTarget.files) {
-//       console.log(e.currentTarget.files[0].name);
-//     }
-//   }
-
-//   return (
-//     <label className={styles.form__label_file}>
-//       <div className={styles.form__button_add}>{label}</div>
-//       <input className={styles.form__input_file} type="file" onChange={changeHandler}></input>
-//       <p>File</p>
-//     </label>
-//   );
-// }
 
 interface IFileInputStates {
   fileName: string;

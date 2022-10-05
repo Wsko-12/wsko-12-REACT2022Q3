@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { emailReg, nameReg, zipCodeReg } from 'utils/regex/regex';
-import CheckboxInput from './CheckboxInput/CheckboxInput';
-import DatePicker from './DatePicker/DatePicker';
-import FileInput from './FileInput/FileInput';
+import CheckboxInput from './components/CheckboxInput/CheckboxInput';
+import DatePicker from './components/DatePicker/DatePicker';
+import FileInput from './components/FileInput/FileInput';
 import styles from './form.module.css';
-import FormInput from './FormInput/FormInput';
-import RadioSwitcher from './RadioSwitcher/RadioSwitcher';
-import SelectInput from './SelectInput/SelectInput';
+import FormInput from './components/FormInput/FormInput';
+import RadioSwitcher from './components/RadioSwitcher/RadioSwitcher';
+import SelectInput from './components/SelectInput/SelectInput';
 
 export default class MyForm extends Component {
   render() {
