@@ -13,8 +13,8 @@ export default function PersonalData({ onChange }: IPersonalDataFormProps) {
       <RadioSwitcher
         label="Notifications"
         values={[
-          'I want to receive notifications about promo, sales, etc.',
-          "I don't want to receive notifications about promo, sales, etc.",
+          ['on', 'I want to receive notifications about promo, sales, etc.'],
+          ['off', "I don't want to receive notifications about promo, sales, etc."],
         ]}
         name="notifications"
       />
