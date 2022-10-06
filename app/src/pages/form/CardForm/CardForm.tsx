@@ -33,8 +33,8 @@ export default class CardForm extends Component {
 
   handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    console.log(Object.fromEntries(formData));
+    // const formData = new FormData(e.currentTarget);
+    // console.log(Object.fromEntries(formData));
   };
 
   render() {
