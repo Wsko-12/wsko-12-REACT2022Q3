@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import SelectInput from '../SelectInput';
 
 const options = ['a', 'b', 'c', 'd'];
@@ -15,8 +16,10 @@ describe('SelectInput', () => {
   test('should change value', () => {
     render(<SelectInput options={options} placeholder={placeholder} />);
     const element = screen.getByRole<HTMLSelectElement>('combobox');
-    fireEvent.change(element, { target: { value: 'b' } });
-    expect(element.value).toBe('b');
+    act(() => {
+      fireEvent.change(element, { target: { value: 'b' } });
+      expect(element.value).toBe('b');
+    });
   });
 
   test('should have "placeholder"', () => {
@@ -28,6 +31,8 @@ describe('SelectInput', () => {
   test('should be invalid while selected placeholder', () => {
     render(<SelectInput options={options} placeholder={placeholder} required={true} />);
     const element = screen.getByRole<HTMLSelectElement>('combobox');
-    expect(element).not.toBeValid();
+    act(() => {
+      expect(element).not.toBeValid();
+    });
   });
 });

@@ -6,6 +6,7 @@ interface IRadioSwitcherProps {
   values: (string | [string, string])[];
   name: string;
   label?: string;
+  onChange?: (e: React.SyntheticEvent) => void;
 }
 
 interface IRadioSwitcherState {
@@ -18,6 +19,15 @@ export default class RadioSwitcher extends Component<IRadioSwitcherProps, IRadio
       isValid: true,
     };
   }
+
+  handleChange = (e: React.SyntheticEvent) => {
+    const { onChange } = this.props;
+    if (onChange) {
+      onChange(e);
+    }
+    this.setState({ isValid: true });
+  };
+
   render() {
     const { values, name, label } = this.props;
     const { isValid } = this.state;
@@ -34,7 +44,7 @@ export default class RadioSwitcher extends Component<IRadioSwitcherProps, IRadio
                   name={name}
                   value={val}
                   required
-                  onChange={() => this.setState({ isValid: true })}
+                  onChange={this.handleChange}
                   onInvalid={() => this.setState({ isValid: false })}
                 />
                 {text}
@@ -49,7 +59,7 @@ export default class RadioSwitcher extends Component<IRadioSwitcherProps, IRadio
                 name={name}
                 value={value.toLowerCase()}
                 required
-                onChange={() => this.setState({ isValid: true })}
+                onChange={this.handleChange}
                 onInvalid={() => this.setState({ isValid: false })}
               />
               {value}

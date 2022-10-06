@@ -46,7 +46,12 @@ export default function User({ onChange }: IUserFormProps) {
       />
 
       <DatePicker label="birthday" direction="past" name="birthday" />
-      <RadioSwitcher label="gender" values={['Male', 'Female']} name="gender" />
+      <RadioSwitcher
+        label="gender"
+        values={['Male', 'Female']}
+        name="gender"
+        onChange={onChange('gender')}
+      />
       <FileInput label="Load avatar" name="avatar" />
     </>
   );
