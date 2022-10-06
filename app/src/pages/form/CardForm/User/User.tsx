@@ -45,7 +45,12 @@ export default function User({ onChange }: IUserFormProps) {
         errorMessage="Invalid email"
       />
 
-      <DatePicker label="birthday" direction="past" name="birthday" />
+      <DatePicker
+        label="birthday"
+        direction="past"
+        name="birthday"
+        onChange={onChange('birthday')}
+      />
       <RadioSwitcher
         label="gender"
         values={['Male', 'Female']}

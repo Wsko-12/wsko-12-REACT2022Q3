@@ -23,7 +23,12 @@ export default function Delivery({ onChange }: IDeliveryFormProps) {
         errorMessage="Invalid zip-code"
       />
 
-      <DatePicker label="delivery" direction="future" name="delivery" />
+      <DatePicker
+        label="delivery"
+        direction="future"
+        name="delivery"
+        onChange={onChange('delivery')}
+      />
 
       <SelectInput
         label="country"
