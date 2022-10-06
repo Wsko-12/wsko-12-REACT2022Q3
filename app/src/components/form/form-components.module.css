@@ -4,7 +4,6 @@
 .form__label {
     display: block;
     font-size: 1.4rem;
-    text-transform: lowercase;
 }
 
 .form__label_file p {
