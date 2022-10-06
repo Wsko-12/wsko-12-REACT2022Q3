@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import CardsList from '../CardsList';
+import ProductCardsList from '../ProductCardsList';
 import { IProduct } from 'ts/interfaces';
 
 describe('CardsList', () => {
   test('should render message "Nothing found" if receive empty array', () => {
-    render(<CardsList products={[]} />);
+    render(<ProductCardsList products={[]} />);
     const messageElement = screen.getByText(/Nothing found/i);
     expect(messageElement).toBeInTheDocument();
   });
@@ -38,7 +38,7 @@ describe('CardsList', () => {
       },
     ];
 
-    render(<CardsList products={fakeProducts} />);
+    render(<ProductCardsList products={fakeProducts} />);
     const firstCardTitle = screen.getByText(/TEST_1/i);
     expect(firstCardTitle).toBeInTheDocument();
 

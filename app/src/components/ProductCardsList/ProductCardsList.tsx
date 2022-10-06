@@ -1,4 +1,4 @@
-import Card from 'components/Card/Card';
+import ProductCard from 'components/ProductCard/ProductCard';
 import React from 'react';
 import { IProduct } from 'ts/interfaces';
 import styles from './cards-list.module.css';
@@ -11,7 +11,7 @@ export default function ClassList({ products }: ClassListProps) {
   return (
     <div className={styles['cards-list']}>
       {products.length > 0 ? (
-        products.map((data) => <Card key={data.id} data={data} />)
+        products.map((data) => <ProductCard key={data.id} data={data} />)
       ) : (
         <div>Nothing found :(</div>
       )}

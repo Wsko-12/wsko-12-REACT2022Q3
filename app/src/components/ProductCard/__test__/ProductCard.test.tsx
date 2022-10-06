@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Card from '../Card';
+import ProductCard from '../ProductCard';
 import { IProduct } from 'ts/interfaces';
 
 describe('Card', () => {
@@ -20,7 +20,7 @@ describe('Card', () => {
   const { model, brand, camera, rating } = fakeCardData;
 
   test('should be rendered with titles', () => {
-    render(<Card data={fakeCardData} />);
+    render(<ProductCard data={fakeCardData} />);
 
     const titleElement = screen.getByText(brand);
     const subtitleElement = screen.getByText(model);
@@ -29,14 +29,14 @@ describe('Card', () => {
   });
 
   test('should be have image alt with brand and model separated by space', () => {
-    render(<Card data={fakeCardData} />);
+    render(<ProductCard data={fakeCardData} />);
 
     const imageElement = screen.getByAltText(`${brand} ${model}`);
     expect(imageElement).toBeInTheDocument();
   });
 
   test('should render all card info', () => {
-    render(<Card data={fakeCardData} />);
+    render(<ProductCard data={fakeCardData} />);
 
     const brandInfo = screen.queryByText(/test-brand/i);
     expect(brandInfo).toBeInTheDocument();
@@ -62,7 +62,7 @@ describe('Card', () => {
 
   test('should not render camera info if data have camera property with null', () => {
     fakeCardData.camera = null;
-    render(<Card data={fakeCardData} />);
+    render(<ProductCard data={fakeCardData} />);
     fakeCardData.camera = camera;
 
     const cameraInfo = screen.queryByText(/2Mp/i);
@@ -71,7 +71,7 @@ describe('Card', () => {
 
   test('should correct render rating stars (with rounding floor)', () => {
     fakeCardData.rating = 3.2;
-    let renderResult = render(<Card data={fakeCardData} />);
+    let renderResult = render(<ProductCard data={fakeCardData} />);
     fakeCardData.rating = rating;
 
     let ratingStars = screen.queryAllByTestId(`card-rating-star`);
@@ -79,7 +79,7 @@ describe('Card', () => {
     expect(ratingStars.length).toBe(3);
 
     fakeCardData.rating = 4.8;
-    renderResult = render(<Card data={fakeCardData} />);
+    renderResult = render(<ProductCard data={fakeCardData} />);
     fakeCardData.rating = rating;
 
     ratingStars = screen.queryAllByTestId(`card-rating-star`);

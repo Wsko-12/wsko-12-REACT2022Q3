@@ -1,5 +1,5 @@
 import API from 'api/API';
-import CardsList from 'components/CardsList/CardsList';
+import ProductCardsList from 'components/ProductCardsList/ProductCardsList';
 import Loader from 'components/Loader/Loader';
 import SearchBar from 'components/SearchBar/SearchBar';
 import React, { Component } from 'react';
@@ -68,7 +68,7 @@ export default class Main extends Component {
           ) : isLoading ? (
             <Loader />
           ) : (
-            <CardsList products={products} />
+            <ProductCardsList products={products} />
           )}
         </div>
       </section>

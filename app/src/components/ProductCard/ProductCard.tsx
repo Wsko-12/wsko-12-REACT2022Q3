@@ -9,7 +9,7 @@ interface ICardProps {
   data: IProduct;
 }
 
-export default class Card extends Component<ICardProps> {
+export default class ProductCard extends Component<ICardProps> {
   constructor(props: ICardProps) {
     super(props);
   }
