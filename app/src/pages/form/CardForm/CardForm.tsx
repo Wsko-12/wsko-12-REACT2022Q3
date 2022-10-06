@@ -3,9 +3,9 @@ import styles from './card-form.module.css';
 import User from './User/User';
 import Delivery from './Delivery/Delivery';
 import Personal from './PersonalData/PersonalData';
-import { nameReg } from 'utils/regex/regex';
+import { CardFormFields } from '../FormPage';
 
-export type onChangeCarried = (name: string) => (e: React.SyntheticEvent) => void;
+export type onChangeCarried = (name: CardFormFields) => (e: React.SyntheticEvent) => void;
 
 export default class CardForm extends Component {
   formRef = createRef<HTMLFormElement>();
@@ -16,7 +16,7 @@ export default class CardForm extends Component {
 
   // use this carry function in case if I need to do custom validation.
   // I will know which field needs to be checked now
-  handleChangeCarry: onChangeCarried = (name) => (e) => {
+  handleChangeCarry: onChangeCarried = (/* name */) => (/* e */) => {
     const { isSubmitted } = this.state;
     this.setState({ isFormValid: true });
     if (isSubmitted) {
@@ -33,6 +33,8 @@ export default class CardForm extends Component {
 
   handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    console.log(Object.fromEntries(formData));
   };
 
   render() {

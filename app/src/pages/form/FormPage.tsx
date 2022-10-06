@@ -2,7 +2,20 @@ import CardForm from 'pages/form/CardForm/CardForm';
 import React from 'react';
 import { Component } from 'react';
 import styles from './form.module.css';
-
+export enum CardFormFields {
+  name = 'name',
+  surname = 'surname',
+  email = 'email',
+  birthday = 'birthday',
+  gender = 'gender',
+  zip = 'zip',
+  delivery = 'delivery',
+  country = 'country',
+  notifications = 'notifications',
+  avatar = 'avatar',
+  consentForPersonalData = 'consentForPersonalData',
+  installBrowsers = 'installBrowsers',
+}
 export default class FormPage extends Component {
   render() {
     return (
