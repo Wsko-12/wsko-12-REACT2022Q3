@@ -10,8 +10,12 @@
 .form-page__content{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     font-size: 2rem;
     color: #303030;
     width: 100%;
+    padding: 15px;
+    gap: 30px;
+    flex-wrap: wrap;
+    padding-left: 40px;
 }

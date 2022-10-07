@@ -1,3 +1,4 @@
+import UserCard from 'components/UserCard/UserCard';
 import CardForm from 'pages/form/CardForm/CardForm';
 import React from 'react';
 import { Component } from 'react';
@@ -21,7 +22,14 @@ export default class FormPage extends Component {
     return (
       <section className={styles['form-page__wrapper']}>
         <CardForm />
-        <div className={styles['form-page__content']}></div>
+        <div className={styles['form-page__content']}>
+          <UserCard />
+          <UserCard />
+          <UserCard />
+          <UserCard />
+          <UserCard />
+          <UserCard />
+        </div>
       </section>
     );
   }
