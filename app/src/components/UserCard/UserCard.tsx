@@ -1,8 +1,13 @@
 import ImagePlaceholder from 'components/ImagePlaceholder/ImagePlaceholder';
 import React from 'react';
+import { IUserCardData } from 'ts/interfaces';
 import LineWithAllowIcon from './LineWithAllowIcon/LineWithAllowIcon';
 import styles from './user-card.module.css';
-export default function UserCard() {
+
+interface IUserCardProps {
+  data: IUserCardData;
+}
+export default function UserCard(props: IUserCardProps) {
   return (
     <div className={styles.card}>
       <header className={styles.card__header}>

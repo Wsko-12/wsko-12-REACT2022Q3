@@ -24,3 +24,19 @@ export interface IProduct {
   sizes: [number, number, number];
   battery: number;
 }
+
+export interface IUserCardData {
+  id: string;
+  avatar: File;
+  name: string;
+  surname: string;
+  gender: 'male' | 'female';
+  country: string;
+  email: string;
+  birthday: string;
+  delivery: string;
+  zip: string;
+  installBrowsers: boolean;
+  notifications: boolean;
+  consent: boolean;
+}

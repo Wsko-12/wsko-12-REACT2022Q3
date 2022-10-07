@@ -4,10 +4,15 @@ import User from './User/User';
 import Delivery from './Delivery/Delivery';
 import Personal from './PersonalData/PersonalData';
 import { CardFormFields } from '../FormPage';
+import { isUserCardData } from 'ts/typeguards';
+import { IUserCardData } from 'ts/interfaces';
 
 export type onChangeCarried = (name: CardFormFields) => (e: React.SyntheticEvent) => void;
 
-export default class CardForm extends Component {
+interface ICardFormProps {
+  createCard?: (data: IUserCardData) => void;
+}
+export default class CardForm extends Component<ICardFormProps> {
   formRef = createRef<HTMLFormElement>();
   state = {
     isFormValid: false,
@@ -33,8 +38,26 @@ export default class CardForm extends Component {
 
   handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // const formData = new FormData(e.currentTarget);
-    // console.log(Object.fromEntries(formData));
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      id: Date.now().toString(),
+      avatar: formData.get(CardFormFields.avatar) as File,
+      name: formData.get(CardFormFields.name),
+      surname: formData.get(CardFormFields.surname),
+      gender: formData.get(CardFormFields.gender),
+      country: formData.get(CardFormFields.country),
+      email: formData.get(CardFormFields.email),
+      birthday: formData.get(CardFormFields.birthday),
+      delivery: formData.get(CardFormFields.delivery),
+      zip: formData.get(CardFormFields.zip),
+      installBrowsers: formData.get(CardFormFields.installBrowsers) === 'on',
+      notifications: formData.get(CardFormFields.notifications) === 'on',
+      consent: formData.get(CardFormFields.consentForPersonalData) === 'on',
+    };
+
+    if (isUserCardData(data) && this.props.createCard) {
+      this.props.createCard(data);
+    }
   };
 
   render() {

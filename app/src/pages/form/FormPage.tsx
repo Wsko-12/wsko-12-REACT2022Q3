@@ -2,6 +2,7 @@ import UserCard from 'components/UserCard/UserCard';
 import CardForm from 'pages/form/CardForm/CardForm';
 import React from 'react';
 import { Component } from 'react';
+import { IUserCardData } from 'ts/interfaces';
 import styles from './form.module.css';
 export enum CardFormFields {
   name = 'name',
@@ -17,18 +18,30 @@ export enum CardFormFields {
   consentForPersonalData = 'consentForPersonalData',
   installBrowsers = 'installBrowsers',
 }
-export default class FormPage extends Component {
+interface IFormPageProps {
+  a?: string;
+}
+interface IFormPageStates {
+  cards: IUserCardData[];
+}
+export default class FormPage extends Component<IFormPageProps, IFormPageStates> {
+  state: IFormPageStates = {
+    cards: [],
+  };
+
+  createCard = (data: IUserCardData) => {
+    this.setState((state) => ({ cards: [...state.cards, data] }));
+  };
+
   render() {
+    const { cards } = this.state;
     return (
       <section className={styles['form-page__wrapper']}>
-        <CardForm />
+        <CardForm createCard={this.createCard} />
         <div className={styles['form-page__content']}>
-          <UserCard />
-          <UserCard />
-          <UserCard />
-          <UserCard />
-          <UserCard />
-          <UserCard />
+          {cards.map((data) => (
+            <UserCard data={data} key={data.id} />
+          ))}
         </div>
       </section>
     );

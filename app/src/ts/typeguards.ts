@@ -1,4 +1,4 @@
-import { IProduct } from './interfaces';
+import { IProduct, IUserCardData } from './interfaces';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const isProductData = (obj: any): obj is IProduct => {
@@ -56,4 +56,54 @@ export const isProductData = (obj: any): obj is IProduct => {
 
 export const isProductDataArr = (arr: unknown[]): arr is IProduct[] => {
   return arr.every((value) => isProductData(value));
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const isUserCardData = (obj: any): obj is IUserCardData => {
+  if (!(obj.avatar instanceof File)) {
+    return false;
+  }
+  if (new Date(obj.birthday).toString() === 'Invalid Date') {
+    return false;
+  }
+  if (new Date(obj.delivery).toString() === 'Invalid Date') {
+    return false;
+  }
+  if (typeof obj.name != 'string') {
+    return false;
+  }
+  if (typeof obj.surname != 'string') {
+    return false;
+  }
+  if (typeof obj.email != 'string') {
+    return false;
+  }
+  if (typeof obj.gender != 'string' || (obj.gender != 'male' && obj.gender != 'female')) {
+    return false;
+  }
+
+  if (typeof obj.country != 'string') {
+    return false;
+  }
+
+  if (typeof obj.zip != 'string') {
+    return false;
+  }
+
+  if (typeof obj.installBrowsers != 'boolean') {
+    return false;
+  }
+
+  if (typeof obj.notifications != 'boolean') {
+    return false;
+  }
+
+  if (typeof obj.consent != 'boolean') {
+    return false;
+  }
+
+  if (typeof obj.id != 'string') {
+    return false;
+  }
+  return true;
 };
