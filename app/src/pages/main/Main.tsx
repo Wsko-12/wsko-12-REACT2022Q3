@@ -2,7 +2,7 @@ import API from 'api/API';
 import CardsList from 'components/CardsList/CardsList';
 import Loader from 'components/Loader/Loader';
 import SearchBar from 'components/SearchBar/SearchBar';
-import React, { Component } from 'react';
+import React, { Component, memo } from 'react';
 import { IProduct } from 'ts/interfaces';
 import { isProductDataArr } from 'ts/typeguards';
 import styles from './main-page.module.css';
@@ -12,6 +12,18 @@ interface IMainPageStates {
   isError: boolean;
   products: IProduct[];
 }
+
+const InnerContent = memo<IMainPageStates>(({ isLoading, isError, products }) => {
+  if (isError) {
+    return <h3>Sorry, something went wrong :(</h3>;
+  }
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  return <CardsList products={products} />;
+});
 
 export default class Main extends Component {
   state: IMainPageStates = {
@@ -57,19 +69,14 @@ export default class Main extends Component {
     this.fetchProducts();
   }
 
+  // do not use double ternary operator, separate components
   render() {
     const { isError, isLoading, products } = this.state;
     return (
       <section className={styles.main__wrapper}>
         <SearchBar />
         <div className={styles.main__content}>
-          {isError ? (
-            <h3>Sorry, something went wrong :(</h3>
-          ) : isLoading ? (
-            <Loader />
-          ) : (
-            <CardsList products={products} />
-          )}
+          <InnerContent isLoading={isLoading} isError={isError} products={products} />
         </div>
       </section>
     );
