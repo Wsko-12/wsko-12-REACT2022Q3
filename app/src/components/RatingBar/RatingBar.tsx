@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from './rating-bar.module.css';
 
 interface RatingBarProps {
@@ -6,7 +6,7 @@ interface RatingBarProps {
   classes?: string;
 }
 
-export default function RatingBar({ rating, classes = '' }: RatingBarProps) {
+const RatingBar = memo<RatingBarProps>(({ rating, classes = '' }) => {
   return (
     <div className={`${styles.rating__container} ${classes}`}>
       {new Array(Math.floor(rating)).fill(1).map((value, index) => (
@@ -20,4 +20,6 @@ export default function RatingBar({ rating, classes = '' }: RatingBarProps) {
       ))}
     </div>
   );
-}
+});
+
+export default RatingBar;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from '../form-components.module.css';
 
 interface IInputWithMessageProps {
@@ -7,15 +7,17 @@ interface IInputWithMessageProps {
   message?: string;
   label?: string;
 }
-export default function InputWithMessage(props: IInputWithMessageProps) {
-  const { children, isValid, message = 'Invalid data', label = '' } = props;
-  return (
-    <div className={styles.form__item}>
-      <label className={styles.form__label}>
-        {label}
-        {children}
-      </label>
-      {!isValid && <p className={styles.form__message}>{message}</p>}
-    </div>
-  );
-}
+const InputWithMessage = memo<IInputWithMessageProps>(
+  ({ children, isValid, message = 'Invalid data', label = '' }) => {
+    return (
+      <div className={styles.form__item}>
+        <label className={styles.form__label}>
+          {label}
+          {children}
+        </label>
+        {!isValid && <p className={styles.form__message}>{message}</p>}
+      </div>
+    );
+  }
+);
+export default InputWithMessage;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from '../form-components.module.css';
 
 interface ICheckboxInputProps {
@@ -7,11 +7,13 @@ interface ICheckboxInputProps {
   name?: string;
 }
 
-export default function CheckboxInput({ name, label = '', checked }: ICheckboxInputProps) {
+const CheckboxInput = memo<ICheckboxInputProps>(({ name, label = '', checked }) => {
   return (
     <label className={styles.form__label_checkbox}>
       <input type="checkbox" defaultChecked={checked} name={name} />
       {label}
     </label>
   );
-}
+});
+
+export default CheckboxInput;

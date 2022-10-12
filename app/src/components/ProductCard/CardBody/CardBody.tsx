@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import CardInfoRow from './CardInfoRow/CardInfoRow';
 import styles from '../card.module.css';
 
@@ -10,7 +10,7 @@ interface ICardBodyProps {
   battery: number;
 }
 
-export default function CardBody({ weight, year, camera, sizes, battery }: ICardBodyProps) {
+const CardBody = memo<ICardBodyProps>(({ weight, year, camera, sizes, battery }) => {
   return (
     <div className={styles.card__body}>
       <CardInfoRow icon="weight" value={`${weight}g`} />
@@ -20,4 +20,6 @@ export default function CardBody({ weight, year, camera, sizes, battery }: ICard
       <CardInfoRow icon="battery_0_bar" value={`${battery}mAh`} />
     </div>
   );
-}
+});
+
+export default CardBody;

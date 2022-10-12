@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './header-nav.module.css';
 
@@ -9,8 +9,8 @@ type classNameProps = {
 
 const getClassName = ({ isActive }: classNameProps) => (isActive ? styles.active : undefined);
 
-export default class HeaderNav extends Component {
-  render() {
+const HeaderNav = memo(() => {
+  {
     return (
       <nav className={styles['header-nav']}>
         <NavLink end to="/" className={getClassName}>
@@ -25,4 +25,6 @@ export default class HeaderNav extends Component {
       </nav>
     );
   }
-}
+});
+
+export default HeaderNav;

@@ -7,7 +7,6 @@ export default class SearchBar extends Component {
     value: '',
   };
 
-  // And calls componentWillUnmount and saves to LS empty value
   componentDidMount() {
     const savedValue = localStorage.getItem(ELSKeys.search);
     this.setState({ value: savedValue || '' });

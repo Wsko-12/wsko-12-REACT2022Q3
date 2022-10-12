@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from '../../card.module.css';
 
 interface ICardInfoRowProps {
@@ -6,11 +6,13 @@ interface ICardInfoRowProps {
   value: string | number;
 }
 
-export default function CardInfoRow({ icon, value }: ICardInfoRowProps) {
+const CardInfoRow = memo<ICardInfoRowProps>(({ icon, value }) => {
   return (
     <div className={styles.card__info}>
       <span className="material-symbols-outlined">{icon}</span>
       <span>{value}</span>
     </div>
   );
-}
+});
+
+export default CardInfoRow;

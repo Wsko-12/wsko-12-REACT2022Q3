@@ -12,6 +12,7 @@ interface IRadioSwitcherProps {
 interface IRadioSwitcherState {
   isValid: boolean;
 }
+
 export default class RadioSwitcher extends Component<IRadioSwitcherProps, IRadioSwitcherState> {
   constructor(props: IRadioSwitcherProps) {
     super(props);
@@ -34,35 +35,20 @@ export default class RadioSwitcher extends Component<IRadioSwitcherProps, IRadio
     return (
       <InputWithMessage isValid={isValid} message="Please, choose one">
         <label className={styles.form__label}>{label}</label>
-        {values.map((value) => {
-          if (Array.isArray(value)) {
-            const [val, text] = value;
-            return (
-              <label key={val} className={styles.form__label_checkbox}>
-                <input
-                  type="radio"
-                  name={name}
-                  value={val}
-                  required
-                  onChange={this.handleChange}
-                  onInvalid={() => this.setState({ isValid: false })}
-                />
-                {text}
-              </label>
-            );
-          }
+        {values.map((option) => {
+          const [value, text] = Array.isArray(option) ? option : [option.toLowerCase(), option];
 
           return (
             <label key={value} className={styles.form__label_checkbox}>
               <input
                 type="radio"
                 name={name}
-                value={value.toLowerCase()}
+                value={value}
                 required
                 onChange={this.handleChange}
                 onInvalid={() => this.setState({ isValid: false })}
               />
-              {value}
+              {text}
             </label>
           );
         })}

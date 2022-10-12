@@ -1,7 +1,7 @@
-import ImagePlaceholder from 'components/ImagePlaceholder/ImagePlaceholder';
 import React, { Component } from 'react';
 import { IUserCardData } from 'ts/interfaces';
-import LineWithAllowIcon from './LineWithAllowIcon/LineWithAllowIcon';
+import CardBody from './CardBody/CardBody';
+import CardHeader from './CardHeader/CardHeader';
 import styles from './user-card.module.css';
 
 interface IUserCardProps {
@@ -10,6 +10,7 @@ interface IUserCardProps {
 interface IUserCardStates {
   imageUrl: string | null;
 }
+
 export default class UserCard extends Component<IUserCardProps, IUserCardStates> {
   constructor(props: IUserCardProps) {
     super(props);
@@ -49,38 +50,23 @@ export default class UserCard extends Component<IUserCardProps, IUserCardStates>
 
     return (
       <div className={styles.card}>
-        <header className={styles.card__header}>
-          <div className={styles.card__image}>
-            {imageUrl ? <img src={imageUrl} /> : <ImagePlaceholder />}
-          </div>
-          <div>
-            <h4 className={styles.card__title}>
-              {name} {surname}
-              <span className="material-symbols-outlined">{gender}</span>
-            </h4>
-            <p className={styles.card__subtitle}>{email}</p>
-            <p className={styles.card__subtitle}>{country}</p>
-          </div>
-        </header>
-        <div className={styles.card__body}>
-          <div className={styles.card__line}>
-            <span>Birthday:</span> <span>{new Date(birthday).toLocaleDateString()}</span>
-          </div>
-          <hr />
+        <CardHeader
+          imageUrl={imageUrl}
+          name={name}
+          surname={surname}
+          gender={gender}
+          email={email}
+          country={country}
+        />
 
-          <h4 className={styles.card__title}>Delivery</h4>
-          <div className={styles.card__line}>
-            <span>Zip-code:</span> <span>{zip}</span>
-          </div>
-          <div className={styles.card__line}>
-            <span>Date:</span> <span>{new Date(delivery).toLocaleDateString()}</span>
-          </div>
-          <hr />
-          <h4 className={styles.card__title}>Permissions</h4>
-          <LineWithAllowIcon title="Consent" allow={consent} />
-          <LineWithAllowIcon title="Install browsers" allow={installBrowsers} />
-          <LineWithAllowIcon title="Notifications" allow={notifications} />
-        </div>
+        <CardBody
+          birthday={birthday}
+          zip={zip}
+          delivery={delivery}
+          consent={consent}
+          installBrowsers={installBrowsers}
+          notifications={notifications}
+        />
       </div>
     );
   }

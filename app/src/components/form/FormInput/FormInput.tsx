@@ -17,7 +17,6 @@ interface IFormInputProps {
 interface IFormInputStates {
   isValid: boolean;
 }
-
 export default class FormInput extends Component<IFormInputProps, IFormInputStates> {
   constructor(props: IFormInputProps) {
     super(props);
@@ -30,7 +29,13 @@ export default class FormInput extends Component<IFormInputProps, IFormInputStat
     this.setState({
       isValid: true,
     });
-    this.props.onChange && this.props.onChange(e);
+
+    // this.props.onChange && this.props.onChange(e);
+
+    const { onChange } = this.props;
+    if (onChange) {
+      onChange(e);
+    }
   };
 
   render() {

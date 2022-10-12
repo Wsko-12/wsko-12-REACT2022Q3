@@ -1,8 +1,8 @@
 import HeaderNav from 'components/Header/HeaderNav/HeaderNav';
-import React from 'react';
+import React, { memo } from 'react';
 import styles from './header.module.css';
 
-export default function Header() {
+const Header = memo(() => {
   return (
     <div className={styles.header}>
       <div className={styles.header__wrapper}>
@@ -10,4 +10,6 @@ export default function Header() {
       </div>
     </div>
   );
-}
+});
+
+export default Header;

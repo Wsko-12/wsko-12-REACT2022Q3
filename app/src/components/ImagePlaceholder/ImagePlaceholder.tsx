@@ -1,10 +1,13 @@
-import React from 'react';
+import Icon from 'components/Icon/Icon';
+import React, { memo } from 'react';
 import styles from './image-placeholder.module.css';
 
-export default function ImagePlaceholder() {
+const ImagePlaceholder = memo(() => {
   return (
     <div className={styles['image-placeholder__container']}>
-      <span className="material-symbols-outlined">account_box</span>
+      <Icon name="account_box" />
     </div>
   );
-}
+});
+
+export default ImagePlaceholder;

@@ -1,4 +1,4 @@
-import UserCard from 'components/UserCard/UserCard';
+import UserCardList from 'components/UserCardList/UserCardList';
 import CardForm from 'pages/form/CardForm/CardForm';
 import React from 'react';
 import { Component } from 'react';
@@ -39,9 +39,7 @@ export default class FormPage extends Component<IFormPageProps, IFormPageStates>
       <section className={styles['form-page__wrapper']}>
         <CardForm createCard={this.createCard} />
         <div className={styles['form-page__content']}>
-          {cards.map((data) => (
-            <UserCard data={data} key={data.id} />
-          ))}
+          <UserCardList cards={cards} />
         </div>
       </section>
     );

@@ -19,14 +19,12 @@ export default class FileInput extends Component<IFileInputProps, IFileInputStat
   }
 
   changeHandler = (e: React.FormEvent<HTMLInputElement>) => {
-    if (e.currentTarget.files) {
-      if (e.currentTarget.files[0]) {
-        const fileName = e.currentTarget.files[0].name;
-        this.setState({ fileName });
-      } else {
-        this.setState({ fileName: '' });
-      }
+    if (e.currentTarget.files && e.currentTarget.files[0]) {
+      const fileName = e.currentTarget.files[0].name;
+      this.setState({ fileName });
+      return;
     }
+    this.setState({ fileName: '' });
   };
 
   render() {

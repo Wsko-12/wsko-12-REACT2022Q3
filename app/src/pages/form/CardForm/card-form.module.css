@@ -25,6 +25,7 @@
 }
 
 .form__button:disabled{
+    cursor: not-allowed;
     background-color: #cae3ff;
 }
 .form__button:disabled:hover{
