@@ -40,3 +40,23 @@ export interface IUserCardData {
   notifications: boolean;
   consent: boolean;
 }
+
+export interface ICharacterLocation {
+  name: string;
+  url: string;
+}
+
+export interface ICharacter {
+  id: number;
+  name: string;
+  status: 'Dead' | 'Alive' | 'unknown';
+  species: string;
+  type: string;
+  gender: 'unknown' | 'Female' | 'Male' | 'Genderless';
+  origin: ICharacterLocation;
+  location: ICharacterLocation;
+  image: string;
+  episode: string[];
+  url: string;
+  created: string;
+}

@@ -1,0 +1,21 @@
+.container{
+    display: flex;
+    gap: 5px;
+}
+
+.button {
+    padding: 5px;
+    font-size: 1rem;
+    background-color: transparent;
+    border: 1px solid gray;
+    border-radius: 100%;
+    color: gray;
+    cursor: pointer;
+}
+
+.button:hover{
+    color: white;
+    font-weight: bold;
+    border: 1px solid #0075ff;
+    background-color: #0075ff;
+}
