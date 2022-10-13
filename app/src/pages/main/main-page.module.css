@@ -12,5 +12,6 @@
     align-items: center;
     justify-content: center;
     font-size: 2rem;
+    flex-direction: column;
     color: #303030;
 }
