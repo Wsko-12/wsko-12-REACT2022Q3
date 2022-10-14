@@ -80,7 +80,12 @@ export default class Main extends Component<IMainProps, IMainStates> {
   handleSearch = async (searchQuery: string) => {
     this.setState({ searchQuery });
     this.setState((state) => ({pagination: {...state.pagination, page: 1}}));
-    this.fetchCharacters(1, searchQuery);
+
+    try{
+      await this.fetchCharacters(1, searchQuery);
+    }catch{
+      this.setState({characters:[], isError: false, pagination: {page: 1, total: 1}})
+    }
   };
 
   async fetchCharacters(page: number, searchQuery: string) {
@@ -91,12 +96,12 @@ export default class Main extends Component<IMainProps, IMainStates> {
         this.setState({
           isError: true,
         });
-        console.error(`[Characters fetchCharacters] can't receive data`);
-        return;
+        throw new Error(`[Characters fetchCharacters] can't receive data`);
       }
       this.applyResponse(response);
-    } catch {
+    } catch (e) {
       this.setState({ isError: true });
+      throw e;
     } finally {
       this.setState({ isLoading: false });
     }
