@@ -96,8 +96,7 @@ export default class Main extends Component<IMainProps, IMainStates> {
         this.setState({
           isError: true,
         });
-        // throw new Error(`[Characters fetchCharacters] can't receive data`);
-        return
+        return;
       }
       this.applyResponse(response);
     } catch (e) {

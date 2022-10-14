@@ -1,0 +1,27 @@
+.card{
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    cursor: pointer;
+    overflow: hidden;
+    padding-bottom: 20px;
+}
+
+.card:hover{
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.6);
+}
+
+.image{
+    width: 100%;
+    height: 100%;
+    padding-bottom: 20px;
+    /* border-radius: 120px; */
+}
+
+.title{
+    text-align: center;
+}
