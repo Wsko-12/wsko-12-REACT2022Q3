@@ -19,4 +19,23 @@
     border: 2px solid #505050;
     border-radius: 2rem;
     color: inherit;
+    margin-right: 10px;
+}
+
+.search-bar__button{
+    font-size: 2rem;
+    padding: 5px 20px;
+    background-color: none;
+    border: 2px solid #505050;
+    border-radius: 2rem;
+    color: inherit;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+.search-bar__button:hover{
+    border: 2px solid #505050;
+    background-color: #505050;
+    color: white;
+
 }

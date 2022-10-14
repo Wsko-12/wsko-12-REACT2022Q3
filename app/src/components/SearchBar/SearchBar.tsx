@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { ELSKeys } from 'ts/enums';
 import styles from './search-bar.module.css';
 
-export default class SearchBar extends Component {
+interface ISearchBarProps {
+  onSearch?: (query: string) => void;
+}
+
+export default class SearchBar extends Component<ISearchBarProps> {
   state = {
     value: '',
   };
@@ -17,13 +21,22 @@ export default class SearchBar extends Component {
     this.setState({ value });
   };
 
+  handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const { onSearch } = this.props;
+    if (onSearch) {
+      onSearch(this.state.value);
+    }
+  };
+
   componentWillUnmount() {
     localStorage.setItem(ELSKeys.search, this.state.value);
   }
 
   render() {
     return (
-      <div className={styles['search-bar']}>
+      <form className={styles['search-bar']}>
         <span className={`material-symbols-outlined ${styles['search-bar__icon']}`}>search</span>
         <input
           type="text"
@@ -32,7 +45,13 @@ export default class SearchBar extends Component {
           className={styles['search-bar__input']}
           placeholder="Search..."
         />
-      </div>
+        <input
+          type="submit"
+          onClick={this.handleSubmit}
+          className={styles['search-bar__button']}
+          value="find"
+        />
+      </form>
     );
   }
 }

@@ -1,4 +1,4 @@
-import { ICharacter } from 'ts/interfaces';
+import { ICharacter, TApiResponse } from 'ts/interfaces';
 // import products from './data.json';
 
 // export default class API {
@@ -45,13 +45,6 @@ import { ICharacter } from 'ts/interfaces';
 
 const url = 'https://rickandmortyapi.com/api';
 
-type TResponseInfo = {
-  count: number;
-  pages: number;
-  next: string;
-  prev: string;
-};
-
 export default class API {
   private static async fetchData<T>(url: string): Promise<T> {
     const response = await fetch(url);
@@ -63,15 +56,26 @@ export default class API {
     }
   }
 
-  public static async getCharacters(page = 1) {
-    const endpoint = `/character?page=${page}`;
+  public static async getCharacters(page = 1, name = '') {
+    const endpoint = `/character?page=${page}&name=${name}`;
     const link = `${url}${endpoint}`;
 
     try {
-      const data = await this.fetchData<{
-        info: TResponseInfo;
-        results: ICharacter[];
-      }>(link);
+      const data = await this.fetchData<TApiResponse<ICharacter>>(link);
+      return data;
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error(err.message);
+      }
+    }
+  }
+
+  public static async findCharacters(name = '') {
+    const endpoint = `/character?name=${name}`;
+    const link = `${url}${endpoint}`;
+
+    try {
+      const data = await this.fetchData<TApiResponse<ICharacter>>(link);
       return data;
     } catch (err) {
       if (err instanceof Error) {

@@ -1,8 +1,9 @@
+/* eslint-disable prettier/prettier */
 import SearchBar from 'components/SearchBar/SearchBar';
 import React, { Component, memo } from 'react';
 import styles from './main-page.module.css';
 import CharactersList from 'components/CharactersList/CharactersList';
-import { ICharacter } from 'ts/interfaces';
+import { ICharacter, TApiResponse } from 'ts/interfaces';
 import API from 'api/API';
 import Pagination from 'components/Pagination/Pagination';
 import Loader from 'components/Loader/Loader';
@@ -15,6 +16,10 @@ interface IMainStates {
   };
   isLoading: boolean;
   isError: boolean;
+  searchQuery: string;
+}
+interface IMainProps {
+  str?: string;
 }
 
 const InnerContent = memo<Pick<IMainStates, 'characters' | 'isLoading' | 'isError'>>(
@@ -27,11 +32,15 @@ const InnerContent = memo<Pick<IMainStates, 'characters' | 'isLoading' | 'isErro
       return <Loader />;
     }
 
+    if (characters.length < 1) {
+      return <h3>Nothing found</h3>;
+    }
+
     return <CharactersList characters={characters} />;
   }
 );
 
-export default class Main extends Component {
+export default class Main extends Component<IMainProps, IMainStates> {
   state: IMainStates = {
     characters: [],
     pagination: {
@@ -40,25 +49,44 @@ export default class Main extends Component {
     },
     isLoading: false,
     isError: false,
+    searchQuery: '',
   };
 
   componentDidMount() {
-    const {
-      pagination: { page },
-    } = this.state;
-    this.fetchCharacters(page);
+    this.fetchCharacters(1, '');
   }
 
   changePage = (page: number) => {
     if (page != this.state.pagination.page) {
-      this.fetchCharacters(page);
+      this.setState((state) => ({pagination: {...state.pagination, page}}));
+      const { searchQuery } = this.state
+      this.fetchCharacters(page, searchQuery);
     }
   };
 
-  async fetchCharacters(page = 1) {
+  applyResponse(response: TApiResponse<ICharacter>) {
+    const characters = response.results;
+    const total = response.info.pages;
+
+    this.setState((state) => ({
+      characters,
+      pagination: {
+        ...state.pagination,
+        total,
+      },
+    }));
+  }
+
+  handleSearch = async (searchQuery: string) => {
+    this.setState({ searchQuery });
+    this.setState((state) => ({pagination: {...state.pagination, page: 1}}));
+    this.fetchCharacters(1, searchQuery);
+  };
+
+  async fetchCharacters(page: number, searchQuery: string) {
     this.setState({ isError: false, isLoading: true });
     try {
-      const response = await API.getCharacters(page);
+      const response = await API.getCharacters(page, searchQuery);
       if (!response) {
         this.setState({
           isError: true,
@@ -66,16 +94,7 @@ export default class Main extends Component {
         console.error(`[Characters fetchCharacters] can't receive data`);
         return;
       }
-      const characters = response.results;
-      const total = response.info.pages;
-      this.setState({
-        pagination: {
-          page,
-          total,
-        },
-      });
-
-      this.setState({ characters });
+      this.applyResponse(response);
     } catch {
       this.setState({ isError: true });
     } finally {
@@ -88,7 +107,7 @@ export default class Main extends Component {
     const { page, total } = pagination;
     return (
       <section className={styles.main__wrapper}>
-        <SearchBar />
+        <SearchBar onSearch={this.handleSearch} />
         <div className={styles.main__content}>
           <InnerContent isLoading={isLoading} isError={isError} characters={characters} />
           {!isLoading && !isError && (

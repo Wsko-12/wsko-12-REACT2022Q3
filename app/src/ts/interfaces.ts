@@ -60,3 +60,15 @@ export interface ICharacter {
   url: string;
   created: string;
 }
+
+export type TResponseInfo = {
+  count: number;
+  pages: number;
+  next: string;
+  prev: string;
+};
+
+export type TApiResponse<T> = {
+  info: TResponseInfo;
+  results: T[];
+};
