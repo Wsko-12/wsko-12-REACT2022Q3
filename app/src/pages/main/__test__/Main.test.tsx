@@ -1,108 +1,109 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Main from '../Main';
+import API from '../../../api/API';
+import { ICharacter, TApiResponse } from 'ts/interfaces';
+import userEvent from '@testing-library/user-event';
 
-interface IFakeApi {
-  getProducts: () => Promise<unknown>;
-}
-const fakeApi: IFakeApi = {
-  getProducts: async () => {},
+jest.mock('../../../api/API');
+const mockGetCharacters = jest.fn();
+API.getCharacters = mockGetCharacters;
+
+const fakeResponse: TApiResponse<ICharacter> = {
+  info: {
+    count: 826,
+    pages: 42,
+    next: 'https://rickandmortyapi.com/api/character/?page=2',
+    prev: 'https://rickandmortyapi.com/api/character/?page=1',
+  },
+  results: [],
 };
-jest.mock('../../../api/API', () => fakeApi);
+
 const spy = jest.spyOn(console, 'error');
 spy.mockImplementation(() => {});
 
 describe('Main page', () => {
   afterAll(() => {
     spy.mockRestore();
+    mockGetCharacters.mockRestore();
   });
 
-  test('should render loader while receive data', async () => {
-    fakeApi.getProducts = async () => {
-      return new Promise((res) => {
-        setTimeout(res, 1000);
-      });
-    };
+  test('should call api', () => {
     render(<Main />);
-    const loaderElement = await screen.findByTestId('loader');
-    expect(loaderElement).toBeInTheDocument();
+    expect(mockGetCharacters).toBeCalled();
   });
 
-  test('should render cards if receive correct data', async () => {
-    fakeApi.getProducts = async () => {
-      const data = [
-        {
-          id: 1,
-          image:
-            'https://www.mobilephonemuseum.com/assets/static/023d29d2ead30af6732c0f7a49e3a7b1/9d75f/eb92b877-5df2-4ddc-a708-a9667cbc598b.png',
-          brand: 'TEST_1',
-          year: 2000,
-          model: '3310',
-          weight: 133,
-          rating: 5,
-          camera: null,
-          sizes: [133, 48, 22],
-          battery: 900,
-        },
-        {
-          id: 2,
-          image:
-            'https://www.mobilephonemuseum.com/assets/static/d7c49f60d18880641ea35579d2b85b04/9d75f/677bc7f4-31b7-4957-b5a1-f6b6176b9080.png',
-          brand: 'TEST_2',
-          year: 2005,
-          model: '1600',
-          weight: 85,
-          rating: 3.7,
-          camera: null,
-          sizes: [104, 45, 17],
-          battery: 900,
-        },
-      ];
-      return Promise.resolve(data);
-    };
+  test('first call api should be with page 1 and empty search query', () => {
     render(<Main />);
-    const firstCardElement = await screen.findByText(/TEST_1/i);
-    expect(firstCardElement).toBeInTheDocument();
-
-    const secondCardElement = screen.getByText(/TEST_2/i);
-    expect(secondCardElement).toBeInTheDocument();
+    expect(mockGetCharacters).toHaveBeenLastCalledWith(1, '');
   });
 
-  test('should render "Sorry, something went wrong" if fetch rejected', async () => {
-    fakeApi.getProducts = async () => {
-      return Promise.reject();
-    };
+  test('should correct render pages', async () => {
+    mockGetCharacters.mockReturnValue(Promise.resolve(fakeResponse));
     render(<Main />);
-    const messageElement = await screen.findByText(/Sorry, something went wrong/i);
-    expect(messageElement).toBeInTheDocument();
+    const firstButton = await screen.findByText('1');
+    const lastButton = await screen.findByText('5');
+    expect(firstButton).toBeInTheDocument();
+    expect(lastButton).toBeInTheDocument();
   });
 
-  test('should render "Sorry, something went wrong" receive incorrect data from fetch', async () => {
-    fakeApi.getProducts = async () => {
-      const data = {
-        a: 2,
-      };
-      return Promise.resolve(data);
-    };
+  test('should send request when click pagination', async () => {
+    mockGetCharacters.mockReturnValue(Promise.resolve(fakeResponse));
     render(<Main />);
-    const messageElement = await screen.findByText(/Sorry, something went wrong/i);
-    expect(messageElement).toBeInTheDocument();
+    const button = await screen.findByText('2');
+    userEvent.click(button);
+    expect(mockGetCharacters).toBeCalledTimes(2);
   });
 
-  test('should render "Sorry, something went wrong" receive incorrect data from fetch 2', async () => {
-    fakeApi.getProducts = async () => {
-      const data = [
-        {
-          id: 1,
-        },
-        {
-          id: 2,
-        },
-      ];
-      return Promise.resolve(data);
-    };
+  test('should send correct request when click pagination', async () => {
+    mockGetCharacters.mockReturnValue(Promise.resolve(fakeResponse));
     render(<Main />);
-    const messageElement = await screen.findByText(/Sorry, something went wrong/i);
-    expect(messageElement).toBeInTheDocument();
+    const button = await screen.findByText('2');
+    userEvent.click(button);
+    expect(mockGetCharacters).toHaveBeenLastCalledWith(2, '');
+
+    const thirdButton = await screen.findByText('3');
+    userEvent.click(thirdButton);
+    expect(mockGetCharacters).toHaveBeenLastCalledWith(3, '');
+
+    const secondButton = await screen.findByText('2');
+    userEvent.click(secondButton);
+    expect(mockGetCharacters).toHaveBeenLastCalledWith(2, '');
+  });
+
+  test('should send search request', async () => {
+    mockGetCharacters.mockReturnValue(Promise.resolve(fakeResponse));
+    render(<Main />);
+    const search = await screen.findByPlaceholderText(/search/i);
+    userEvent.type(search, 'test');
+    const button = await screen.findByText(/find/i);
+    userEvent.click(button);
+    userEvent.clear(search);
+
+    expect(mockGetCharacters).toHaveBeenCalledTimes(2);
+  });
+
+  test('should send search request with page 1 and correct search value', async () => {
+    mockGetCharacters.mockReturnValue(Promise.resolve(fakeResponse));
+    render(<Main />);
+    const search = await screen.findByPlaceholderText(/search/i);
+    userEvent.type(search, 'test');
+    const button = await screen.findByText(/find/i);
+    userEvent.click(button);
+    userEvent.clear(search);
+    expect(mockGetCharacters).toHaveBeenLastCalledWith(1, 'test');
+  });
+
+  test('pagination should work with search query', async () => {
+    mockGetCharacters.mockReturnValue(Promise.resolve(fakeResponse));
+    render(<Main />);
+    const search = await screen.findByPlaceholderText(/search/i);
+    userEvent.type(search, 'test');
+    const button = await screen.findByText(/find/i);
+    userEvent.click(button);
+
+    const pagination = await screen.findByText(/2/i);
+    userEvent.click(pagination);
+    expect(mockGetCharacters).toHaveBeenLastCalledWith(2, 'test');
   });
 });
