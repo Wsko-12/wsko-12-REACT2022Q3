@@ -4,12 +4,13 @@ import styles from './character-cart.module.css';
 
 interface ICharacterCardProps {
   characterData: ICharacter;
+  openModal: (data: ICharacter) => void;
 }
 
-const CharacterCard = memo<ICharacterCardProps>(({ characterData }) => {
+const CharacterCard = memo<ICharacterCardProps>(({ characterData, openModal }) => {
   const { name } = characterData;
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={() => openModal(characterData)}>
       <img className={styles.image} src={characterData.image} />
       <span className={styles.title}>{name}</span>
     </div>
