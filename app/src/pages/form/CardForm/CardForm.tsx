@@ -1,4 +1,5 @@
 import React, { Component, createRef } from 'react';
+// if you use module.css there are no reason to use BEM, hash should be added in build
 import styles from './card-form.module.css';
 import User from './User/User';
 import Delivery from './Delivery/Delivery';
@@ -30,12 +31,14 @@ export default class CardForm extends Component<ICardFormProps> {
     }
   };
 
+  // clear after successfully submit
   handleSubmitClick = () => {
     this.setState({ isSubmitted: true });
     const isFormValid = this.formRef.current?.checkValidity();
     this.setState({ isFormValid });
   };
 
+  // why 2 submit handlers ?? do it in 1
   handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
