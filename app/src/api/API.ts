@@ -73,7 +73,6 @@ export default class API {
   public static async findCharacters(name = '') {
     const endpoint = `/character?name=${name}`;
     const link = `${url}${endpoint}`;
-
     try {
       const data = await this.fetchData<TApiResponse<ICharacter>>(link);
       return data;

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import SearchBar from 'components/SearchBar/SearchBar';
 import React, { Component, memo } from 'react';
 import styles from './main-page.module.css';
@@ -23,20 +22,26 @@ interface IMainStates {
   searchQuery: string;
   modalData: null | ICharacter;
 }
-interface IMainProps {
-  str?: string;
-}
 
 interface IInnerContentProps {
   characters: ICharacter[];
   isLoading: boolean;
   isError: boolean;
-  openModal: (data: ICharacter) => void
+  openModal: (data: ICharacter) => void;
+  pagination: {
+    page: number;
+    total: number;
+    onChange: (page: number) => void;
+  };
 }
 
 const InnerContent = memo<IInnerContentProps>(
-  ({ isLoading, isError, characters, openModal }) => {
+  ({ isLoading, isError, characters, openModal, pagination }) => {
     if (isError) {
+      // there is a problem with this API
+      // when there are no results for a search query, a 404 error is returned
+      // as far as I know normally the API should return an empty array of results in this case.
+      // I can pass an argument like "isSearchQuery" but that would be like a hot fix
       return <h3>Sorry, something went wrong :(</h3>;
     }
 
@@ -48,11 +53,18 @@ const InnerContent = memo<IInnerContentProps>(
       return <h3>Nothing found</h3>;
     }
 
-    return <CharactersList characters={characters} openModal={openModal}/>;
+    const { page, total, onChange } = pagination;
+
+    return (
+      <>
+        <CharactersList characters={characters} openModal={openModal} />
+        <Pagination page={page} total={total} onChange={onChange} />
+      </>
+    );
   }
 );
 
-export default class Main extends Component<IMainProps, IMainStates> {
+export default class Main extends Component<Record<string, never>, IMainStates> {
   state: IMainStates = {
     characters: [],
     pagination: {
@@ -67,7 +79,7 @@ export default class Main extends Component<IMainProps, IMainStates> {
 
   toggleModal = (modalData: ICharacter | null) => {
     this.setState({ modalData });
-  }
+  };
 
   componentDidMount() {
     this.fetchCharacters(1, '');
@@ -75,8 +87,8 @@ export default class Main extends Component<IMainProps, IMainStates> {
 
   changePage = (page: number) => {
     if (page != this.state.pagination.page) {
-      this.setState((state) => ({pagination: {...state.pagination, page}}));
-      const { searchQuery } = this.state
+      this.setState((state) => ({ pagination: { ...state.pagination, page } }));
+      const { searchQuery } = this.state;
       this.fetchCharacters(page, searchQuery);
     }
   };
@@ -96,12 +108,12 @@ export default class Main extends Component<IMainProps, IMainStates> {
 
   handleSearch = async (searchQuery: string) => {
     this.setState({ searchQuery });
-    this.setState((state) => ({pagination: {...state.pagination, page: 1}}));
+    this.setState((state) => ({ pagination: { ...state.pagination, page: 1 } }));
 
-    try{
+    try {
       await this.fetchCharacters(1, searchQuery);
-    }catch{
-      this.setState({characters:[], isError: false, pagination: {page: 1, total: 1}})
+    } catch {
+      this.setState({ characters: [], isError: false, pagination: { page: 1, total: 1 } });
     }
   };
 
@@ -131,12 +143,19 @@ export default class Main extends Component<IMainProps, IMainStates> {
       <section className={styles.main__wrapper}>
         <SearchBar onSearch={this.handleSearch} />
         <div className={styles.main__content}>
-          <InnerContent isLoading={isLoading} isError={isError} characters={characters} openModal={this.toggleModal}/>
-          {!isLoading && !isError && (
-            <Pagination page={page} total={total} onChange={this.changePage} />
+          <InnerContent
+            isLoading={isLoading}
+            isError={isError}
+            characters={characters}
+            openModal={this.toggleModal}
+            pagination={{ page, total, onChange: this.changePage }}
+          />
+          {modalData && (
+            <Modal onClose={() => this.toggleModal(null)}>
+              <CharacterModalContent data={modalData} />
+            </Modal>
           )}
-          {modalData && <Modal onClose={() => this.toggleModal(null)}><CharacterModalContent data={modalData}/></Modal>}
-        </div> 
+        </div>
       </section>
     );
   }
