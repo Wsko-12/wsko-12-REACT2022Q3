@@ -31,6 +31,15 @@ export default class CardForm extends Component<ICardFormProps> {
     }
   };
 
+  clearForm() {
+    this.formRef.current?.reset();
+  }
+
+  // I use this 2 submit because first submit it's only click, where we check validation and so on
+  // And second submit is "real submit" where we send data to server
+  // it's just a decomposition
+  // so, if i add custom validation this method will be too big
+
   // clear after successfully submit
   handleSubmitClick = () => {
     this.setState({ isSubmitted: true });
@@ -60,6 +69,7 @@ export default class CardForm extends Component<ICardFormProps> {
 
     if (isUserCardData(data) && this.props.createCard) {
       this.props.createCard(data);
+      this.clearForm();
     }
   };
 

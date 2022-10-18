@@ -18,13 +18,12 @@ export enum CardFormFields {
   consentForPersonalData = 'consentForPersonalData',
   installBrowsers = 'installBrowsers',
 }
-interface IFormPageProps {
-  a?: string; // ?? :)
-}
+
 interface IFormPageStates {
   cards: IUserCardData[];
 }
-export default class FormPage extends Component<IFormPageProps, IFormPageStates> {
+
+export default class FormPage extends Component<Record<string, never>, IFormPageStates> {
   state: IFormPageStates = {
     cards: [],
   };
