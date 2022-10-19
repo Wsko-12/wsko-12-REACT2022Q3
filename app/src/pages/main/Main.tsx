@@ -52,11 +52,6 @@ const InnerContent = memo<IInnerContentProps>(
   }
 );
 
-interface IPaginationState {
-  page: number;
-  total: number;
-}
-
 function useDataLoader<T extends (...args: Parameters<T>) => ReturnType<T>>(loader: T) {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -85,25 +80,34 @@ function useDataLoader<T extends (...args: Parameters<T>) => ReturnType<T>>(load
   };
 }
 
+// function usePagination() {
+//   const [page, setPage] = useState(1);
+//   const [total, setTotal] = useState(1);
+
+//   return {
+//     page,
+//     total,
+//     setPage,
+//     setTotal,
+//   };
+// }
+
 const Main = memo(() => {
   const [searchQuery, setSearchQuery] = useState('');
   const [modalData, setModalData] = useState<ICharacter | null>(null);
-  const [pagination, setPagination] = useState<IPaginationState>({ page: 1, total: 1 });
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(1);
   const [characters, setCharacters] = useState<ICharacter[]>([]);
 
   const { isLoading, isError, load: loadCharacters } = useDataLoader(API.getCharacters);
 
   const handleSearch = async (searchQuery: string) => {
     setSearchQuery(searchQuery);
-    setPagination((prev) => ({ ...prev, page: 1 }));
-    fetchCharacters(1, searchQuery);
+    setPage(1);
   };
 
-  const changePage = (page: number) => {
-    if (page != pagination.page) {
-      setPagination((prev) => ({ ...prev, page }));
-      fetchCharacters(page, searchQuery);
-    }
+  const changePage = (current: number) => {
+    setPage(current);
   };
 
   const fetchCharacters = async (page: number, searchQuery: string) => {
@@ -112,15 +116,13 @@ const Main = memo(() => {
       const characters = response.results;
       const total = response.info.pages;
       setCharacters(characters);
-      setPagination((prev) => ({ ...prev, total }));
+      setTotal(total);
     }
   };
 
   useEffect(() => {
-    fetchCharacters(1, '');
-  }, []);
-
-  const { page, total } = pagination;
+    fetchCharacters(page, searchQuery);
+  }, [page, searchQuery]);
 
   return (
     <section className={styles.main__wrapper}>
@@ -130,6 +132,7 @@ const Main = memo(() => {
           isLoading={isLoading}
           isError={isError}
           characters={characters}
+          // it's ok or I have to create toggleModal like in prev task?
           openModal={setModalData}
           pagination={{ page, total, onChange: changePage }}
         />

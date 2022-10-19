@@ -57,8 +57,6 @@ export default class API {
   }
 
   public static getCharacters = async (page: number, name: string) => {
-    console.log('page: ', page);
-    console.log('name: ', name);
     const endpoint = `/character?page=${page}&name=${name}`;
     const link = `${url}${endpoint}`;
 
