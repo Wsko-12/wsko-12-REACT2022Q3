@@ -1,8 +1,8 @@
 import SearchBar from 'components/SearchBar/SearchBar';
-import React, { Component, memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import styles from './main-page.module.css';
 import CharactersList from 'components/Character/CharactersList/CharactersList';
-import { ICharacter, TApiResponse } from 'ts/interfaces';
+import { ICharacter } from 'ts/interfaces';
 import API from 'api/API';
 import Pagination from 'components/Pagination/Pagination';
 import Loader from 'components/Loader/Loader';
@@ -10,18 +10,6 @@ import Modal from 'components/Modal/Modal';
 import CharacterModalContent from 'components/Character/CharacterModalContent/CharacterModalContent';
 
 // const testCharacter: ICharacter = {"id":1,"name":"Rick Sanchez","status":"Alive","species":"Human","type":"","gender":"Male","origin":{"name":"Earth (C-137)","url":"https://rickandmortyapi.com/api/location/1"},"location":{"name":"Citadel of Ricks","url":"https://rickandmortyapi.com/api/location/3"},"image":"https://rickandmortyapi.com/api/character/avatar/1.jpeg","episode":["https://rickandmortyapi.com/api/episode/1","https://rickandmortyapi.com/api/episode/2","https://rickandmortyapi.com/api/episode/3","https://rickandmortyapi.com/api/episode/4","https://rickandmortyapi.com/api/episode/5","https://rickandmortyapi.com/api/episode/6","https://rickandmortyapi.com/api/episode/7","https://rickandmortyapi.com/api/episode/8","https://rickandmortyapi.com/api/episode/9","https://rickandmortyapi.com/api/episode/10","https://rickandmortyapi.com/api/episode/11","https://rickandmortyapi.com/api/episode/12","https://rickandmortyapi.com/api/episode/13","https://rickandmortyapi.com/api/episode/14","https://rickandmortyapi.com/api/episode/15","https://rickandmortyapi.com/api/episode/16","https://rickandmortyapi.com/api/episode/17","https://rickandmortyapi.com/api/episode/18","https://rickandmortyapi.com/api/episode/19","https://rickandmortyapi.com/api/episode/20","https://rickandmortyapi.com/api/episode/21","https://rickandmortyapi.com/api/episode/22","https://rickandmortyapi.com/api/episode/23","https://rickandmortyapi.com/api/episode/24","https://rickandmortyapi.com/api/episode/25","https://rickandmortyapi.com/api/episode/26","https://rickandmortyapi.com/api/episode/27","https://rickandmortyapi.com/api/episode/28","https://rickandmortyapi.com/api/episode/29","https://rickandmortyapi.com/api/episode/30","https://rickandmortyapi.com/api/episode/31","https://rickandmortyapi.com/api/episode/32","https://rickandmortyapi.com/api/episode/33","https://rickandmortyapi.com/api/episode/34","https://rickandmortyapi.com/api/episode/35","https://rickandmortyapi.com/api/episode/36","https://rickandmortyapi.com/api/episode/37","https://rickandmortyapi.com/api/episode/38","https://rickandmortyapi.com/api/episode/39","https://rickandmortyapi.com/api/episode/40","https://rickandmortyapi.com/api/episode/41","https://rickandmortyapi.com/api/episode/42","https://rickandmortyapi.com/api/episode/43","https://rickandmortyapi.com/api/episode/44","https://rickandmortyapi.com/api/episode/45","https://rickandmortyapi.com/api/episode/46","https://rickandmortyapi.com/api/episode/47","https://rickandmortyapi.com/api/episode/48","https://rickandmortyapi.com/api/episode/49","https://rickandmortyapi.com/api/episode/50","https://rickandmortyapi.com/api/episode/51"],"url":"https://rickandmortyapi.com/api/character/1","created":"2017-11-04T18:48:46.250Z"}
-
-interface IMainStates {
-  characters: ICharacter[];
-  pagination: {
-    page: number;
-    total: number;
-  };
-  isLoading: boolean;
-  isError: boolean;
-  searchQuery: string;
-  modalData: null | ICharacter;
-}
 
 interface IInnerContentProps {
   characters: ICharacter[];
@@ -64,99 +52,95 @@ const InnerContent = memo<IInnerContentProps>(
   }
 );
 
-export default class Main extends Component<Record<string, never>, IMainStates> {
-  state: IMainStates = {
-    characters: [],
-    pagination: {
-      page: 1,
-      total: 1,
-    },
-    isLoading: false,
-    isError: false,
-    searchQuery: '',
-    modalData: null,
-  };
+interface IPaginationState {
+  page: number;
+  total: number;
+}
 
-  toggleModal = (modalData: ICharacter | null) => {
-    this.setState({ modalData });
-  };
+function useDataLoader<T extends (...args: Parameters<T>) => ReturnType<T>>(loader: T) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-  componentDidMount() {
-    this.fetchCharacters(1, '');
-  }
-
-  changePage = (page: number) => {
-    if (page != this.state.pagination.page) {
-      this.setState((state) => ({ pagination: { ...state.pagination, page } }));
-      const { searchQuery } = this.state;
-      this.fetchCharacters(page, searchQuery);
-    }
-  };
-
-  applyResponse(response: TApiResponse<ICharacter>) {
-    const characters = response.results;
-    const total = response.info.pages;
-
-    this.setState((state) => ({
-      characters,
-      pagination: {
-        ...state.pagination,
-        total,
-      },
-    }));
-  }
-
-  handleSearch = async (searchQuery: string) => {
-    this.setState({ searchQuery });
-    this.setState((state) => ({ pagination: { ...state.pagination, page: 1 } }));
-
+  async function load(...args: Parameters<T>) {
+    setIsError(false);
+    setIsLoading(true);
     try {
-      await this.fetchCharacters(1, searchQuery);
-    } catch {
-      this.setState({ characters: [], isError: false, pagination: { page: 1, total: 1 } });
-    }
-  };
-
-  async fetchCharacters(page: number, searchQuery: string) {
-    this.setState({ isError: false, isLoading: true });
-    try {
-      const response = await API.getCharacters(page, searchQuery);
+      const response = await loader(...args);
       if (!response) {
-        this.setState({
-          isError: true,
-        });
+        setIsError(true);
         return;
       }
-      this.applyResponse(response);
-    } catch (e) {
-      this.setState({ isError: true });
-      throw e;
+      return response;
+    } catch {
+      setIsError(true);
     } finally {
-      this.setState({ isLoading: false });
+      setIsLoading(false);
     }
   }
 
-  render() {
-    const { isError, isLoading, pagination, characters, modalData } = this.state;
-    const { page, total } = pagination;
-    return (
-      <section className={styles.main__wrapper}>
-        <SearchBar onSearch={this.handleSearch} />
-        <div className={styles.main__content}>
-          <InnerContent
-            isLoading={isLoading}
-            isError={isError}
-            characters={characters}
-            openModal={this.toggleModal}
-            pagination={{ page, total, onChange: this.changePage }}
-          />
-          {modalData && (
-            <Modal onClose={() => this.toggleModal(null)}>
-              <CharacterModalContent data={modalData} />
-            </Modal>
-          )}
-        </div>
-      </section>
-    );
-  }
+  return {
+    isError,
+    isLoading,
+    load,
+  };
 }
+
+const Main = memo(() => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [modalData, setModalData] = useState<ICharacter | null>(null);
+  const [pagination, setPagination] = useState<IPaginationState>({ page: 1, total: 1 });
+  const [characters, setCharacters] = useState<ICharacter[]>([]);
+
+  const { isLoading, isError, load: loadCharacters } = useDataLoader(API.getCharacters);
+
+  const handleSearch = async (searchQuery: string) => {
+    setSearchQuery(searchQuery);
+    setPagination((prev) => ({ ...prev, page: 1 }));
+    fetchCharacters(1, searchQuery);
+  };
+
+  const changePage = (page: number) => {
+    if (page != pagination.page) {
+      setPagination((prev) => ({ ...prev, page }));
+      fetchCharacters(page, searchQuery);
+    }
+  };
+
+  const fetchCharacters = async (page: number, searchQuery: string) => {
+    const response = await loadCharacters(page, searchQuery);
+    if (response) {
+      const characters = response.results;
+      const total = response.info.pages;
+      setCharacters(characters);
+      setPagination((prev) => ({ ...prev, total }));
+    }
+  };
+
+  useEffect(() => {
+    fetchCharacters(1, '');
+  }, []);
+
+  const { page, total } = pagination;
+
+  return (
+    <section className={styles.main__wrapper}>
+      <SearchBar onSearch={handleSearch} />
+      <div className={styles.main__content}>
+        <InnerContent
+          isLoading={isLoading}
+          isError={isError}
+          characters={characters}
+          openModal={setModalData}
+          pagination={{ page, total, onChange: changePage }}
+        />
+        {modalData && (
+          <Modal onClose={() => setModalData(null)}>
+            <CharacterModalContent data={modalData} />
+          </Modal>
+        )}
+      </div>
+    </section>
+  );
+});
+
+export default Main;
