@@ -1,3 +1,5 @@
+import { ELSKeys } from 'ts/enums';
+
 export const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export const getPagesIndexes = (maxButtons: number, current: number, total: number) => {
@@ -25,4 +27,9 @@ export const getPagesIndexes = (maxButtons: number, current: number, total: numb
     //this means must be showed 2,3,4,5,6
     return current + (i - Math.floor(count / 2));
   });
+};
+
+export const getSavedSearchQuery = () => {
+  const savedValue = localStorage.getItem(ELSKeys.search);
+  return savedValue || '';
 };

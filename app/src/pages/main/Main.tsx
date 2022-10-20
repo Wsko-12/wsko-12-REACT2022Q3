@@ -8,6 +8,8 @@ import Pagination from 'components/Pagination/Pagination';
 import Loader from 'components/Loader/Loader';
 import Modal from 'components/Modal/Modal';
 import CharacterModalContent from 'components/Character/CharacterModalContent/CharacterModalContent';
+import { useDataLoader } from 'hooks/customHooks';
+import { getSavedSearchQuery } from 'utils/utils';
 
 interface IInnerContentProps {
   characters: ICharacter[];
@@ -50,48 +52,8 @@ const InnerContent = memo<IInnerContentProps>(
   }
 );
 
-function useDataLoader<T extends (...args: Parameters<T>) => ReturnType<T>>(loader: T) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-
-  async function load(...args: Parameters<T>) {
-    setIsError(false);
-    setIsLoading(true);
-    try {
-      const response = await loader(...args);
-      if (!response) {
-        setIsError(true);
-        return;
-      }
-      return response;
-    } catch {
-      setIsError(true);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  return {
-    isError,
-    isLoading,
-    load,
-  };
-}
-
-// function usePagination() {
-//   const [page, setPage] = useState(1);
-//   const [total, setTotal] = useState(1);
-
-//   return {
-//     page,
-//     total,
-//     setPage,
-//     setTotal,
-//   };
-// }
-
 const Main = memo(() => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(getSavedSearchQuery);
   const [modalData, setModalData] = useState<ICharacter | null>(null);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(1);
