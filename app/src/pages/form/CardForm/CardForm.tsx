@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import styles from './card-form.module.css';
 import User from './User/User';
 import Delivery from './Delivery/Delivery';
@@ -9,81 +9,97 @@ import { IUserCardData } from 'ts/interfaces';
 
 export type onChangeCarried = (name: CardFormFields) => (e: React.SyntheticEvent) => void;
 
+function parseUserCardFormData(formData: FormData) {
+  const data = {
+    id: Date.now().toString(),
+    avatar: formData.get(CardFormFields.avatar) as File,
+    name: formData.get(CardFormFields.name),
+    surname: formData.get(CardFormFields.surname),
+    gender: formData.get(CardFormFields.gender),
+    country: formData.get(CardFormFields.country),
+    email: formData.get(CardFormFields.email),
+    birthday: formData.get(CardFormFields.birthday),
+    delivery: formData.get(CardFormFields.delivery),
+    zip: formData.get(CardFormFields.zip),
+    installBrowsers: formData.get(CardFormFields.installBrowsers) === 'on',
+    notifications: formData.get(CardFormFields.notifications) === 'on',
+    consent: formData.get(CardFormFields.consentForPersonalData) === 'on',
+  };
+
+  return data;
+}
+
 interface ICardFormProps {
   createCard?: (data: IUserCardData) => void;
 }
-export default class CardForm extends Component<ICardFormProps> {
-  formRef = createRef<HTMLFormElement>();
-  state = {
-    isFormValid: false,
-    isSubmitted: false,
-  };
+
+const CardForm = memo<ICardFormProps>(({ createCard }) => {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [isValid, setIsValid] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // use this carry function in case if I need to do custom validation.
   // I will know which field needs to be checked now
-  handleChangeCarry: onChangeCarried = (/* name */) => (/* e */) => {
-    const { isSubmitted } = this.state;
-    this.setState({ isFormValid: true });
-    if (isSubmitted) {
-      const isFormValid = this.formRef.current?.checkValidity();
-      this.setState({ isFormValid });
+  const handleChangeCarry: onChangeCarried = (/* name */) => (/* e */) => {
+    // to enable the submit button in first typing
+    if (!isSubmitted) {
+      setIsValid(true);
+    } else {
+      const isFormValid = formRef.current?.checkValidity();
+      setIsValid(!!isFormValid);
     }
   };
 
-  handleSubmitClick = () => {
-    this.setState({ isSubmitted: true });
-    const isFormValid = this.formRef.current?.checkValidity();
-    this.setState({ isFormValid });
-  };
-
-  handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = {
-      id: Date.now().toString(),
-      avatar: formData.get(CardFormFields.avatar) as File,
-      name: formData.get(CardFormFields.name),
-      surname: formData.get(CardFormFields.surname),
-      gender: formData.get(CardFormFields.gender),
-      country: formData.get(CardFormFields.country),
-      email: formData.get(CardFormFields.email),
-      birthday: formData.get(CardFormFields.birthday),
-      delivery: formData.get(CardFormFields.delivery),
-      zip: formData.get(CardFormFields.zip),
-      installBrowsers: formData.get(CardFormFields.installBrowsers) === 'on',
-      notifications: formData.get(CardFormFields.notifications) === 'on',
-      consent: formData.get(CardFormFields.consentForPersonalData) === 'on',
-    };
-
-    if (isUserCardData(data) && this.props.createCard) {
-      this.props.createCard(data);
-    }
-  };
-
-  render() {
-    const { isFormValid } = this.state;
-    return (
-      <form ref={this.formRef} className={styles.form} onSubmit={this.handleSubmit}>
-        <div className={styles.form__body}>
-          <div>
-            <User onChange={this.handleChangeCarry} />
-          </div>
-          <div>
-            <Delivery onChange={this.handleChangeCarry} />
-            <Personal onChange={this.handleChangeCarry} />
-          </div>
-        </div>
-        <div className={styles.form__footer}>
-          <button
-            className={styles.form__button}
-            type="submit"
-            disabled={!isFormValid}
-            onClick={this.handleSubmitClick}
-          >
-            Submit
-          </button>
-        </div>
-      </form>
-    );
+  // I'm using this two handlers because I use default validations on form fields
+  // in case when form isn't valid submit event isn't calls
+  // calls only click event on button
+  function handleSubmitClick() {
+    setIsSubmitted(true);
+    const isFormValid = formRef.current?.checkValidity();
+    setIsValid(!!isFormValid);
   }
-}
+
+  function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const data = parseUserCardFormData(formData);
+
+    if (isUserCardData(data) && createCard) {
+      createCard(data);
+      resetForm();
+    }
+  }
+
+  function resetForm() {
+    formRef.current?.reset();
+    setIsValid(false);
+    setIsSubmitted(false);
+  }
+
+  return (
+    <form ref={formRef} className={styles.form} onSubmit={handleSubmit}>
+      <div className={styles.form__body}>
+        <div>
+          <User onChange={handleChangeCarry} />
+        </div>
+        <div>
+          <Delivery onChange={handleChangeCarry} />
+          <Personal onChange={handleChangeCarry} />
+        </div>
+      </div>
+      <div className={styles.form__footer}>
+        <button
+          className={styles.form__button}
+          type="submit"
+          disabled={!isValid}
+          onClick={handleSubmitClick}
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  );
+});
+
+export default CardForm;
