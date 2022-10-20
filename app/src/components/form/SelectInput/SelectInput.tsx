@@ -1,4 +1,5 @@
-import React, { memo, useState } from 'react';
+import { useDefaultValidation } from 'hooks/customHooks';
+import React, { memo } from 'react';
 import styles from '../form-components.module.css';
 import InputWithMessage from '../InputWithMessage/InputWithMessage';
 
@@ -14,24 +15,16 @@ interface ISelectInputProps {
 
 const SelectInput = memo<ISelectInputProps>(
   ({ label, required, placeholder, options, errorMessage, name, onChange }) => {
-    const [isValid, setIsValid] = useState(true);
-
-    function handleChange(e: React.SyntheticEvent) {
-      setIsValid(true);
-      if (onChange) {
-        onChange(e);
-      }
-    }
+    const validation = useDefaultValidation(onChange);
 
     return (
-      <InputWithMessage isValid={isValid} label={label} message={errorMessage}>
+      <InputWithMessage isValid={validation.isValid} label={label} message={errorMessage}>
         <select
           className={styles.form__input}
           required={required}
           defaultValue=""
-          onChange={handleChange}
-          onInvalid={() => setIsValid(false)}
           name={name}
+          {...validation.bind}
         >
           {placeholder && (
             <option value="" disabled={true} hidden={true}>

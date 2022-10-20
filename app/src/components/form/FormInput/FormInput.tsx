@@ -1,4 +1,5 @@
-import React, { memo, useState } from 'react';
+import { useDefaultValidation } from 'hooks/customHooks';
+import React, { memo } from 'react';
 import styles from '../form-components.module.css';
 import InputWithMessage from '../InputWithMessage/InputWithMessage';
 
@@ -16,17 +17,10 @@ interface IFormInputProps {
 
 const FormInput = memo<IFormInputProps>(
   ({ label, pattern, type, title, required, errorMessage, name, placeholder, onChange }) => {
-    const [isValid, setIsValid] = useState(true);
-
-    function handleChange(e: React.SyntheticEvent) {
-      setIsValid(true);
-      if (onChange) {
-        onChange(e);
-      }
-    }
+    const validation = useDefaultValidation(onChange);
 
     return (
-      <InputWithMessage isValid={isValid} label={label} message={errorMessage}>
+      <InputWithMessage isValid={validation.isValid} label={label} message={errorMessage}>
         <input
           name={name}
           title={title}
@@ -35,8 +29,7 @@ const FormInput = memo<IFormInputProps>(
           type={type || 'text'}
           required={required}
           placeholder={placeholder || label}
-          onChange={handleChange}
-          onInvalid={() => setIsValid(false)}
+          {...validation.bind}
         ></input>
       </InputWithMessage>
     );

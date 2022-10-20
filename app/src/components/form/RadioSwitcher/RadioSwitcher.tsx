@@ -1,4 +1,5 @@
-import React, { memo, useState } from 'react';
+import { useDefaultValidation } from 'hooks/customHooks';
+import React, { memo } from 'react';
 import styles from '../form-components.module.css';
 import InputWithMessage from '../InputWithMessage/InputWithMessage';
 
@@ -10,31 +11,17 @@ interface IRadioSwitcherProps {
 }
 
 const RadioSwitcher = memo<IRadioSwitcherProps>(({ values, name, label, onChange }) => {
-  const [isValid, setIsValid] = useState(true);
-
-  function handleChange(e: React.SyntheticEvent) {
-    setIsValid(true);
-    if (onChange) {
-      onChange(e);
-    }
-  }
+  const validation = useDefaultValidation(onChange);
 
   return (
-    <InputWithMessage isValid={isValid} message="Please, choose one">
+    <InputWithMessage isValid={validation.isValid} message="Please, choose one">
       <label className={styles.form__label}>{label}</label>
       {values.map((option) => {
         const [value, text] = Array.isArray(option) ? option : [option.toLowerCase(), option];
 
         return (
           <label key={value} className={styles.form__label_checkbox}>
-            <input
-              type="radio"
-              name={name}
-              value={value}
-              required
-              onChange={handleChange}
-              onInvalid={() => setIsValid(false)}
-            />
+            <input type="radio" name={name} value={value} required {...validation.bind} />
             {text}
           </label>
         );

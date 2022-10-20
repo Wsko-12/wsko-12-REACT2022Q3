@@ -1,4 +1,5 @@
-import React, { memo, useState } from 'react';
+import { useDefaultValidation } from 'hooks/customHooks';
+import React, { memo } from 'react';
 import styles from '../form-components.module.css';
 import InputWithMessage from '../InputWithMessage/InputWithMessage';
 
@@ -23,20 +24,12 @@ const getDateOptions = (direction?: TDateDirection) => {
 };
 
 const DatePicker = memo<IDatePickerProps>(({ direction, label, name, onChange }) => {
-  const [isValid, setIsValid] = useState(true);
-
-  function handleChange(e: React.SyntheticEvent) {
-    setIsValid(true);
-
-    if (onChange) {
-      onChange(e);
-    }
-  }
+  const validation = useDefaultValidation(onChange);
 
   const { today, max, min } = getDateOptions(direction);
 
   return (
-    <InputWithMessage isValid={isValid} label={label} message="Invalid date">
+    <InputWithMessage isValid={validation.isValid} label={label} message="Invalid date">
       <input
         name={name}
         className={styles.form__input}
@@ -45,8 +38,7 @@ const DatePicker = memo<IDatePickerProps>(({ direction, label, name, onChange })
         min={min}
         max={max}
         defaultValue={today}
-        onChange={handleChange}
-        onInvalid={() => setIsValid(false)}
+        {...validation.bind}
       />
     </InputWithMessage>
   );
