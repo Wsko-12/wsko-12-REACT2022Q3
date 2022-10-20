@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { memo, useState } from 'react';
 import styles from '../form-components.module.css';
 import InputWithMessage from '../InputWithMessage/InputWithMessage';
 
@@ -12,34 +12,25 @@ interface ISelectInputProps {
   errorMessage?: string;
 }
 
-interface ISelectInputStates {
-  isValid: boolean;
-}
+const SelectInput = memo<ISelectInputProps>(
+  ({ label, required, placeholder, options, errorMessage, name, onChange }) => {
+    const [isValid, setIsValid] = useState(true);
 
-export default class SelectInput extends Component<ISelectInputProps, ISelectInputStates> {
-  constructor(props: ISelectInputProps) {
-    super(props);
-    this.state = {
-      isValid: true,
-    };
-  }
+    function handleChange(e: React.SyntheticEvent) {
+      setIsValid(true);
+      if (onChange) {
+        onChange(e);
+      }
+    }
 
-  handleChange = (e: React.SyntheticEvent) => {
-    this.setState({ isValid: true });
-    this.props.onChange && this.props.onChange(e);
-  };
-
-  render() {
-    const { label, required, placeholder, options, errorMessage, name } = this.props;
-    const { isValid } = this.state;
     return (
       <InputWithMessage isValid={isValid} label={label} message={errorMessage}>
         <select
           className={styles.form__input}
           required={required}
           defaultValue=""
-          onChange={this.handleChange}
-          onInvalid={() => this.setState({ isValid: false })}
+          onChange={handleChange}
+          onInvalid={() => setIsValid(false)}
           name={name}
         >
           {placeholder && (
@@ -56,4 +47,6 @@ export default class SelectInput extends Component<ISelectInputProps, ISelectInp
       </InputWithMessage>
     );
   }
-}
+);
+
+export default SelectInput;

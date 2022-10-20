@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { memo, useState } from 'react';
 import styles from '../form-components.module.css';
 import InputWithMessage from '../InputWithMessage/InputWithMessage';
 
@@ -14,38 +14,17 @@ interface IFormInputProps {
   errorMessage?: string;
 }
 
-interface IFormInputStates {
-  isValid: boolean;
-}
-export default class FormInput extends Component<IFormInputProps, IFormInputStates> {
-  constructor(props: IFormInputProps) {
-    super(props);
-    this.state = {
-      isValid: true,
-    };
-  }
+const FormInput = memo<IFormInputProps>(
+  ({ label, pattern, type, title, required, errorMessage, name, placeholder, onChange }) => {
+    const [isValid, setIsValid] = useState(true);
 
-  handleChange = (e: React.SyntheticEvent) => {
-    this.setState({
-      isValid: true,
-    });
-
-    // this.props.onChange && this.props.onChange(e);
-
-    const { onChange } = this.props;
-    if (onChange) {
-      onChange(e);
-    }
-  };
-
-  render() {
-    const { label, pattern, type, title, required, errorMessage, name } = this.props;
-    let { placeholder } = this.props;
-    if (!placeholder) {
-      placeholder = label;
+    function handleChange(e: React.SyntheticEvent) {
+      setIsValid(true);
+      if (onChange) {
+        onChange(e);
+      }
     }
 
-    const { isValid } = this.state;
     return (
       <InputWithMessage isValid={isValid} label={label} message={errorMessage}>
         <input
@@ -55,11 +34,13 @@ export default class FormInput extends Component<IFormInputProps, IFormInputStat
           className={styles.form__input}
           type={type || 'text'}
           required={required}
-          placeholder={placeholder}
-          onChange={this.handleChange}
-          onInvalid={() => this.setState({ isValid: false })}
+          placeholder={placeholder || label}
+          onChange={handleChange}
+          onInvalid={() => setIsValid(false)}
         ></input>
       </InputWithMessage>
     );
   }
-}
+);
+
+export default FormInput;

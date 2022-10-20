@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { memo, useState } from 'react';
 import styles from '../form-components.module.css';
 import InputWithMessage from '../InputWithMessage/InputWithMessage';
 
@@ -9,10 +9,6 @@ interface IDatePickerProps {
   label?: string;
   direction?: TDateDirection;
   onChange?: (e: React.SyntheticEvent) => void;
-}
-
-interface IDatePickerStates {
-  isValid: boolean;
 }
 
 const getDateOptions = (direction?: TDateDirection) => {
@@ -26,45 +22,34 @@ const getDateOptions = (direction?: TDateDirection) => {
   return { today, max: '', min: '' };
 };
 
-export default class DatePicker extends Component<IDatePickerProps, IDatePickerStates> {
-  constructor(props: IDatePickerProps) {
-    super(props);
-    this.state = {
-      isValid: true,
-    };
-  }
+const DatePicker = memo<IDatePickerProps>(({ direction, label, name, onChange }) => {
+  const [isValid, setIsValid] = useState(true);
 
-  handleChange = (e: React.SyntheticEvent) => {
-    this.setState({ isValid: true });
+  function handleChange(e: React.SyntheticEvent) {
+    setIsValid(true);
 
-    // this.props.onChange && this.props.onChange(e);
-
-    const { onChange } = this.props;
     if (onChange) {
       onChange(e);
     }
-  };
-
-  render() {
-    const { direction, label, name } = this.props;
-    const { isValid } = this.state;
-
-    const { today, max, min } = getDateOptions(direction);
-
-    return (
-      <InputWithMessage isValid={isValid} label={label} message="Invalid date">
-        <input
-          name={name}
-          className={styles.form__input}
-          type="date"
-          role="datepicker"
-          min={min}
-          max={max}
-          defaultValue={today}
-          onChange={this.handleChange}
-          onInvalid={() => this.setState({ isValid: false })}
-        />
-      </InputWithMessage>
-    );
   }
-}
+
+  const { today, max, min } = getDateOptions(direction);
+
+  return (
+    <InputWithMessage isValid={isValid} label={label} message="Invalid date">
+      <input
+        name={name}
+        className={styles.form__input}
+        type="date"
+        role="datepicker"
+        min={min}
+        max={max}
+        defaultValue={today}
+        onChange={handleChange}
+        onInvalid={() => setIsValid(false)}
+      />
+    </InputWithMessage>
+  );
+});
+
+export default DatePicker;
