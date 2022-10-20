@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { ELSKeys } from 'ts/enums';
 import styles from './search-bar.module.css';
 
@@ -6,52 +6,53 @@ interface ISearchBarProps {
   onSearch?: (query: string) => void;
 }
 
-export default class SearchBar extends Component<ISearchBarProps> {
-  state = {
-    value: '',
-  };
+const useInput = (initialValue: () => string | string) => {
+  const [value, setValue] = useState(initialValue);
 
-  componentDidMount() {
+  function onChange(e: React.SyntheticEvent<HTMLInputElement>) {
+    const value = e.currentTarget.value;
+    setValue(value);
+  }
+
+  return {
+    value,
+    onChange,
+  };
+};
+
+const SearchBar = memo<ISearchBarProps>(({ onSearch }) => {
+  const search = useInput(() => {
     const savedValue = localStorage.getItem(ELSKeys.search);
-    this.setState({ value: savedValue || '' });
-  }
+    return savedValue || '';
+  });
 
-  inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    this.setState({ value });
-  };
-
-  handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
+  function handleSubmit(e: React.FormEvent<HTMLInputElement>) {
     e.preventDefault();
-
-    const { onSearch } = this.props;
     if (onSearch) {
-      onSearch(this.state.value);
+      onSearch(search.value);
     }
-  };
-
-  componentWillUnmount() {
-    localStorage.setItem(ELSKeys.search, this.state.value);
   }
 
-  render() {
-    return (
-      <form className={styles['search-bar']}>
-        <span className={`material-symbols-outlined ${styles['search-bar__icon']}`}>search</span>
-        <input
-          type="text"
-          value={this.state.value}
-          onChange={this.inputHandler}
-          className={styles['search-bar__input']}
-          placeholder="Search..."
-        />
-        <input
-          type="submit"
-          onClick={this.handleSubmit}
-          className={styles['search-bar__button']}
-          value="find"
-        />
-      </form>
-    );
-  }
-}
+  // unmount
+  useEffect(() => () => localStorage.setItem(ELSKeys.search, search.value));
+
+  return (
+    <form className={styles['search-bar']}>
+      <span className={`material-symbols-outlined ${styles['search-bar__icon']}`}>search</span>
+      <input
+        type="text"
+        className={styles['search-bar__input']}
+        placeholder="Search..."
+        {...search}
+      />
+      <input
+        type="submit"
+        onClick={handleSubmit}
+        className={styles['search-bar__button']}
+        value="find"
+      />
+    </form>
+  );
+});
+
+export default SearchBar;
