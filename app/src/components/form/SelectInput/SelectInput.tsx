@@ -20,7 +20,7 @@ const SelectInput = memo<ISelectInputProps>(
     return (
       <InputWithMessage isValid={validation.isValid} label={label} message={errorMessage}>
         <select
-          className={styles.form__input}
+          className={styles.input}
           required={required}
           defaultValue=""
           name={name}

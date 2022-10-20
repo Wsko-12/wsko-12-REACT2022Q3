@@ -1,9 +1,9 @@
-.header-nav{
+.nav{
     display: flex;
     align-items: center;
     height: 100%;
 }
-.header-nav a{
+.nav a{
     padding: 0 10px;
     height: 100%;
     display: flex;
@@ -13,14 +13,14 @@
     font-size: 1.5rem;
 }
 
-.header-nav a.active{
+.nav a.active{
     background-color: #404040;
 }
 
-.header-nav a:visited{
+.nav a:visited{
     color: white;
 }
 
-.header-nav a:hover{
+.nav a:hover{
     background-color: #505050;
 }

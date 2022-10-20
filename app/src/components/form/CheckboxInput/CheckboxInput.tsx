@@ -9,7 +9,7 @@ interface ICheckboxInputProps {
 
 const CheckboxInput = memo<ICheckboxInputProps>(({ name, label = '', checked }) => {
   return (
-    <label className={styles.form__label_checkbox}>
+    <label className={styles.label_checkbox}>
       <input type="checkbox" defaultChecked={checked} name={name} />
       {label}
     </label>

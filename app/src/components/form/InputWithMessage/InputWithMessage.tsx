@@ -10,12 +10,12 @@ interface IInputWithMessageProps {
 const InputWithMessage = memo<IInputWithMessageProps>(
   ({ children, isValid, message = 'Invalid data', label = '' }) => {
     return (
-      <div className={styles.form__item}>
-        <label className={styles.form__label}>
+      <div className={styles.item}>
+        <label className={styles.label}>
           {label}
           {children}
         </label>
-        {!isValid && <p className={styles.form__message}>{message}</p>}
+        {!isValid && <p className={styles.message}>{message}</p>}
       </div>
     );
   }

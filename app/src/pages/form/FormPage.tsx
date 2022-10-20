@@ -26,9 +26,9 @@ const FormPage = memo(() => {
   }
 
   return (
-    <section className={styles['form-page__wrapper']}>
+    <section className={styles.wrapper}>
       <CardForm createCard={createCard} />
-      <div className={styles['form-page__content']}>
+      <div className={styles.content}>
         <UserCardList cards={cards} />
       </div>
     </section>

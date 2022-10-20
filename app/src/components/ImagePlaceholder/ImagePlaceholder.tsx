@@ -4,7 +4,7 @@ import styles from './image-placeholder.module.css';
 
 const ImagePlaceholder = memo(() => {
   return (
-    <div className={styles['image-placeholder__container']}>
+    <div className={styles.container}>
       <Icon name="account_box" />
     </div>
   );

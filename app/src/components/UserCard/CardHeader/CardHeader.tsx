@@ -12,17 +12,17 @@ const CardHeader = memo<{
   country: string;
 }>(({ imageUrl, gender, name, surname, email, country }) => {
   return (
-    <header className={styles.card__header}>
-      <div className={styles.card__image}>
+    <header className={styles.header}>
+      <div className={styles.image}>
         <Avatar url={imageUrl || undefined} />
       </div>
       <div>
-        <h4 className={styles.card__title}>
+        <h4 className={styles.title}>
           {name} {surname}
           <Icon name={gender} />
         </h4>
-        <p className={styles.card__subtitle}>{email}</p>
-        <p className={styles.card__subtitle}>{country}</p>
+        <p className={styles.subtitle}>{email}</p>
+        <p className={styles.subtitle}>{country}</p>
       </div>
     </header>
   );

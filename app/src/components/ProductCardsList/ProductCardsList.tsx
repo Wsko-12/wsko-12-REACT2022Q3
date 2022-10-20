@@ -9,7 +9,7 @@ interface ClassListProps {
 
 const ClassList = memo<ClassListProps>(({ products }) => {
   return (
-    <div className={styles['cards-list']}>
+    <div className={styles.list}>
       {products.length > 0 ? (
         products.map((data) => <ProductCard key={data.id} data={data} />)
       ) : (

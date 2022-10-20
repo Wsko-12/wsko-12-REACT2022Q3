@@ -32,7 +32,7 @@ const DatePicker = memo<IDatePickerProps>(({ direction, label, name, onChange })
     <InputWithMessage isValid={validation.isValid} label={label} message="Invalid date">
       <input
         name={name}
-        className={styles.form__input}
+        className={styles.input}
         type="date"
         role="datepicker"
         min={min}

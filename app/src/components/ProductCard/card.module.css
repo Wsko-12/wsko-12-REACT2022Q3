@@ -18,31 +18,31 @@
     cursor: pointer;
 }
 
-.card__image_container{
+.image_container{
     width: 160px;
     display: flex;
     position: absolute;
     transform: translate(75%, -15%);
 }
 
-.card__image{
+.image{
     max-width: 100%;
     max-height: 100%;
     margin: auto;
 }
 
-.card__content{
+.content{
     width: 100%;
     border-radius: 15px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     background-color: white;
     padding: 15px;
 }
-.card__header{
+.header{
     margin-bottom: 10px;
 }
 
-.card__title {
+.title {
     font-size: 1.5rem;
     max-width: 55%;
     margin: 0;
@@ -50,40 +50,40 @@
     color: #303030;
 }
 
-.card__subtitle{
+.subtitle{
     font-size: 1.3rem;
     max-width: 55%;
     margin: 0;
     color: #505050;
 }
 
-.card__body{
+.body{
     margin-bottom: 10px;
 }
 
-.card__info{
+.info{
     display: flex;
     font-size: 1.2rem;
     align-items: center;
     gap: 5px;
     color: #707070;
 }
-.card__info span:first-child{
+.info span:first-child{
     font-size: 1.7rem ;
     color: #505050;
 }
 
-.card__footer{
+.footer{
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
 
-.card__rating-container {
+.rating-container {
     width: 40%;
 }
 
-.card__rating-container > span{
+.rating-container > span{
     font-size: 2rem;
 }

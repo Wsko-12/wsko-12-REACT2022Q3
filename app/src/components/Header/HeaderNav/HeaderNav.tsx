@@ -12,7 +12,7 @@ const getClassName = ({ isActive }: classNameProps) => (isActive ? styles.active
 const HeaderNav = memo(() => {
   {
     return (
-      <nav className={styles['header-nav']}>
+      <nav className={styles.nav}>
         <NavLink end to="/" className={getClassName}>
           Main
         </NavLink>

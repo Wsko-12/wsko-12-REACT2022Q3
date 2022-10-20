@@ -10,9 +10,9 @@ interface ISwitcherInputProps {
 
 const SwitcherInput = memo<ISwitcherInputProps>(
   ({ alwaysColored, checked, firstLabel, secondLabel }) => {
-    const checkboxClasses = [styles.switcher__checkbox];
+    const checkboxClasses = [styles.checkbox];
     if (alwaysColored) {
-      checkboxClasses.push(styles.switcher__checkbox_colored);
+      checkboxClasses.push(styles.checkbox_colored);
     }
 
     return (
@@ -25,7 +25,7 @@ const SwitcherInput = memo<ISwitcherInputProps>(
         ></input>
         <span>{firstLabel}</span>
         <div className={checkboxClasses.join(' ')} data-testid="switcher-pseudo-checkbox">
-          <div className={styles.switcher__decor}></div>
+          <div className={styles.decor}></div>
         </div>
         {secondLabel && <span>{secondLabel}</span>}
       </label>

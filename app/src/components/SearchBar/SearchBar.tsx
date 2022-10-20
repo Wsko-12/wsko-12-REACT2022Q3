@@ -22,20 +22,10 @@ const SearchBar = memo<ISearchBarProps>(({ onSearch }) => {
   useEffect(() => () => localStorage.setItem(ELSKeys.search, search.value));
 
   return (
-    <form className={styles['search-bar']}>
-      <span className={`material-symbols-outlined ${styles['search-bar__icon']}`}>search</span>
-      <input
-        type="text"
-        className={styles['search-bar__input']}
-        placeholder="Search..."
-        {...search}
-      />
-      <input
-        type="submit"
-        onClick={handleSubmit}
-        className={styles['search-bar__button']}
-        value="find"
-      />
+    <form className={styles.bar}>
+      <span className={`material-symbols-outlined ${styles.icon}`}>search</span>
+      <input type="text" className={styles.input} placeholder="Search..." {...search} />
+      <input type="submit" onClick={handleSubmit} className={styles.button} value="find" />
     </form>
   );
 });

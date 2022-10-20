@@ -8,7 +8,7 @@ interface ICardFooterProps {
 
 const CardFooter = memo<ICardFooterProps>(({ rating }) => {
   return (
-    <div className={styles.card__footer}>
+    <div className={styles.footer}>
       <RatingBar rating={rating} classes={styles['card__rating-container']} />
     </div>
   );

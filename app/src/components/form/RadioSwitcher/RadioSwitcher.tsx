@@ -15,12 +15,12 @@ const RadioSwitcher = memo<IRadioSwitcherProps>(({ values, name, label, onChange
 
   return (
     <InputWithMessage isValid={validation.isValid} message="Please, choose one">
-      <label className={styles.form__label}>{label}</label>
+      <label className={styles.label}>{label}</label>
       {values.map((option) => {
         const [value, text] = Array.isArray(option) ? option : [option.toLowerCase(), option];
 
         return (
-          <label key={value} className={styles.form__label_checkbox}>
+          <label key={value} className={styles.label_checkbox}>
             <input type="radio" name={name} value={value} required {...validation.bind} />
             {text}
           </label>

@@ -12,7 +12,7 @@ interface ICardBodyProps {
 
 const CardBody = memo<ICardBodyProps>(({ weight, year, camera, sizes, battery }) => {
   return (
-    <div className={styles.card__body}>
+    <div className={styles.body}>
       <CardInfoRow icon="weight" value={`${weight}g`} />
       <CardInfoRow icon="straighten" value={`${sizes[0]}x${sizes[1]}x${sizes[2]}mm`} />
       <CardInfoRow icon="celebration" value={year} />

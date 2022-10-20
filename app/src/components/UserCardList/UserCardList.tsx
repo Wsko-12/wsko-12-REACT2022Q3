@@ -8,7 +8,7 @@ interface IUserCardListProps {
 }
 const UserCardList = memo<IUserCardListProps>(({ cards }) => {
   return (
-    <div className={styles.list__container}>
+    <div className={styles.container}>
       {cards.map((data) => (
         <UserCard data={data} key={data.id} />
       ))}

@@ -12,7 +12,7 @@
 .switcher span {
     text-transform: capitalize;
 }
-.switcher__checkbox{
+.checkbox{
     flex-shrink: 0;
     cursor: pointer;
     display: flex;
@@ -26,11 +26,11 @@
     box-shadow: inset 0 0 2px rgba(0,0,0,0.2);;
 }
 
-.switcher__checkbox_colored{
+.checkbox_colored{
     background-color: #0075ff;
 }
 
-.switcher__decor{
+.decor{
     width: 25px;
     height: 25px;
     border-radius: 25px;
@@ -39,11 +39,11 @@
     transition-duration: 0.25s;
 }
 
-input:checked ~ .switcher__checkbox{
+input:checked ~ .checkbox{
     background-color: #0075ff;
 
 }
 
-input:checked ~ .switcher__checkbox > .switcher__decor{
+input:checked ~ .checkbox > .decor{
     transform: translate(100%, 0);
 }

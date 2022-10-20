@@ -7,7 +7,7 @@ const CardLine = memo<{
   value: string;
 }>(({ title, value }) => {
   return (
-    <div className={styles.card__line}>
+    <div className={styles.line}>
       <span>{title}</span> <span>{value}</span>
     </div>
   );
@@ -17,16 +17,16 @@ const LineWithAllowIcon = memo<{
   title: string;
   allow: boolean;
 }>(({ title, allow }) => {
-  const classNames = [styles['card__allow-icon']];
+  const classNames = [styles.icon];
   if (!allow) {
-    classNames.push(styles['card__allow-icon_prevented']);
+    classNames.push(styles.icon_prevented);
   }
 
   const icon = allow ? 'check_circle' : 'cancel';
 
   return (
     <div
-      className={styles.card__line}
+      className={styles.line}
       style={{ flexDirection: 'row-reverse', justifyContent: 'flex-end' }}
     >
       <span>{title}</span> <Icon name={icon} classNames={classNames.join(' ')} />
@@ -43,15 +43,15 @@ const CardBody = memo<{
   notifications: boolean;
 }>(({ birthday, delivery, zip, consent, installBrowsers, notifications }) => {
   return (
-    <div className={styles.card__body}>
+    <div className={styles.body}>
       <CardLine title="Birthday" value={new Date(birthday).toLocaleDateString()} />
       <hr />
 
-      <h4 className={styles.card__title}>Delivery</h4>
+      <h4 className={styles.title}>Delivery</h4>
       <CardLine title="Zip-code:" value={zip} />
       <CardLine title="Date:" value={new Date(delivery).toLocaleDateString()} />
       <hr />
-      <h4 className={styles.card__title}>Permissions</h4>
+      <h4 className={styles.title}>Permissions</h4>
       <LineWithAllowIcon title="Consent" allow={consent} />
       <LineWithAllowIcon title="Install browsers" allow={installBrowsers} />
       <LineWithAllowIcon title="Notifications" allow={notifications} />

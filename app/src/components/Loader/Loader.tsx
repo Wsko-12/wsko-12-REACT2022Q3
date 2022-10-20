@@ -3,8 +3,8 @@ import styles from './loader.module.css';
 
 const Loader = memo(() => {
   return (
-    <div data-testid="loader" className={styles.loader__container}>
-      <div className={styles.loader__item}></div>
+    <div data-testid="loader" className={styles.container}>
+      <div className={styles.item}></div>
     </div>
   );
 });

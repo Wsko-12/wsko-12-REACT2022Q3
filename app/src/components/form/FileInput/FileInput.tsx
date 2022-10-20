@@ -19,9 +19,9 @@ const FileInput = memo<IFileInputProps>(({ label, name }) => {
   }
 
   return (
-    <label className={styles.form__label_file}>
-      <div className={styles.form__button_add}>{label}</div>
-      <input className={styles.form__input_file} type="file" onChange={changeHandler} name={name} />
+    <label className={styles.label_file}>
+      <div className={styles.button_add}>{label}</div>
+      <input className={styles.input_file} type="file" onChange={changeHandler} name={name} />
       {fileName && <p>image: {fileName}</p>}
     </label>
   );

@@ -8,7 +8,7 @@ interface ICardInfoRowProps {
 
 const CardInfoRow = memo<ICardInfoRowProps>(({ icon, value }) => {
   return (
-    <div className={styles.card__info}>
+    <div className={styles.info}>
       <span className="material-symbols-outlined">{icon}</span>
       <span>{value}</span>
     </div>

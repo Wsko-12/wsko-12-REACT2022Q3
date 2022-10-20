@@ -1,4 +1,4 @@
-.loader__container{
+.container{
     width: 75px;
     height: 75px;
     display: flex;
@@ -9,7 +9,7 @@
 
 }
 
-.loader__item{
+.item{
     width: 35px;
     height: 35px;
     background-color: #505050;

@@ -7,14 +7,14 @@
 
 }
 
-.card__header{
+.header{
     display: flex;
     width: 100%;
     align-items: center;
     gap: 10px;
 }
 
-.card__image{
+.image{
     width: 50px;
     height: 50px;
     border-radius: 100px;
@@ -23,13 +23,13 @@
     align-items: center;
     justify-content: center;
 }
-.card__image span{
+.image span{
     font-size: 8rem !important;
 }
-.card__image img{
+.image img{
     width: 100%;
 }
-.card__title{
+.title{
     display: flex;
     align-items: center;
     font-size: 1.5rem;
@@ -37,31 +37,31 @@
     text-transform: capitalize;
     gap: 5px;
 }
-.card__title span{
+.title span{
     font-size: 1.8rem;
     font-weight: bold;
 }
 
-.card__subtitle{
+.subtitle{
     margin: 0px;
     font-size: 1.2rem;
 }
 
-.card__body{
+.body{
     margin-top: 10px;
     width: 100%;
     font-size: 1.4rem;
 }
 
-.card__line{
+.line{
     display: flex;
     gap: 5px;
     align-items: center;
 }
-.card__allow-icon{
+.icon{
     font-size: 1.6rem;
     color: LimeGreen;
 }
-.card__allow-icon_prevented{
+.icon_prevented{
     color: crimson;
 }

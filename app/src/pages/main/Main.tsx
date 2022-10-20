@@ -85,9 +85,9 @@ const Main = memo(() => {
   }, [page, searchQuery]);
 
   return (
-    <section className={styles.main__wrapper}>
+    <section className={styles.wrapper}>
       <SearchBar onSearch={handleSearch} />
-      <div className={styles.main__content}>
+      <div className={styles.content}>
         <InnerContent
           isLoading={isLoading}
           isError={isError}

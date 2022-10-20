@@ -5,7 +5,7 @@ import styles from './header.module.css';
 const Header = memo(() => {
   return (
     <div className={styles.header}>
-      <div className={styles.header__wrapper}>
+      <div className={styles.wrapper}>
         <HeaderNav />
       </div>
     </div>

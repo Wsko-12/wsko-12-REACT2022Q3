@@ -8,9 +8,9 @@ interface ICardHeaderProps {
 
 const CardHeader = memo<ICardHeaderProps>(({ brand, model }) => {
   return (
-    <div className={styles.card__header}>
-      <h3 className={styles.card__title}>{brand}</h3>
-      <p className={styles.card__subtitle}>{model}</p>
+    <div className={styles.header}>
+      <h3 className={styles.title}>{brand}</h3>
+      <p className={styles.subtitle}>{model}</p>
     </div>
   );
 });
