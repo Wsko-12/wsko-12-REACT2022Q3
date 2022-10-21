@@ -40,7 +40,7 @@ export default function User({ onChange }: IUserFormProps) {
         placeholder="example@example.com"
         required={true}
         type={'email'}
-        pattern={emailReg}
+        pattern={new RegExp(emailReg).toString()}
         onChange={onChange(CardFormFields.email)}
         title="example@example.com or example.example@example.com or .by/.ua/.ru"
         errorMessage="Invalid email"

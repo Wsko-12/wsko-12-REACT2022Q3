@@ -1,5 +1,5 @@
 import UserCardList from 'components/UserCardList/UserCardList';
-import CardForm from 'pages/form/CardForm/CardForm';
+import CardForm from 'pages/form/CardFormWithUseForm/CardForm';
 import React, { memo, useState } from 'react';
 import { IUserCardData } from 'ts/interfaces';
 import styles from './form.module.css';
