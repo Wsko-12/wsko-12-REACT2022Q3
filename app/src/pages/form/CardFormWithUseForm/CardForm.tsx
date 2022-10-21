@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IUserCardData } from 'ts/interfaces';
 import { emailReg, nameReg } from 'utils/regex/regex';
@@ -44,8 +44,14 @@ const CardForm = memo<ICardFormProps>(() => {
     reset();
   }, [isSubmitSuccessful]);
 
-  const buttonEnabled = isSubmitted ? isValid : isDirty;
+  const [buttonEnabled, setButtonEnabled] = useState(true);
+  useEffect(() => {
+    const value = isSubmitted ? isValid : isDirty;
+    setButtonEnabled(value);
+  }, [isSubmitted, isDirty, isValid]);
 
+  // if i pass register like a cb,
+  // after form reset i can't receive values
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <TextInput
