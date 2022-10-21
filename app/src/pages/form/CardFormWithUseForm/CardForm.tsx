@@ -6,6 +6,7 @@ import TextInput from './components/TextInput/TextInput';
 import styles from './card-form.module.css';
 import DatePicker from './components/DatePicker/DatePicker';
 import FileInput from './components/FileInput/FileInput';
+import RadioSwitcher from './components/RadioSwitcher/RadioSwitcher';
 
 interface ICardFormProps {
   createCard?: (data: IUserCardData) => void;
@@ -18,6 +19,7 @@ export interface ICardFormValues {
   birthday: string;
   delivery: string;
   avatar?: FileList;
+  gender?: 'male' | 'female';
 }
 
 const CardForm = memo<ICardFormProps>(() => {
@@ -34,8 +36,6 @@ const CardForm = memo<ICardFormProps>(() => {
   const { handleSubmit, register, reset, formState } = useForm<ICardFormValues>({ defaultValues });
   const { errors, isDirty, isSubmitted, isValid, isSubmitSuccessful } = formState;
   const onSubmit = (data: ICardFormValues) => {
-    //reset doesn't clear isSubmitted
-    //so, I always have validation after submit
     const file = data.avatar && data.avatar[0];
     console.log(data, file);
   };
@@ -83,6 +83,13 @@ const CardForm = memo<ICardFormProps>(() => {
       />
 
       <FileInput registration={register('avatar')} />
+
+      <RadioSwitcher
+        registration={register('gender', { required: true })}
+        values={['male', 'female']}
+        isValid={!errors.gender}
+        label="gender"
+      />
 
       <button disabled={!buttonEnabled} type="submit" className={styles.button}>
         Submit

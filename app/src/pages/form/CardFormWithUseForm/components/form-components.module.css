@@ -55,10 +55,6 @@
     margin: 5px 0px 15px;
 }
 
-.label_checkbox::first-letter{
-    text-transform: uppercase; 
-}
-
 .message {
     margin: 0;
     font-size: 1rem;
