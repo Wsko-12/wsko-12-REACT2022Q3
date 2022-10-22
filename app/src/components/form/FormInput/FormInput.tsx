@@ -7,7 +7,7 @@ interface IFormInputProps {
   name?: string;
   label?: string;
   placeholder?: string;
-  pattern?: string;
+  pattern?: string | RegExp;
   type?: React.HTMLInputTypeAttribute;
   title?: string;
   required?: boolean;
@@ -24,7 +24,7 @@ const FormInput = memo<IFormInputProps>(
         <input
           name={name}
           title={title}
-          pattern={pattern}
+          pattern={pattern instanceof RegExp ? pattern.toString() : pattern}
           className={styles.input}
           type={type || 'text'}
           required={required}

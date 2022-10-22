@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IUserCardData } from 'ts/interfaces';
-import { emailReg, nameReg } from 'utils/regex/regex';
+import { emailReg, nameReg, zipCodeReg } from 'utils/regex/regex';
 import TextInput from './components/TextInput/TextInput';
 import styles from './card-form.module.css';
 import DatePicker from './components/DatePicker/DatePicker';
@@ -26,29 +26,29 @@ export interface ICardFormValues {
   country: string;
   zip: string;
   installBrowsers: boolean;
-  notifications: boolean;
+  notifications: string;
   consent: boolean;
 }
 
 const CardForm = memo<ICardFormProps>(() => {
   const today = new Date().toLocaleDateString('en-CA');
 
-  const defaultValues: ICardFormValues = {
+  const defaultValues = {
     name: '',
     surname: '',
     email: '',
-    birthday: '',
-    delivery: '',
+    birthday: today,
+    delivery: today,
 
-    country: '',
     zip: '',
     installBrowsers: true,
-    notifications: true,
-    consent: false,
+    notifications: '',
+    consent: true,
   };
 
   const { handleSubmit, register, reset, formState } = useForm<ICardFormValues>({ defaultValues });
-  const { errors, isDirty, isSubmitted, isValid, isSubmitSuccessful } = formState;
+  const { errors, isDirty, isValid, isSubmitSuccessful } = formState;
+  const [isSubmitClicked, setIsSubmitClicked] = useState(false);
   const onSubmit = (data: ICardFormValues) => {
     const file = data.avatar && data.avatar[0];
     console.log(data, file);
@@ -56,13 +56,14 @@ const CardForm = memo<ICardFormProps>(() => {
 
   useEffect(() => {
     reset();
+    setIsSubmitClicked(false);
   }, [isSubmitSuccessful]);
 
   const [buttonEnabled, setButtonEnabled] = useState(true);
   useEffect(() => {
-    const value = isSubmitted ? isValid : isDirty;
+    const value = isSubmitClicked ? isValid : isDirty;
     setButtonEnabled(value);
-  }, [isSubmitted, isDirty, isValid]);
+  }, [isSubmitClicked, isDirty, isValid]);
 
   // if i pass register like a cb,
   // after form reset i can't receive values because, as I understand it, it cleans refs and so on
@@ -91,6 +92,7 @@ const CardForm = memo<ICardFormProps>(() => {
         label="Birthday"
         registration={register('birthday', {
           required: true,
+          valueAsDate: true,
           max: today, // It's not working
         })}
         max={today}
@@ -105,25 +107,54 @@ const CardForm = memo<ICardFormProps>(() => {
         label="gender"
       />
 
-      <CheckboxInput label="I consent to my personal data" registration={register('consent')} />
+      <RadioSwitcher
+        registration={register('notifications', { required: true })}
+        values={[
+          'I want to receive notifications about promo, sales, etc.',
+          "I don't want to receive notifications about promo, sales, etc.",
+        ]}
+        isValid={!errors.consent}
+        label="notifications"
+      />
+
       <CheckboxInput
         label="Install Amigo and Yandex browser"
         registration={register('installBrowsers')}
       />
-      <CheckboxInput
-        label="I want to receive notifications about promo, sales, etc."
-        registration={register('notifications')}
+
+      <CheckboxInput label="I consent to my personal data" registration={register('consent')} />
+
+      <DatePicker
+        isValid={!errors.delivery}
+        label="Delivery"
+        registration={register('delivery', {
+          required: true,
+          valueAsDate: true,
+          min: today, // It's not working
+        })}
+        min={today}
+      />
+
+      <TextInput
+        label="Zip-code"
+        isValid={!errors.zip}
+        registration={register('zip', { required: true, pattern: new RegExp(zipCodeReg) })}
       />
 
       <SelectInput
-        registration={register('country', { required: true })}
+        registration={register('country', { required: true, value: '' })}
         label="Country"
         options={['Belarus', 'Ukraine', 'Georgia', 'Poland', 'Lithuania', 'Latvia']}
         isValid={!errors.country}
         placeholder="Select country"
       />
 
-      <button disabled={!buttonEnabled} type="submit" className={styles.button}>
+      <button
+        disabled={!buttonEnabled}
+        type="submit"
+        className={styles.button}
+        onClick={() => setIsSubmitClicked(true)}
+      >
         Submit
       </button>
     </form>
