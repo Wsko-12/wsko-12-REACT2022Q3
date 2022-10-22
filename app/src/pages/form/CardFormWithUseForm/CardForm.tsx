@@ -7,6 +7,8 @@ import styles from './card-form.module.css';
 import DatePicker from './components/DatePicker/DatePicker';
 import FileInput from './components/FileInput/FileInput';
 import RadioSwitcher from './components/RadioSwitcher/RadioSwitcher';
+import CheckboxInput from './components/CheckboxInput/CheckboxInput';
+import SelectInput from './components/SelectInput/SelectInput';
 
 interface ICardFormProps {
   createCard?: (data: IUserCardData) => void;
@@ -20,6 +22,12 @@ export interface ICardFormValues {
   delivery: string;
   avatar?: FileList;
   gender?: 'male' | 'female';
+
+  country: string;
+  zip: string;
+  installBrowsers: boolean;
+  notifications: boolean;
+  consent: boolean;
 }
 
 const CardForm = memo<ICardFormProps>(() => {
@@ -31,6 +39,12 @@ const CardForm = memo<ICardFormProps>(() => {
     email: '',
     birthday: '',
     delivery: '',
+
+    country: '',
+    zip: '',
+    installBrowsers: true,
+    notifications: true,
+    consent: false,
   };
 
   const { handleSubmit, register, reset, formState } = useForm<ICardFormValues>({ defaultValues });
@@ -51,7 +65,7 @@ const CardForm = memo<ICardFormProps>(() => {
   }, [isSubmitted, isDirty, isValid]);
 
   // if i pass register like a cb,
-  // after form reset i can't receive values
+  // after form reset i can't receive values because, as I understand it, it cleans refs and so on
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <TextInput
@@ -89,6 +103,24 @@ const CardForm = memo<ICardFormProps>(() => {
         values={['male', 'female']}
         isValid={!errors.gender}
         label="gender"
+      />
+
+      <CheckboxInput label="I consent to my personal data" registration={register('consent')} />
+      <CheckboxInput
+        label="Install Amigo and Yandex browser"
+        registration={register('installBrowsers')}
+      />
+      <CheckboxInput
+        label="I want to receive notifications about promo, sales, etc."
+        registration={register('notifications')}
+      />
+
+      <SelectInput
+        registration={register('country', { required: true })}
+        label="Country"
+        options={['Belarus', 'Ukraine', 'Georgia', 'Poland', 'Lithuania', 'Latvia']}
+        isValid={!errors.country}
+        placeholder="Select country"
       />
 
       <button disabled={!buttonEnabled} type="submit" className={styles.button}>
