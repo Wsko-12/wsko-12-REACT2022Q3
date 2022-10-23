@@ -1,15 +1,11 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IUserCardData } from 'ts/interfaces';
-import { emailReg, nameReg, zipCodeReg } from 'utils/regex/regex';
-import TextInput from './components/TextInput/TextInput';
 import styles from './card-form.module.css';
-import DatePicker from './components/DatePicker/DatePicker';
-import FileInput from './components/FileInput/FileInput';
-import RadioSwitcher from './components/RadioSwitcher/RadioSwitcher';
-import CheckboxInput from './components/CheckboxInput/CheckboxInput';
-import SelectInput from './components/SelectInput/SelectInput';
 import { isUserCardData } from 'ts/typeguards';
+import UserInfo from './UserInfo/UserInfo';
+import DeliveryInfo from './DeliveryInfo/DeliveryInfo';
+import PermissionsInfo from './PermissionsInfo/PermissionsInfo';
 
 interface ICardFormProps {
   createCard?: (data: IUserCardData) => void;
@@ -31,13 +27,13 @@ export interface ICardFormValues {
   consent: boolean;
 }
 
-const parseData = (data: ICardFormValues) => {
-  const avatar = data.avatar && data.avatar[0];
-  const notifications = data.notifications.startsWith('I want');
-  const birthday = data.birthday.toString();
-  const delivery = data.delivery.toString();
+const parseFormValues = (values: ICardFormValues) => {
+  const avatar = values.avatar && values.avatar[0];
+  const notifications = values.notifications.startsWith('I want');
+  const birthday = values.birthday.toString();
+  const delivery = values.delivery.toString();
   const parsed = {
-    ...data,
+    ...values,
     notifications,
     avatar,
     id: Date.now().toString(),
@@ -64,12 +60,12 @@ const CardForm = memo<ICardFormProps>(({ createCard }) => {
   };
 
   const { handleSubmit, register, reset, formState } = useForm<ICardFormValues>({ defaultValues });
-  const { errors, isDirty, isValid, isSubmitSuccessful } = formState;
+  const { isDirty, isValid, isSubmitSuccessful } = formState;
+  // I use isSubmitClicked instead of isSubmitted because
+  // it's works better for submit button behavior like in requirements
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
-  const onSubmit = (data: ICardFormValues) => {
-    const parsed = parseData(data);
-
-    console.log(parsed, isUserCardData(parsed));
+  const onSubmit = (values: ICardFormValues) => {
+    const parsed = parseFormValues(values);
     if (isUserCardData(parsed) && createCard) {
       createCard(parsed);
     }
@@ -86,89 +82,12 @@ const CardForm = memo<ICardFormProps>(({ createCard }) => {
     setButtonEnabled(value);
   }, [isSubmitClicked, isDirty, isValid]);
 
-  // if i pass register like a cb,
-  // after form reset i can't receive values because, as I understand it, it cleans refs and so on
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <TextInput
-        label="name"
-        isValid={!errors.name}
-        registration={register('name', { required: true, pattern: new RegExp(nameReg) })}
-      />
-
-      <TextInput
-        label="surname"
-        isValid={!errors.surname}
-        registration={register('surname', { required: true, pattern: new RegExp(nameReg) })}
-      />
-
-      <TextInput
-        label="email"
-        isValid={!errors.email}
-        registration={register('email', { required: true, pattern: new RegExp(emailReg) })}
-      />
-
-      <DatePicker
-        isValid={!errors.birthday}
-        label="Birthday"
-        registration={register('birthday', {
-          required: true,
-          valueAsDate: true,
-          max: today, // It's not working
-        })}
-        max={today}
-      />
-
-      <FileInput registration={register('avatar')} />
-
-      <RadioSwitcher
-        registration={register('gender', { required: true })}
-        values={['male', 'female']}
-        isValid={!errors.gender}
-        label="gender"
-      />
-
-      <RadioSwitcher
-        registration={register('notifications', { required: true })}
-        values={[
-          'I want to receive notifications about promo, sales, etc.',
-          "I don't want to receive notifications about promo, sales, etc.",
-        ]}
-        isValid={!errors.notifications}
-        label="notifications"
-      />
-
-      <CheckboxInput
-        label="Install Amigo and Yandex browser"
-        registration={register('installBrowsers')}
-      />
-
-      <CheckboxInput label="I consent to my personal data" registration={register('consent')} />
-
-      <DatePicker
-        isValid={!errors.delivery}
-        label="Delivery"
-        registration={register('delivery', {
-          required: true,
-          valueAsDate: true,
-          min: today, // It's not working
-        })}
-        min={today}
-      />
-
-      <TextInput
-        label="Zip-code"
-        isValid={!errors.zip}
-        registration={register('zip', { required: true, pattern: new RegExp(zipCodeReg) })}
-      />
-
-      <SelectInput
-        registration={register('country', { required: true, value: '' })}
-        label="Country"
-        options={['Belarus', 'Ukraine', 'Georgia', 'Poland', 'Lithuania', 'Latvia']}
-        isValid={!errors.country}
-        placeholder="Select country"
-      />
+      {/* if i pass errors from formState they are not shown */}
+      <UserInfo register={register} formState={formState} today={today} />
+      <PermissionsInfo register={register} formState={formState} />
+      <DeliveryInfo register={register} formState={formState} today={today} />
 
       <button
         disabled={!buttonEnabled}
