@@ -60,7 +60,7 @@ export const isProductDataArr = (arr: unknown[]): arr is IProduct[] => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const isUserCardData = (obj: any): obj is IUserCardData => {
-  if (!(obj.avatar instanceof File)) {
+  if (obj.avatar && !(obj.avatar instanceof File)) {
     return false;
   }
   if (new Date(obj.birthday).toString() === 'Invalid Date') {
@@ -69,6 +69,7 @@ export const isUserCardData = (obj: any): obj is IUserCardData => {
   if (new Date(obj.delivery).toString() === 'Invalid Date') {
     return false;
   }
+
   if (typeof obj.name != 'string') {
     return false;
   }

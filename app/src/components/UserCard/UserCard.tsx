@@ -28,6 +28,9 @@ const UserCard = memo<IUserCardProps>(({ data }) => {
 
   useEffect(() => {
     const reader = new FileReader();
+    if (!avatar) {
+      return;
+    }
     reader.readAsDataURL(avatar);
     reader.onloadend = () => {
       const { result } = reader;

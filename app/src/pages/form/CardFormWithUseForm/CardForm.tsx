@@ -9,6 +9,7 @@ import FileInput from './components/FileInput/FileInput';
 import RadioSwitcher from './components/RadioSwitcher/RadioSwitcher';
 import CheckboxInput from './components/CheckboxInput/CheckboxInput';
 import SelectInput from './components/SelectInput/SelectInput';
+import { isUserCardData } from 'ts/typeguards';
 
 interface ICardFormProps {
   createCard?: (data: IUserCardData) => void;
@@ -18,8 +19,8 @@ export interface ICardFormValues {
   name: string;
   surname: string;
   email: string;
-  birthday: string;
-  delivery: string;
+  birthday: string | Date;
+  delivery: string | Date;
   avatar?: FileList;
   gender?: 'male' | 'female';
 
@@ -30,7 +31,23 @@ export interface ICardFormValues {
   consent: boolean;
 }
 
-const CardForm = memo<ICardFormProps>(() => {
+const parseData = (data: ICardFormValues) => {
+  const avatar = data.avatar && data.avatar[0];
+  const notifications = data.notifications.startsWith('I want');
+  const birthday = data.birthday.toString();
+  const delivery = data.delivery.toString();
+  const parsed = {
+    ...data,
+    notifications,
+    avatar,
+    id: Date.now().toString(),
+    birthday,
+    delivery,
+  };
+  return parsed;
+};
+
+const CardForm = memo<ICardFormProps>(({ createCard }) => {
   const today = new Date().toLocaleDateString('en-CA');
 
   const defaultValues = {
@@ -50,8 +67,12 @@ const CardForm = memo<ICardFormProps>(() => {
   const { errors, isDirty, isValid, isSubmitSuccessful } = formState;
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
   const onSubmit = (data: ICardFormValues) => {
-    const file = data.avatar && data.avatar[0];
-    console.log(data, file);
+    const parsed = parseData(data);
+
+    console.log(parsed, isUserCardData(parsed));
+    if (isUserCardData(parsed) && createCard) {
+      createCard(parsed);
+    }
   };
 
   useEffect(() => {
@@ -113,7 +134,7 @@ const CardForm = memo<ICardFormProps>(() => {
           'I want to receive notifications about promo, sales, etc.',
           "I don't want to receive notifications about promo, sales, etc.",
         ]}
-        isValid={!errors.consent}
+        isValid={!errors.notifications}
         label="notifications"
       />
 

@@ -27,7 +27,7 @@ export interface IProduct {
 
 export interface IUserCardData {
   id: string;
-  avatar: File;
+  avatar: File | undefined;
   name: string;
   surname: string;
   gender: 'male' | 'female';
