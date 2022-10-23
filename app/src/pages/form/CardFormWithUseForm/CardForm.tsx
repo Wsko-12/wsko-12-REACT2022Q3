@@ -64,6 +64,8 @@ const CardForm = memo<ICardFormProps>(({ createCard }) => {
   // I use isSubmitClicked instead of isSubmitted because
   // it's works better for submit button behavior like in requirements
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
+  const [buttonEnabled, setButtonEnabled] = useState(true);
+
   const onSubmit = (values: ICardFormValues) => {
     const parsed = parseFormValues(values);
     if (isUserCardData(parsed) && createCard) {
@@ -76,7 +78,6 @@ const CardForm = memo<ICardFormProps>(({ createCard }) => {
     setIsSubmitClicked(false);
   }, [isSubmitSuccessful]);
 
-  const [buttonEnabled, setButtonEnabled] = useState(true);
   useEffect(() => {
     const value = isSubmitClicked ? isValid : isDirty;
     setButtonEnabled(value);
