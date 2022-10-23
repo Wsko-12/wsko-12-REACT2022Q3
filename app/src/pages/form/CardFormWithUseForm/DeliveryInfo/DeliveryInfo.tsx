@@ -14,7 +14,7 @@ const DeliveryInfo = memo<IDeliveryInfoProps>(({ register, formState, today }) =
   const { errors } = formState;
 
   return (
-    <>
+    <div>
       <DatePicker
         isValid={!errors.delivery}
         label="Delivery"
@@ -39,7 +39,7 @@ const DeliveryInfo = memo<IDeliveryInfoProps>(({ register, formState, today }) =
         isValid={!errors.country}
         placeholder="Select country"
       />
-    </>
+    </div>
   );
 });
 

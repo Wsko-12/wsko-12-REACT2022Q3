@@ -15,7 +15,7 @@ const UserInfo = memo<IUserInfoProps>(({ register, formState, today }) => {
   const { errors } = formState;
 
   return (
-    <>
+    <div>
       <TextInput
         label="name"
         isValid={!errors.name}
@@ -45,15 +45,15 @@ const UserInfo = memo<IUserInfoProps>(({ register, formState, today }) => {
         max={today}
       />
 
-      <FileInput registration={register('avatar')} />
-
       <RadioSwitcher
         registration={register('gender', { required: true })}
         values={['male', 'female']}
         isValid={!errors.gender}
         label="gender"
       />
-    </>
+
+      <FileInput registration={register('avatar')} />
+    </div>
   );
 });
 

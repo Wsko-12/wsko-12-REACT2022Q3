@@ -13,7 +13,7 @@ const PermissionsInfo = memo<IPermissionsInfoProps>(({ register, formState }) =>
   const { errors } = formState;
 
   return (
-    <>
+    <div>
       <RadioSwitcher
         registration={register('notifications', { required: true })}
         values={[
@@ -30,7 +30,7 @@ const PermissionsInfo = memo<IPermissionsInfoProps>(({ register, formState }) =>
       />
 
       <CheckboxInput label="I consent to my personal data" registration={register('consent')} />
-    </>
+    </div>
   );
 });
 
