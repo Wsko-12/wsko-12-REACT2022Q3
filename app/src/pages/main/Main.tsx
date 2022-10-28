@@ -11,6 +11,7 @@ import { StoreContext } from 'api/store/Store';
 import { EStoreReducerActions } from 'api/store/reducers/StoreReducer';
 import SearchBar from 'components/SearchBar/SearchBar';
 import CharacterFilters from './filters/CharacterFilters';
+import { ESortingOrder } from 'ts/enums';
 
 interface IInnerContentProps {
   isLoading: boolean;
@@ -32,11 +33,19 @@ const InnerContent = memo<IInnerContentProps>(({ isLoading, characters, isError 
 const Main = memo(() => {
   const [store, dispatch] = useContext(StoreContext);
   const { isLoading, isError, load: loadCharacters } = useDataLoader(API.getCharacters);
-  const { search } = store;
+  const {
+    search,
+    sorting: { name: nameSort },
+  } = store;
   const { limit, page, total } = store.pagination;
 
-  const fetchCharacters = async (limit: number, page: number, search: string) => {
-    const response = await loadCharacters(limit, page, search);
+  const fetchCharacters = async (
+    limit: number,
+    page: number,
+    search: string,
+    nameSort: ESortingOrder
+  ) => {
+    const response = await loadCharacters(limit, page, search, nameSort);
     if (response) {
       dispatch({ type: EStoreReducerActions.SetCharacters, payload: response.docs });
       dispatch({ type: EStoreReducerActions.SetPagesTotal, payload: response.pages });
@@ -44,8 +53,8 @@ const Main = memo(() => {
   };
 
   useEffect(() => {
-    fetchCharacters(limit, page, search);
-  }, [search, page, limit]);
+    fetchCharacters(limit, page, search, nameSort);
+  }, [search, page, limit, nameSort]);
 
   const onSearch = (search: string) => {
     dispatch({ type: EStoreReducerActions.SetSearch, payload: search });

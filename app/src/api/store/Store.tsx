@@ -1,4 +1,5 @@
 import React, { createContext, memo, ReactNode, useReducer } from 'react';
+import { ESortingOrder } from 'ts/enums';
 import { ICharacter } from 'ts/interfaces';
 import { getSavedSearchQuery } from 'utils/utils';
 import storeReducer, { TStoreReducerAction } from './reducers/StoreReducer';
@@ -11,6 +12,9 @@ export interface IStore {
     limit: number;
   };
   search: string;
+  sorting: {
+    name: ESortingOrder;
+  };
 }
 
 const initialState: IStore = {
@@ -21,6 +25,9 @@ const initialState: IStore = {
     limit: 20,
   },
   search: getSavedSearchQuery(),
+  sorting: {
+    name: ESortingOrder.ASC,
+  },
 };
 
 export const StoreContext = createContext<[IStore, React.Dispatch<TStoreReducerAction>]>([

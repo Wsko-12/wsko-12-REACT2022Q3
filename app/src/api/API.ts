@@ -1,3 +1,4 @@
+import { ESortingOrder } from 'ts/enums';
 import { ICharacter, TApiResponse } from 'ts/interfaces';
 // import products from './data.json';
 
@@ -54,15 +55,19 @@ export default class API {
     });
     if (response.ok) {
       const data: T = await response.json();
-      console.log(data);
       return data;
     } else {
       throw new Error(`[API fetchData] can't load data ${url}`);
     }
   }
 
-  public static getCharacters = async (limit: number, page: number, name: string) => {
-    const endpoint = `/character?limit=${limit}&page=${page}&name=/${name}/i`;
+  public static getCharacters = async (
+    limit: number,
+    page: number,
+    name: string,
+    nameSort: ESortingOrder
+  ) => {
+    const endpoint = `/character?limit=${limit}&page=${page}&name=/${name}/i&sort=name:${nameSort}`;
     const link = `${url}${endpoint}`;
 
     try {
