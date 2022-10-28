@@ -5,10 +5,10 @@ import styles from './character-cart-list.module.css';
 
 interface ICharactersListProps {
   characters: ICharacter[];
-  openModal: (data: ICharacter) => void;
+  openModal?: (data: ICharacter) => void;
 }
 
-const CharactersList = memo<ICharactersListProps>(({ characters, openModal }) => {
+const CharactersList = memo<ICharactersListProps>(({ characters, openModal = () => {} }) => {
   return (
     <div className={styles.list}>
       {characters.map((character) => (

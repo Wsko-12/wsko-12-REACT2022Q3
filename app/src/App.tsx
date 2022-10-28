@@ -1,3 +1,4 @@
+import Store from 'api/store/Store';
 import Header from 'components/Header/Header';
 import About from 'pages/about/About';
 import FormPage from 'pages/form/FormPage';
@@ -10,13 +11,15 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <Header />
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/form" element={<FormPage />} />
-        <Route path="*" element={<Page404 />} />
-      </Routes>
+      <Store>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/form" element={<FormPage />} />
+          <Route path="*" element={<Page404 />} />
+        </Routes>
+      </Store>
     </div>
   );
 }
