@@ -8,6 +8,7 @@ export interface IStore {
   pagination: {
     page: number;
     total: number;
+    limit: number;
   };
   search: string;
 }
@@ -17,6 +18,7 @@ const initialState: IStore = {
   pagination: {
     page: 1,
     total: 1,
+    limit: 20,
   },
   search: getSavedSearchQuery(),
 };

@@ -47,18 +47,17 @@ export interface ICharacterLocation {
 }
 
 export interface ICharacter {
-  id: number;
+  _id: string;
+  birth: string;
+  death: string;
+  gender: string;
+  hair: string;
+  height: string;
   name: string;
-  status: 'Dead' | 'Alive' | 'unknown';
-  species: string;
-  type: string;
-  gender: 'unknown' | 'Female' | 'Male' | 'Genderless';
-  origin: ICharacterLocation;
-  location: ICharacterLocation;
-  image: string;
-  episode: string[];
-  url: string;
-  created: string;
+  race: string;
+  realm: string;
+  spouse: string;
+  wikiUrl: string;
 }
 
 export type TResponseInfo = {
@@ -69,6 +68,10 @@ export type TResponseInfo = {
 };
 
 export type TApiResponse<T> = {
-  info: TResponseInfo;
-  results: T[];
+  limit: number;
+  offset: number;
+  page: number;
+  pages: number;
+  total: number;
+  docs: T[];
 };

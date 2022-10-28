@@ -7,14 +7,15 @@ interface ISelectInputProps {
   name?: string;
   placeholder?: string;
   label?: string;
+  defaultValue?: string;
   options: string[];
   required?: boolean;
-  onChange?: (e: React.SyntheticEvent) => void;
+  onChange?: (e: React.SyntheticEvent<HTMLSelectElement>) => void;
   errorMessage?: string;
 }
 
 const SelectInput = memo<ISelectInputProps>(
-  ({ label, required, placeholder, options, errorMessage, name, onChange }) => {
+  ({ label, required, placeholder, options, errorMessage, name, onChange, defaultValue = '' }) => {
     const validation = useDefaultValidation(onChange);
 
     return (
@@ -22,7 +23,7 @@ const SelectInput = memo<ISelectInputProps>(
         <select
           className={styles.input}
           required={required}
-          defaultValue=""
+          defaultValue={defaultValue}
           name={name}
           {...validation.bind}
         >

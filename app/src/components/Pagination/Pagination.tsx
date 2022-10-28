@@ -1,3 +1,4 @@
+import SelectInput from 'components/form/SelectInput/SelectInput';
 import React, { memo } from 'react';
 import { getPagesIndexes } from 'utils/utils';
 import PaginationButton from './button/PaginationButton';
@@ -6,10 +7,11 @@ import styles from './pagination.module.css';
 interface IPaginationProps {
   total: number;
   page: number;
+  limit: number;
   onChange?: (page: number) => void;
+  onLimitChange?: (limit: string) => void;
   buttonsCount?: number;
 }
-// ?? should I use event delegation
 
 const PrevButtons = memo<Pick<IPaginationProps, 'page' | 'onChange'>>(
   ({ page, onChange = () => {} }) => {
@@ -41,7 +43,7 @@ const NextButtons = memo<Pick<IPaginationProps, 'page' | 'onChange' | 'total'>>(
   }
 );
 
-const InnerButtons = memo<IPaginationProps>(
+const InnerButtons = memo<Omit<IPaginationProps, 'limit'>>(
   ({ buttonsCount = 5, page, total, onChange = () => {} }) => {
     return (
       <>
@@ -55,14 +57,21 @@ const InnerButtons = memo<IPaginationProps>(
   }
 );
 
-const Pagination = memo<IPaginationProps>(({ onChange = () => {}, total, page, buttonsCount }) => {
-  return (
-    <nav className={styles.container}>
-      <PrevButtons page={page} onChange={onChange} />
-      <InnerButtons buttonsCount={buttonsCount} page={page} total={total} onChange={onChange} />
-      <NextButtons page={page} onChange={onChange} total={total} />
-    </nav>
-  );
-});
+const Pagination = memo<IPaginationProps>(
+  ({ onChange = () => {}, limit, total, page, buttonsCount, onLimitChange = () => {} }) => {
+    return (
+      <nav className={styles.container}>
+        <PrevButtons page={page} onChange={onChange} />
+        <InnerButtons buttonsCount={buttonsCount} page={page} total={total} onChange={onChange} />
+        <NextButtons page={page} onChange={onChange} total={total} />
+        <SelectInput
+          onChange={(e) => onLimitChange(e.currentTarget.value)}
+          options={['10', '20', '30', '40', '50']}
+          defaultValue={limit.toString()}
+        />
+      </nav>
+    );
+  }
+);
 
 export default Pagination;

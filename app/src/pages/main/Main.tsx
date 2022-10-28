@@ -10,6 +10,7 @@ import { useDataLoader } from 'hooks/customHooks';
 import { StoreContext } from 'api/store/Store';
 import { EStoreReducerActions } from 'api/store/reducers/StoreReducer';
 import SearchBar from 'components/SearchBar/SearchBar';
+import CharacterFilters from './filters/CharacterFilters';
 
 interface IInnerContentProps {
   isLoading: boolean;
@@ -32,20 +33,19 @@ const Main = memo(() => {
   const [store, dispatch] = useContext(StoreContext);
   const { isLoading, isError, load: loadCharacters } = useDataLoader(API.getCharacters);
   const { search } = store;
-  const { page, total } = store.pagination;
+  const { limit, page, total } = store.pagination;
 
-  const fetchCharacters = async () => {
-    console.log('fetching');
-    const response = await loadCharacters(page, search);
+  const fetchCharacters = async (limit: number, page: number, search: string) => {
+    const response = await loadCharacters(limit, page, search);
     if (response) {
-      dispatch({ type: EStoreReducerActions.SetCharacters, payload: response.results });
-      dispatch({ type: EStoreReducerActions.SetPagesTotal, payload: response.info.pages });
+      dispatch({ type: EStoreReducerActions.SetCharacters, payload: response.docs });
+      dispatch({ type: EStoreReducerActions.SetPagesTotal, payload: response.pages });
     }
   };
 
   useEffect(() => {
-    fetchCharacters();
-  }, [search, page]);
+    fetchCharacters(limit, page, search);
+  }, [search, page, limit]);
 
   const onSearch = (search: string) => {
     dispatch({ type: EStoreReducerActions.SetSearch, payload: search });
@@ -56,11 +56,22 @@ const Main = memo(() => {
     dispatch({ type: EStoreReducerActions.SetCurrentPage, payload: page });
   };
 
+  const onLimitChange = (limit: string) => {
+    dispatch({ type: EStoreReducerActions.SetLimit, payload: Number(limit) });
+  };
+
   return (
     <section className={styles.wrapper}>
       <SearchBar defaultValue={search} onSearch={onSearch} />
+      <CharacterFilters />
       <InnerContent isError={isError} isLoading={isLoading} characters={store.characters} />
-      <Pagination page={page} total={total} onChange={onPagination} />
+      <Pagination
+        limit={limit}
+        page={page}
+        total={total}
+        onChange={onPagination}
+        onLimitChange={onLimitChange}
+      />
     </section>
   );
 });

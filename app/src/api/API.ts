@@ -43,21 +43,26 @@ import { ICharacter, TApiResponse } from 'ts/interfaces';
 //   }
 // }
 
-const url = 'https://rickandmortyapi.com/api';
+const url = 'https://the-one-api.dev/v2';
 
 export default class API {
   private static async fetchData<T>(url: string): Promise<T> {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        Authorization: 'Bearer bGXaFQ6sAakgf2HO6b3K',
+      },
+    });
     if (response.ok) {
       const data: T = await response.json();
+      console.log(data);
       return data;
     } else {
       throw new Error(`[API fetchData] can't load data ${url}`);
     }
   }
 
-  public static getCharacters = async (page: number, name: string) => {
-    const endpoint = `/character?page=${page}&name=${name}`;
+  public static getCharacters = async (limit: number, page: number, name: string) => {
+    const endpoint = `/character?limit=${limit}&page=${page}&name=/${name}/i`;
     const link = `${url}${endpoint}`;
 
     try {

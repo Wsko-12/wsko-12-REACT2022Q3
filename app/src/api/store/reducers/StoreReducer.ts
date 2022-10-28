@@ -7,6 +7,7 @@ export const enum EStoreReducerActions {
   SetCharacters = 'SET_CHARACTERS',
   SetCurrentPage = 'SET_CURRENT_PAGE',
   SetPagesTotal = 'SET_PAGES_TOTAL',
+  SetLimit = 'SET_LIMIT',
   SetSearch = 'SET_SEARCH',
 }
 

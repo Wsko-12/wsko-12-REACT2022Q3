@@ -43,10 +43,10 @@ export const useDataLoader = <T extends (...args: Parameters<T>) => ReturnType<T
   };
 };
 
-export const useDefaultValidation = (onChangeCb?: (e: React.SyntheticEvent) => void) => {
+export const useDefaultValidation = <T>(onChangeCb?: (e: React.SyntheticEvent<T>) => void) => {
   const [isValid, setIsValid] = useState(true);
 
-  function onChange(e: React.SyntheticEvent) {
+  function onChange(e: React.SyntheticEvent<T>) {
     setIsValid(true);
 
     if (onChangeCb) {

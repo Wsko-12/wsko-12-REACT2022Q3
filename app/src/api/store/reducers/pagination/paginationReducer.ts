@@ -5,6 +5,7 @@ import { EStoreReducerActions, TStoreReducerAction } from '../StoreReducer';
 type TPaginationPayloads = {
   [EStoreReducerActions.SetCurrentPage]: number;
   [EStoreReducerActions.SetPagesTotal]: number;
+  [EStoreReducerActions.SetLimit]: number;
 };
 
 export type TPaginationAction = ActionMap<TPaginationPayloads>[keyof TPaginationPayloads];
@@ -15,6 +16,8 @@ const paginationReducer = (state: IStore['pagination'], action: TStoreReducerAct
       return { ...state, page: action.payload };
     case EStoreReducerActions.SetPagesTotal:
       return { ...state, total: action.payload };
+    case EStoreReducerActions.SetLimit:
+      return { ...state, limit: action.payload };
     default:
       return state;
   }

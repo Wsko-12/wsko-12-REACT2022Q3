@@ -12,7 +12,7 @@ const CharactersList = memo<ICharactersListProps>(({ characters, openModal = () 
   return (
     <div className={styles.list}>
       {characters.map((character) => (
-        <CharacterCard key={character.id} characterData={character} openModal={openModal} />
+        <CharacterCard key={character._id} characterData={character} openModal={openModal} />
       ))}
     </div>
   );
