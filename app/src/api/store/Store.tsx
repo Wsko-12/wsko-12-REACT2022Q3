@@ -15,6 +15,7 @@ export interface IStore {
   sorting: {
     name: ESortingOrder;
     races: Set<string>;
+    gender: Set<string>;
   };
 }
 
@@ -29,6 +30,7 @@ const initialState: IStore = {
   sorting: {
     name: ESortingOrder.ASC,
     races: new Set(['Hobbit', 'Orc', 'Goblin', 'Human', 'Elf', 'Maiar']),
+    gender: new Set(['Male', 'Female']),
   },
 };
 

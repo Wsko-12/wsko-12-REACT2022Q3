@@ -8,7 +8,7 @@ import { ESortingOrder } from 'ts/enums';
 const CharacterFilters = memo(() => {
   const [store, dispatch] = useContext(StoreContext);
   const {
-    sorting: { name, races },
+    sorting: { name, races, gender },
   } = store;
 
   const allRaces = ['Hobbit', 'Orc', 'Goblin', 'Human', 'Elf', 'Maiar'];
@@ -32,6 +32,17 @@ const CharacterFilters = memo(() => {
     });
   };
 
+  const onGenderChange = (e: SyntheticEvent<HTMLInputElement>) => {
+    const target = e.currentTarget;
+    const { name, checked } = target;
+    checked ? gender.add(name) : gender.delete(name);
+
+    dispatch({
+      type: EStoreReducerActions.SetGenderSelected,
+      payload: gender,
+    });
+  };
+
   return (
     <div style={{ display: 'flex', gap: '30px' }}>
       <SelectInput
@@ -50,6 +61,18 @@ const CharacterFilters = memo(() => {
             label={name}
             onChange={onRaceChange}
             checked={races.has(name)}
+          />
+        ))}
+      </div>
+      <div>
+        <p>Gender: </p>
+        {['Male', 'Female'].map((name) => (
+          <CheckboxInput
+            key={name}
+            name={name}
+            label={name}
+            onChange={onGenderChange}
+            checked={gender.has(name)}
           />
         ))}
       </div>

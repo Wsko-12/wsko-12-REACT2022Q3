@@ -66,12 +66,13 @@ export default class API {
     page: number,
     name: string,
     nameSort: ESortingOrder,
-    races: Set<string>
+    races: Set<string>,
+    gender: Set<string>
   ) => {
     const racesSelected = Array.from(races);
-    const endpoint = `/character?limit=${limit}&page=${page}&name=/${name}/i&sort=name:${nameSort}}&race=${racesSelected.toString()}`;
+    const gendersSelected = Array.from(gender);
+    const endpoint = `/character?limit=${limit}&page=${page}&name=/${name}/i&sort=name:${nameSort}}&race=${racesSelected.toString()}&gender=${gendersSelected.toString()}`;
     const link = `${url}${endpoint}`;
-
     try {
       const data = await this.fetchData<TApiResponse<ICharacter>>(link);
       return data;
