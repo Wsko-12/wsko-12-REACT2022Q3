@@ -11,6 +11,7 @@ export const enum EStoreReducerActions {
   SetLimit = 'SET_LIMIT',
   SetSearch = 'SET_SEARCH',
   SetNameSorting = 'SET_NAME_SORTING',
+  SetRacesSelected = 'SET_RACES_SELECTED',
 }
 
 export type TStoreReducerAction =

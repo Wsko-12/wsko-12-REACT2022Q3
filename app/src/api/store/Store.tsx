@@ -14,6 +14,7 @@ export interface IStore {
   search: string;
   sorting: {
     name: ESortingOrder;
+    races: Set<string>;
   };
 }
 
@@ -27,6 +28,7 @@ const initialState: IStore = {
   search: getSavedSearchQuery(),
   sorting: {
     name: ESortingOrder.ASC,
+    races: new Set(['Hobbit', 'Orc', 'Goblin', 'Human', 'Elf', 'Maiar']),
   },
 };
 

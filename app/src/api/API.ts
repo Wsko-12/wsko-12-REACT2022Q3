@@ -65,9 +65,11 @@ export default class API {
     limit: number,
     page: number,
     name: string,
-    nameSort: ESortingOrder
+    nameSort: ESortingOrder,
+    races: Set<string>
   ) => {
-    const endpoint = `/character?limit=${limit}&page=${page}&name=/${name}/i&sort=name:${nameSort}`;
+    const racesSelected = Array.from(races);
+    const endpoint = `/character?limit=${limit}&page=${page}&name=/${name}/i&sort=name:${nameSort}}&race=${racesSelected.toString()}`;
     const link = `${url}${endpoint}`;
 
     try {

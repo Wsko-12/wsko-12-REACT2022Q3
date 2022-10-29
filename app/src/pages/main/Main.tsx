@@ -35,7 +35,7 @@ const Main = memo(() => {
   const { isLoading, isError, load: loadCharacters } = useDataLoader(API.getCharacters);
   const {
     search,
-    sorting: { name: nameSort },
+    sorting: { name: nameSort, races },
   } = store;
   const { limit, page, total } = store.pagination;
 
@@ -43,9 +43,10 @@ const Main = memo(() => {
     limit: number,
     page: number,
     search: string,
-    nameSort: ESortingOrder
+    nameSort: ESortingOrder,
+    races: Set<string>
   ) => {
-    const response = await loadCharacters(limit, page, search, nameSort);
+    const response = await loadCharacters(limit, page, search, nameSort, races);
     if (response) {
       dispatch({ type: EStoreReducerActions.SetCharacters, payload: response.docs });
       dispatch({ type: EStoreReducerActions.SetPagesTotal, payload: response.pages });
@@ -53,8 +54,8 @@ const Main = memo(() => {
   };
 
   useEffect(() => {
-    fetchCharacters(limit, page, search, nameSort);
-  }, [search, page, limit, nameSort]);
+    fetchCharacters(limit, page, search, nameSort, races);
+  }, [search, page, limit, nameSort, races]);
 
   const onSearch = (search: string) => {
     dispatch({ type: EStoreReducerActions.SetSearch, payload: search });
