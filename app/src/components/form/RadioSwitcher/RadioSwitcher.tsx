@@ -4,7 +4,7 @@ import styles from '../form-components.module.css';
 import InputWithMessage from '../InputWithMessage/InputWithMessage';
 
 interface IRadioSwitcherProps {
-  values: (string | [string, string])[];
+  values: (string | [string, string])[]; // usual value is currentValue - it is options
   name: string;
   label?: string;
   onChange?: (e: React.SyntheticEvent) => void;

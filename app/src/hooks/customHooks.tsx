@@ -4,6 +4,7 @@ import { useState } from 'react';
 export const useInput = (initialValue: any) => {
   const [value, setValue] = useState(initialValue);
 
+  // useCallback
   function onChange(e: React.SyntheticEvent<HTMLInputElement>) {
     const value = e.currentTarget.value;
     setValue(value);
@@ -46,6 +47,7 @@ export const useDataLoader = <T extends (...args: Parameters<T>) => ReturnType<T
 export const useDefaultValidation = (onChangeCb?: (e: React.SyntheticEvent) => void) => {
   const [isValid, setIsValid] = useState(true);
 
+  // useCallback
   function onChange(e: React.SyntheticEvent) {
     setIsValid(true);
 
@@ -54,6 +56,7 @@ export const useDefaultValidation = (onChangeCb?: (e: React.SyntheticEvent) => v
     }
   }
 
+  // useCallback
   function onInvalid() {
     setIsValid(false);
   }

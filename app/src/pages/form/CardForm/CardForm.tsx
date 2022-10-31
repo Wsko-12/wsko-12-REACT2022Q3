@@ -7,10 +7,11 @@ import { CardFormFields } from '../FormPage';
 import { isUserCardData } from 'ts/typeguards';
 import { IUserCardData } from 'ts/interfaces';
 
-export type onChangeCarried = (name: CardFormFields) => (e: React.SyntheticEvent) => void;
+// types From big letter, better with prefix T/I/E
+export type TOnChangeCarried = (name: CardFormFields) => (e: React.SyntheticEvent) => void;
 
 function parseUserCardFormData(formData: FormData) {
-  const data = {
+  return {
     id: Date.now().toString(),
     avatar: formData.get(CardFormFields.avatar) as File,
     name: formData.get(CardFormFields.name),
@@ -25,8 +26,6 @@ function parseUserCardFormData(formData: FormData) {
     notifications: formData.get(CardFormFields.notifications) === 'on',
     consent: formData.get(CardFormFields.consentForPersonalData) === 'on',
   };
-
-  return data;
 }
 
 interface ICardFormProps {
@@ -40,7 +39,8 @@ const CardForm = memo<ICardFormProps>(({ createCard }) => {
 
   // use this carry function in case if I need to do custom validation.
   // I will know which field needs to be checked now
-  const handleChangeCarry: onChangeCarried = (/* name */) => (/* e */) => {
+  // useCallback, now no sense in carry
+  const handleChangeCarry: TOnChangeCarried = (/* name */) => (/* e */) => {
     // to enable the submit button in first typing
     if (!isSubmitted) {
       setIsValid(true);
@@ -53,12 +53,14 @@ const CardForm = memo<ICardFormProps>(({ createCard }) => {
   // I'm using this two handlers because I use default validations on form fields
   // in case when form isn't valid submit event isn't calls
   // calls only click event on button
+  // useCallback
   function handleSubmitClick() {
     setIsSubmitted(true);
     const isFormValid = formRef.current?.checkValidity();
     setIsValid(!!isFormValid);
   }
 
+  // useCallback
   function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;

@@ -61,11 +61,13 @@ const Main = memo(() => {
 
   const { isLoading, isError, load: loadCharacters } = useDataLoader(API.getCharacters);
 
+  // useCallback
   const handleSearch = async (searchQuery: string) => {
     setSearchQuery(searchQuery);
     setPage(1);
   };
 
+  // useCallback
   const changePage = (current: number) => {
     setPage(current);
   };
@@ -93,10 +95,12 @@ const Main = memo(() => {
           isError={isError}
           characters={characters}
           // it's ok or I have to create toggleModal like in prev task?
+          // now ok - with global state you can store just active entity id
           openModal={setModalData}
-          pagination={{ page, total, onChange: changePage }}
+          pagination={{ page, total, onChange: changePage }} // ref property
         />
         {modalData && (
+          // onClose useCallback
           <Modal onClose={() => setModalData(null)}>
             <CharacterModalContent data={modalData} />
           </Modal>

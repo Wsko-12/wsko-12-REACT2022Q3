@@ -4,10 +4,10 @@ import SelectInput from 'components/form/SelectInput/SelectInput';
 import { CardFormFields } from 'pages/form/FormPage';
 import React from 'react';
 import { zipCodeReg } from 'utils/regex/regex';
-import { onChangeCarried } from '../CardForm';
+import { TOnChangeCarried } from '../CardForm';
 
 interface IDeliveryFormProps {
-  onChange: onChangeCarried;
+  onChange: TOnChangeCarried;
 }
 
 export default function Delivery({ onChange }: IDeliveryFormProps) {
@@ -35,7 +35,7 @@ export default function Delivery({ onChange }: IDeliveryFormProps) {
         label="country"
         required={true}
         placeholder="Select country"
-        options={['Belarus', 'Ukraine', 'Georgia', 'Poland', 'Lithuania', 'Latvia']}
+        options={['Belarus', 'Ukraine', 'Georgia', 'Poland', 'Lithuania', 'Latvia']} // const ref property - extract from component
         onChange={onChange(CardFormFields.country)}
         errorMessage="Please, select your country"
         name={CardFormFields.country}

@@ -21,6 +21,7 @@ export enum CardFormFields {
 const FormPage = memo(() => {
   const [cards, setCards] = useState<IUserCardData[]>([]);
 
+  // useCallback
   function createCard(data: IUserCardData) {
     setCards((prev) => [...prev, data]);
   }

@@ -9,8 +9,9 @@ interface IPaginationProps {
   onChange?: (page: number) => void;
   buttonsCount?: number;
 }
-// ?? should I use event delegation
+// ?? should I use event delegation - no sense
 
+// useCallback
 const PrevButtons = memo<Pick<IPaginationProps, 'page' | 'onChange'>>(
   ({ page, onChange = () => {} }) => {
     return (
@@ -26,21 +27,24 @@ const PrevButtons = memo<Pick<IPaginationProps, 'page' | 'onChange'>>(
   }
 );
 
+// useCallback
 const NextButtons = memo<Pick<IPaginationProps, 'page' | 'onChange' | 'total'>>(
   ({ page, total, onChange = () => {} }) => {
+    if (page === total) {
+      return null;
+    }
+
+    // no sense to return empty fragment - same in PrevButtons
     return (
       <>
-        {page !== total && (
-          <>
-            <PaginationButton onClick={() => onChange(page + 1)}>{'>'}</PaginationButton>
-            <PaginationButton onClick={() => onChange(total)}>{'>>'}</PaginationButton>
-          </>
-        )}
+        <PaginationButton onClick={() => onChange(page + 1)}>{'>'}</PaginationButton>
+        <PaginationButton onClick={() => onChange(total)}>{'>>'}</PaginationButton>
       </>
     );
   }
 );
 
+// useCallback
 const InnerButtons = memo<IPaginationProps>(
   ({ buttonsCount = 5, page, total, onChange = () => {} }) => {
     return (

@@ -11,6 +11,7 @@ interface ISearchBarProps {
 const SearchBar = memo<ISearchBarProps>(({ onSearch }) => {
   const search = useInput(getSavedSearchQuery);
 
+  // useCallback
   function handleSubmit(e: React.FormEvent<HTMLInputElement>) {
     e.preventDefault();
     if (onSearch) {

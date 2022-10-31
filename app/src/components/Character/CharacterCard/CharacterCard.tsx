@@ -10,6 +10,7 @@ interface ICharacterCardProps {
 const CharacterCard = memo<ICharacterCardProps>(({ characterData, openModal }) => {
   const { name } = characterData;
   return (
+    //  onClick - useCallback
     <div className={styles.card} onClick={() => openModal(characterData)}>
       <img className={styles.image} src={characterData.image} />
       <span className={styles.title}>{name}</span>

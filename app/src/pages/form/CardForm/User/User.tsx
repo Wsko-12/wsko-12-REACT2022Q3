@@ -5,11 +5,12 @@ import RadioSwitcher from 'components/form/RadioSwitcher/RadioSwitcher';
 import { CardFormFields } from 'pages/form/FormPage';
 import React from 'react';
 import { nameReg, emailReg } from 'utils/regex/regex';
-import { onChangeCarried } from '../CardForm';
+import { TOnChangeCarried } from '../CardForm';
 interface IUserFormProps {
-  onChange: onChangeCarried;
+  onChange: TOnChangeCarried;
 }
 
+// memo
 export default function User({ onChange }: IUserFormProps) {
   return (
     <>

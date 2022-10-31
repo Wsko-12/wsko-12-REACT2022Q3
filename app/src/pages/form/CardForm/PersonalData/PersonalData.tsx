@@ -2,9 +2,9 @@ import CheckboxInput from 'components/form/CheckboxInput/CheckboxInput';
 import RadioSwitcher from 'components/form/RadioSwitcher/RadioSwitcher';
 import { CardFormFields } from 'pages/form/FormPage';
 import React from 'react';
-import { onChangeCarried } from '../CardForm';
+import { TOnChangeCarried } from '../CardForm';
 interface IPersonalDataFormProps {
-  onChange: onChangeCarried;
+  onChange: TOnChangeCarried;
 }
 export default function PersonalData({ onChange }: IPersonalDataFormProps) {
   return (
@@ -24,7 +24,7 @@ export default function PersonalData({ onChange }: IPersonalDataFormProps) {
         values={[
           ['on', 'I want to receive notifications about promo, sales, etc.'],
           ['off', "I don't want to receive notifications about promo, sales, etc."],
-        ]}
+        ]} // ref property - extract
         name={CardFormFields.notifications}
       />
     </>
