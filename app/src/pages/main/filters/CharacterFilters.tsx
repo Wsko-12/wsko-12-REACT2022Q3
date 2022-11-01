@@ -1,5 +1,5 @@
-import { EStoreReducerActions } from 'api/store/reducers/StoreReducer';
-import { StoreContext } from 'api/store/Store';
+import { EStoreReducerActions } from 'store/reducers/StoreReducer';
+import { StoreContext } from 'store/Store';
 import CheckboxInput from 'components/form/CheckboxInput/CheckboxInput';
 import SelectInput from 'components/form/SelectInput/SelectInput';
 import React, { memo, SyntheticEvent, useCallback, useContext } from 'react';

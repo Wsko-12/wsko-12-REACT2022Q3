@@ -6,8 +6,8 @@ import { isUserCardData } from 'ts/typeguards';
 import UserInfo from './UserInfo/UserInfo';
 import DeliveryInfo from './DeliveryInfo/DeliveryInfo';
 import PermissionsInfo from './PermissionsInfo/PermissionsInfo';
-import { StoreContext } from 'api/store/Store';
-import { EStoreReducerActions } from 'api/store/reducers/StoreReducer';
+import { StoreContext } from 'store/Store';
+import { EStoreReducerActions } from 'store/reducers/StoreReducer';
 
 interface ICardFormProps {
   createCard?: (data: IUserCardData) => void;

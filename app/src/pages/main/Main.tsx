@@ -7,8 +7,8 @@ import Pagination from 'components/Pagination/Pagination';
 import Loader from 'components/Loader/Loader';
 import { useDataLoader } from 'hooks/customHooks';
 
-import { StoreContext } from 'api/store/Store';
-import { EStoreReducerActions } from 'api/store/reducers/StoreReducer';
+import { StoreContext } from 'store/Store';
+import { EStoreReducerActions } from 'store/reducers/StoreReducer';
 import SearchBar from 'components/SearchBar/SearchBar';
 import CharacterFilters from './filters/CharacterFilters';
 import { ESortingOrder } from 'ts/enums';

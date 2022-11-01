@@ -1,4 +1,4 @@
-import Store from 'api/store/Store';
+import Store from 'store/Store';
 import Header from 'components/Header/Header';
 import About from 'pages/about/About';
 import CharacterPage from 'pages/characterPage/CharacterPage';

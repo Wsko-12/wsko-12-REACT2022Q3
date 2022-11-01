@@ -1,4 +1,4 @@
-import { StoreContext } from 'api/store/Store';
+import { StoreContext } from 'store/Store';
 import React, { memo, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 

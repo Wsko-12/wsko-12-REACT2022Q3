@@ -1,4 +1,4 @@
-import { IStore } from 'api/store/Store';
+import { IStore } from 'store/Store';
 import { ActionMap } from '../ActionMap/ActionMap';
 import { EStoreReducerActions, TStoreReducerAction } from '../StoreReducer';
 
