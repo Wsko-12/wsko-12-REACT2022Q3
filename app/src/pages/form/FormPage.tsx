@@ -1,6 +1,6 @@
 import UserCardList from 'components/UserCardList/UserCardList';
 import CardForm from 'pages/form/CardFormWithUseForm/CardForm';
-import React, { memo, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { IUserCardData } from 'ts/interfaces';
 import styles from './form.module.css';
 export enum CardFormFields {
@@ -21,9 +21,9 @@ export enum CardFormFields {
 const FormPage = memo(() => {
   const [cards, setCards] = useState<IUserCardData[]>([]);
 
-  function createCard(data: IUserCardData) {
+  const createCard = useCallback((data: IUserCardData) => {
     setCards((prev) => [...prev, data]);
-  }
+  }, []);
 
   return (
     <section className={styles.wrapper}>

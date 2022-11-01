@@ -15,14 +15,13 @@ interface IPaginationProps {
 
 const PrevButtons = memo<Pick<IPaginationProps, 'page' | 'onChange'>>(
   ({ page, onChange = () => {} }) => {
+    if (page === 1) {
+      return null;
+    }
     return (
       <>
-        {page !== 1 && (
-          <>
-            <PaginationButton onClick={() => onChange(1)}>{'<<'}</PaginationButton>
-            <PaginationButton onClick={() => onChange(page - 1)}>{'<'}</PaginationButton>
-          </>
-        )}
+        <PaginationButton onClick={() => onChange(1)}>{'<<'}</PaginationButton>
+        <PaginationButton onClick={() => onChange(page - 1)}>{'<'}</PaginationButton>
       </>
     );
   }
@@ -30,14 +29,13 @@ const PrevButtons = memo<Pick<IPaginationProps, 'page' | 'onChange'>>(
 
 const NextButtons = memo<Pick<IPaginationProps, 'page' | 'onChange' | 'total'>>(
   ({ page, total, onChange = () => {} }) => {
+    if (page === total) {
+      return null;
+    }
     return (
       <>
-        {page !== total && (
-          <>
-            <PaginationButton onClick={() => onChange(page + 1)}>{'>'}</PaginationButton>
-            <PaginationButton onClick={() => onChange(total)}>{'>>'}</PaginationButton>
-          </>
-        )}
+        <PaginationButton onClick={() => onChange(page + 1)}>{'>'}</PaginationButton>
+        <PaginationButton onClick={() => onChange(total)}>{'>>'}</PaginationButton>
       </>
     );
   }

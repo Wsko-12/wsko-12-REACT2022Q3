@@ -1,4 +1,4 @@
-import React, { memo, useContext, useEffect } from 'react';
+import React, { memo, useCallback, useContext, useEffect } from 'react';
 import styles from './main-page.module.css';
 import CharactersList from 'components/Character/CharactersList/CharactersList';
 import { ICharacter } from 'ts/interfaces';
@@ -58,18 +58,21 @@ const Main = memo(() => {
     fetchCharacters(limit, page, search, nameSort, races, gender);
   }, [search, page, limit, nameSort, races, gender]);
 
-  const onSearch = (search: string) => {
-    dispatch({ type: EStoreReducerActions.SetSearch, payload: search });
-    dispatch({ type: EStoreReducerActions.SetCurrentPage, payload: 1 });
-  };
+  const onSearch = useCallback(
+    (search: string) => {
+      dispatch({ type: EStoreReducerActions.SetSearch, payload: search });
+      dispatch({ type: EStoreReducerActions.SetCurrentPage, payload: 1 });
+    },
+    [dispatch]
+  );
 
-  const onPagination = (page: number) => {
+  const onPagination = useCallback((page: number) => {
     dispatch({ type: EStoreReducerActions.SetCurrentPage, payload: page });
-  };
+  }, []);
 
-  const onLimitChange = (limit: string) => {
+  const onLimitChange = useCallback((limit: string) => {
     dispatch({ type: EStoreReducerActions.SetLimit, payload: Number(limit) });
-  };
+  }, []);
 
   return (
     <section className={styles.wrapper}>
