@@ -1,3 +1,4 @@
+import { ICardFormValues } from 'pages/form/CardFormWithUseForm/CardForm';
 import React, { createContext, memo, ReactNode, useReducer } from 'react';
 import { ESortingOrder } from 'ts/enums';
 import { ICharacter } from 'ts/interfaces';
@@ -17,7 +18,10 @@ export interface IStore {
     races: Set<string>;
     gender: Set<string>;
   };
+  form: ICardFormValues;
 }
+
+const today = new Date().toLocaleDateString('en-CA');
 
 const initialState: IStore = {
   characters: null,
@@ -31,6 +35,18 @@ const initialState: IStore = {
     name: ESortingOrder.ASC,
     races: new Set(['Hobbit', 'Orc', 'Goblin', 'Human', 'Elf', 'Maiar']),
     gender: new Set(['Male', 'Female']),
+  },
+  form: {
+    name: '',
+    surname: '',
+    email: '',
+    birthday: today,
+    delivery: today,
+    country: '',
+    zip: '',
+    installBrowsers: true,
+    notifications: '',
+    consent: true,
   },
 };
 

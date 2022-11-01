@@ -3,7 +3,7 @@ import CardForm from 'pages/form/CardFormWithUseForm/CardForm';
 import React, { memo, useCallback, useState } from 'react';
 import { IUserCardData } from 'ts/interfaces';
 import styles from './form.module.css';
-export enum CardFormFields {
+export enum ECardFormFields {
   name = 'name',
   surname = 'surname',
   email = 'email',

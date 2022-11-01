@@ -3,27 +3,27 @@ import styles from './card-form.module.css';
 import User from './User/User';
 import Delivery from './Delivery/Delivery';
 import Personal from './PersonalData/PersonalData';
-import { CardFormFields } from '../FormPage';
+import { ECardFormFields } from '../FormPage';
 import { isUserCardData } from 'ts/typeguards';
 import { IUserCardData } from 'ts/interfaces';
 
-export type onChangeCarried = (name: CardFormFields) => (e: React.SyntheticEvent) => void;
+export type onChangeCarried = (name: ECardFormFields) => (e: React.SyntheticEvent) => void;
 
 function parseUserCardFormData(formData: FormData) {
   const data = {
     id: Date.now().toString(),
-    avatar: formData.get(CardFormFields.avatar) as File,
-    name: formData.get(CardFormFields.name),
-    surname: formData.get(CardFormFields.surname),
-    gender: formData.get(CardFormFields.gender),
-    country: formData.get(CardFormFields.country),
-    email: formData.get(CardFormFields.email),
-    birthday: formData.get(CardFormFields.birthday),
-    delivery: formData.get(CardFormFields.delivery),
-    zip: formData.get(CardFormFields.zip),
-    installBrowsers: formData.get(CardFormFields.installBrowsers) === 'on',
-    notifications: formData.get(CardFormFields.notifications) === 'on',
-    consent: formData.get(CardFormFields.consentForPersonalData) === 'on',
+    avatar: formData.get(ECardFormFields.avatar) as File,
+    name: formData.get(ECardFormFields.name),
+    surname: formData.get(ECardFormFields.surname),
+    gender: formData.get(ECardFormFields.gender),
+    country: formData.get(ECardFormFields.country),
+    email: formData.get(ECardFormFields.email),
+    birthday: formData.get(ECardFormFields.birthday),
+    delivery: formData.get(ECardFormFields.delivery),
+    zip: formData.get(ECardFormFields.zip),
+    installBrowsers: formData.get(ECardFormFields.installBrowsers) === 'on',
+    notifications: formData.get(ECardFormFields.notifications) === 'on',
+    consent: formData.get(ECardFormFields.consentForPersonalData) === 'on',
   };
 
   return data;

@@ -1,7 +1,7 @@
 import DatePicker from 'components/form/DatePicker/DatePicker';
 import FormInput from 'components/form/FormInput/FormInput';
 import SelectInput from 'components/form/SelectInput/SelectInput';
-import { CardFormFields } from 'pages/form/FormPage';
+import { ECardFormFields } from 'pages/form/FormPage';
 import React from 'react';
 import { zipCodeReg } from 'utils/regex/regex';
 import { onChangeCarried } from '../CardForm';
@@ -14,12 +14,12 @@ export default function Delivery({ onChange }: IDeliveryFormProps) {
   return (
     <>
       <FormInput
-        name={CardFormFields.zip}
+        name={ECardFormFields.zip}
         label="zip-code"
         placeholder="000-000"
         pattern={zipCodeReg}
         required={true}
-        onChange={onChange(CardFormFields.zip)}
+        onChange={onChange(ECardFormFields.zip)}
         title="Only numbers or number with dash (example: 000 or 000-000)"
         errorMessage="Invalid zip-code"
       />
@@ -27,8 +27,8 @@ export default function Delivery({ onChange }: IDeliveryFormProps) {
       <DatePicker
         label="delivery date"
         direction="future"
-        name={CardFormFields.delivery}
-        onChange={onChange(CardFormFields.delivery)}
+        name={ECardFormFields.delivery}
+        onChange={onChange(ECardFormFields.delivery)}
       />
 
       <SelectInput
@@ -36,9 +36,9 @@ export default function Delivery({ onChange }: IDeliveryFormProps) {
         required={true}
         placeholder="Select country"
         options={['Belarus', 'Ukraine', 'Georgia', 'Poland', 'Lithuania', 'Latvia']}
-        onChange={onChange(CardFormFields.country)}
+        onChange={onChange(ECardFormFields.country)}
         errorMessage="Please, select your country"
-        name={CardFormFields.country}
+        name={ECardFormFields.country}
       />
     </>
   );

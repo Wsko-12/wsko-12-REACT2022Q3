@@ -1,6 +1,6 @@
 import CheckboxInput from 'components/form/CheckboxInput/CheckboxInput';
 import RadioSwitcher from 'components/form/RadioSwitcher/RadioSwitcher';
-import { CardFormFields } from 'pages/form/FormPage';
+import { ECardFormFields } from 'pages/form/FormPage';
 import React from 'react';
 import { onChangeCarried } from '../CardForm';
 interface IPersonalDataFormProps {
@@ -11,21 +11,21 @@ export default function PersonalData({ onChange }: IPersonalDataFormProps) {
     <>
       <CheckboxInput
         label="I consent to my personal data"
-        name={CardFormFields.consentForPersonalData}
+        name={ECardFormFields.consentForPersonalData}
       />
       <CheckboxInput
         label="Install Amigo and Yandex browser"
-        name={CardFormFields.installBrowsers}
+        name={ECardFormFields.installBrowsers}
         checked={true}
       />
       <RadioSwitcher
-        onChange={onChange(CardFormFields.notifications)}
+        onChange={onChange(ECardFormFields.notifications)}
         label="Notifications"
         values={[
           ['on', 'I want to receive notifications about promo, sales, etc.'],
           ['off', "I don't want to receive notifications about promo, sales, etc."],
         ]}
-        name={CardFormFields.notifications}
+        name={ECardFormFields.notifications}
       />
     </>
   );

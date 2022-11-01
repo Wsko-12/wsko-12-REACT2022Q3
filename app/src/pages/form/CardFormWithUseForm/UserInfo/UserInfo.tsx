@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, SyntheticEvent } from 'react';
 import { FormState, UseFormRegister } from 'react-hook-form';
 import { emailReg, nameReg } from 'utils/regex/regex';
 import { ICardFormValues } from '../CardForm';
@@ -10,8 +10,10 @@ interface IUserInfoProps {
   register: UseFormRegister<ICardFormValues>;
   formState: FormState<ICardFormValues>;
   today: string;
+  onFieldChange: <T extends keyof ICardFormValues>(field: T, value: ICardFormValues[T]) => void;
 }
-const UserInfo = memo<IUserInfoProps>(({ register, formState, today }) => {
+
+const UserInfo = memo<IUserInfoProps>(({ register, formState, today, onFieldChange }) => {
   const { errors } = formState;
 
   return (
@@ -19,19 +21,37 @@ const UserInfo = memo<IUserInfoProps>(({ register, formState, today }) => {
       <TextInput
         label="name"
         isValid={!errors.name}
-        registration={register('name', { required: true, pattern: new RegExp(nameReg) })}
+        registration={register('name', {
+          required: true,
+          pattern: new RegExp(nameReg),
+          onChange: (e: SyntheticEvent<HTMLInputElement>) => {
+            onFieldChange('name', e.currentTarget.value);
+          },
+        })}
       />
 
       <TextInput
         label="surname"
         isValid={!errors.surname}
-        registration={register('surname', { required: true, pattern: new RegExp(nameReg) })}
+        registration={register('surname', {
+          required: true,
+          pattern: new RegExp(nameReg),
+          onChange: (e: SyntheticEvent<HTMLInputElement>) => {
+            onFieldChange('surname', e.currentTarget.value);
+          },
+        })}
       />
 
       <TextInput
         label="email"
         isValid={!errors.email}
-        registration={register('email', { required: true, pattern: new RegExp(emailReg) })}
+        registration={register('email', {
+          required: true,
+          pattern: new RegExp(emailReg),
+          onChange: (e: SyntheticEvent<HTMLInputElement>) => {
+            onFieldChange('email', e.currentTarget.value);
+          },
+        })}
       />
 
       <DatePicker
@@ -41,12 +61,20 @@ const UserInfo = memo<IUserInfoProps>(({ register, formState, today }) => {
           required: true,
           valueAsDate: true,
           max: today, // It's not working
+          onChange: (e: SyntheticEvent<HTMLInputElement>) => {
+            onFieldChange('birthday', e.currentTarget.value);
+          },
         })}
         max={today}
       />
 
       <RadioSwitcher
-        registration={register('gender', { required: true })}
+        registration={register('gender', {
+          required: true,
+          onChange: (e: SyntheticEvent<HTMLInputElement>) => {
+            onFieldChange('gender', e.currentTarget.value as 'male' | 'female');
+          },
+        })}
         values={['male', 'female']}
         isValid={!errors.gender}
         label="gender"
