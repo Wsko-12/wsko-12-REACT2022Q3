@@ -1,11 +1,11 @@
-import { ActionMap } from '../ActionMap/ActionMap';
 import { EStoreReducerActions, TStoreReducerAction } from '../StoreReducer';
 
-type TSearchPayloads = {
-  [EStoreReducerActions.SetSearch]: string;
-};
+interface ISetSearchAction {
+  type: EStoreReducerActions.SetSearch;
+  payload: string;
+}
 
-export type TSearchAction = ActionMap<TSearchPayloads>[keyof TSearchPayloads];
+export type TSearchAction = ISetSearchAction;
 
 const searchReducer = (state: string, action: TStoreReducerAction) => {
   switch (action.type) {

@@ -1,12 +1,12 @@
 import { ICharacter } from 'ts/interfaces';
-import { ActionMap } from '../ActionMap/ActionMap';
 import { EStoreReducerActions, TStoreReducerAction } from '../StoreReducer';
 
-type TCharacterPayloads = {
-  [EStoreReducerActions.SetCharacters]: ICharacter[];
-};
+interface ISetCharactersAction {
+  type: EStoreReducerActions.SetCharacters;
+  payload: ICharacter[];
+}
 
-export type TCharacterAction = ActionMap<TCharacterPayloads>[keyof TCharacterPayloads];
+export type TCharacterAction = ISetCharactersAction;
 
 const characterReducer = (state: ICharacter[] | null, action: TStoreReducerAction) => {
   switch (action.type) {

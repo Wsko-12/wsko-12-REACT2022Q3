@@ -1,15 +1,36 @@
 import { IStore } from 'store/Store';
 import { ESortingOrder } from 'ts/enums';
-import { ActionMap } from '../ActionMap/ActionMap';
 import { EStoreReducerActions, TStoreReducerAction } from '../StoreReducer';
 
-type TSortingPayloads = {
-  [EStoreReducerActions.SetNameSorting]: ESortingOrder;
-  [EStoreReducerActions.SetRacesSelected]: Set<string>;
-  [EStoreReducerActions.SetGenderSelected]: Set<string>;
-};
+// type TSortingPayloads = {
+//   [EStoreReducerActions.SetNameSorting]: ESortingOrder;
+//   [EStoreReducerActions.SetRacesSelected]: Set<string>;
+//   [EStoreReducerActions.SetGenderSelected]: Set<string>;
+// };
 
-export type TSortingAction = ActionMap<TSortingPayloads>[keyof TSortingPayloads];
+// export type TSortingAction = ActionMap<TSortingPayloads>[keyof TSortingPayloads];
+
+// the same as below, but violates KISS
+
+interface ISetNameSortingAction {
+  type: EStoreReducerActions.SetNameSorting;
+  payload: ESortingOrder;
+}
+
+interface ISetRacesSelectedAction {
+  type: EStoreReducerActions.SetRacesSelected;
+  payload: Set<string>;
+}
+
+interface ISetGenderSelectedAction {
+  type: EStoreReducerActions.SetGenderSelected;
+  payload: Set<string>;
+}
+
+export type TSortingAction =
+  | ISetNameSortingAction
+  | ISetRacesSelectedAction
+  | ISetGenderSelectedAction;
 
 const sortingReducer = (state: IStore['sorting'], action: TStoreReducerAction) => {
   switch (action.type) {

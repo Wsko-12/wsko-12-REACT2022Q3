@@ -1,4 +1,3 @@
-import { ICardFormValues } from 'pages/form/CardFormWithUseForm/CardForm';
 import { IStore } from '../Store';
 import characterReducer, { TCharacterAction } from './characters/CharacterReducer';
 import formReducer, { TFormAction } from './form/formReducer';

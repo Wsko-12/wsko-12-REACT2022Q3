@@ -1,14 +1,31 @@
 import { IStore } from 'store/Store';
-import { ActionMap } from '../ActionMap/ActionMap';
 import { EStoreReducerActions, TStoreReducerAction } from '../StoreReducer';
 
-type TPaginationPayloads = {
-  [EStoreReducerActions.SetCurrentPage]: number;
-  [EStoreReducerActions.SetPagesTotal]: number;
-  [EStoreReducerActions.SetLimit]: number;
-};
+// type TPaginationPayloads = {
+//   [EStoreReducerActions.SetCurrentPage]: number;
+//   [EStoreReducerActions.SetPagesTotal]: number;
+//   [EStoreReducerActions.SetLimit]: number;
+// };
+// export type TPaginationAction = ActionMap<TPaginationPayloads>[keyof TPaginationPayloads];
 
-export type TPaginationAction = ActionMap<TPaginationPayloads>[keyof TPaginationPayloads];
+// the same as below, but violates KISS
+
+interface TSetCurrentPageAction {
+  type: EStoreReducerActions.SetCurrentPage;
+  payload: number;
+}
+
+interface TSetPagesTotalAction {
+  type: EStoreReducerActions.SetPagesTotal;
+  payload: number;
+}
+
+interface TSetLimitAction {
+  type: EStoreReducerActions.SetLimit;
+  payload: number;
+}
+
+export type TPaginationAction = TSetCurrentPageAction | TSetPagesTotalAction | TSetLimitAction;
 
 const paginationReducer = (state: IStore['pagination'], action: TStoreReducerAction) => {
   switch (action.type) {
