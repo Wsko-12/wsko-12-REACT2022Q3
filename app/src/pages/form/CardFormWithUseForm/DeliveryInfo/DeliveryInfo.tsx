@@ -1,4 +1,4 @@
-import React, { memo, SyntheticEvent, useContext } from 'react';
+import React, { memo, SyntheticEvent, useCallback, useContext } from 'react';
 import { UseFormRegister, FormState } from 'react-hook-form';
 import { setFormValueAction } from 'store/reducers/form/formReducer';
 import { StoreContext } from 'store/Store';
@@ -16,6 +16,18 @@ const DeliveryInfo = memo<IDeliveryInfoProps>(({ register, formState, today }) =
   const { errors } = formState;
   const [store, dispatch] = useContext(StoreContext);
 
+  const onDeliveryChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
+    dispatch(setFormValueAction('delivery', e.currentTarget.value));
+  }, []);
+
+  const onZipChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
+    dispatch(setFormValueAction('zip', e.currentTarget.value));
+  }, []);
+
+  const onCountryChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
+    dispatch(setFormValueAction('country', e.currentTarget.value));
+  }, []);
+
   return (
     <div>
       <DatePicker
@@ -25,9 +37,7 @@ const DeliveryInfo = memo<IDeliveryInfoProps>(({ register, formState, today }) =
           required: true,
           valueAsDate: true,
           min: today, // It's not working
-          onChange: (e: SyntheticEvent<HTMLInputElement>) => {
-            dispatch(setFormValueAction('delivery', e.currentTarget.value));
-          },
+          onChange: onDeliveryChange,
         })}
         min={today}
       />
@@ -38,9 +48,7 @@ const DeliveryInfo = memo<IDeliveryInfoProps>(({ register, formState, today }) =
         registration={register('zip', {
           required: true,
           pattern: new RegExp(zipCodeReg),
-          onChange: (e: SyntheticEvent<HTMLInputElement>) => {
-            dispatch(setFormValueAction('zip', e.currentTarget.value));
-          },
+          onChange: onZipChange,
         })}
       />
 
@@ -48,9 +56,7 @@ const DeliveryInfo = memo<IDeliveryInfoProps>(({ register, formState, today }) =
         registration={register('country', {
           required: true,
           value: '',
-          onChange: (e: SyntheticEvent<HTMLInputElement>) => {
-            dispatch(setFormValueAction('country', e.currentTarget.value));
-          },
+          onChange: onCountryChange,
         })}
         label="Country"
         options={['Belarus', 'Ukraine', 'Georgia', 'Poland', 'Lithuania', 'Latvia']}

@@ -74,9 +74,10 @@ const CardForm = memo<ICardFormProps>(({ createCard }) => {
     setButtonEnabled(value);
   }, [isSubmitClicked, isDirty, isValid]);
 
+  const onSubmitClick = useCallback(() => setIsSubmitClicked(true), []);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-      {/* if i pass errors from formState they are not shown */}
       <div className={styles.body}>
         <UserInfo register={register} formState={formState} today={today} />
         <PermissionsInfo register={register} formState={formState} />
@@ -88,7 +89,7 @@ const CardForm = memo<ICardFormProps>(({ createCard }) => {
           disabled={!buttonEnabled}
           type="submit"
           className={styles.button}
-          onClick={() => setIsSubmitClicked(true)}
+          onClick={onSubmitClick}
         >
           Submit
         </button>

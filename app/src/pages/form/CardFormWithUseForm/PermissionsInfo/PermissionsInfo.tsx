@@ -1,4 +1,4 @@
-import React, { memo, SyntheticEvent, useContext } from 'react';
+import React, { memo, SyntheticEvent, useCallback, useContext } from 'react';
 import { UseFormRegister, FormState } from 'react-hook-form';
 import { setFormValueAction } from 'store/reducers/form/formReducer';
 import { StoreContext } from 'store/Store';
@@ -15,14 +15,24 @@ const PermissionsInfo = memo<IPermissionsInfoProps>(({ register, formState }) =>
   const { errors } = formState;
   const [store, dispatch] = useContext(StoreContext);
 
+  const onNotificationChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
+    dispatch(setFormValueAction('notifications', e.currentTarget.value));
+  }, []);
+
+  const onInstallBrowsersChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
+    dispatch(setFormValueAction('installBrowsers', e.currentTarget.checked));
+  }, []);
+
+  const onConsentChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
+    dispatch(setFormValueAction('consent', e.currentTarget.checked));
+  }, []);
+
   return (
     <div>
       <RadioSwitcher
         registration={register('notifications', {
           required: true,
-          onChange: (e: SyntheticEvent<HTMLInputElement>) => {
-            dispatch(setFormValueAction('notifications', e.currentTarget.value));
-          },
+          onChange: onNotificationChange,
         })}
         values={[
           'I want to receive notifications about promo, sales, etc.',
@@ -35,18 +45,14 @@ const PermissionsInfo = memo<IPermissionsInfoProps>(({ register, formState }) =>
       <CheckboxInput
         label="Install Amigo and Yandex browser"
         registration={register('installBrowsers', {
-          onChange: (e: SyntheticEvent<HTMLInputElement>) => {
-            dispatch(setFormValueAction('installBrowsers', e.currentTarget.checked));
-          },
+          onChange: onInstallBrowsersChange,
         })}
       />
 
       <CheckboxInput
         label="I consent to my personal data"
         registration={register('consent', {
-          onChange: (e: SyntheticEvent<HTMLInputElement>) => {
-            dispatch(setFormValueAction('consent', e.currentTarget.checked));
-          },
+          onChange: onConsentChange,
         })}
       />
     </div>
