@@ -1,4 +1,3 @@
-import { ICharacter } from 'ts/interfaces';
 import { ActionMap } from '../ActionMap/ActionMap';
 import { EStoreReducerActions, TStoreReducerAction } from '../StoreReducer';
 
@@ -18,3 +17,10 @@ const searchReducer = (state: string, action: TStoreReducerAction) => {
 };
 
 export default searchReducer;
+
+export const setSearchACtion: (payload: string) => TStoreReducerAction = (payload) => {
+  return {
+    type: EStoreReducerActions.SetSearch,
+    payload,
+  };
+};

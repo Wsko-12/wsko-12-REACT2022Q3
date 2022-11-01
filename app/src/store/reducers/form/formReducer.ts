@@ -25,3 +25,16 @@ const formReducer = (state: IStore['form'], action: TStoreReducerAction) => {
 };
 
 export default formReducer;
+
+export const setFormValueAction: <T extends keyof ICardFormValues>(
+  field: T,
+  value: ICardFormValues[T]
+) => TStoreReducerAction = (field, value) => {
+  return {
+    type: EStoreReducerActions.SetFormValue,
+    payload: {
+      field,
+      value,
+    },
+  };
+};

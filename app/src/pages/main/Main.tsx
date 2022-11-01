@@ -8,10 +8,16 @@ import Loader from 'components/Loader/Loader';
 import { useDataLoader } from 'hooks/customHooks';
 
 import { StoreContext } from 'store/Store';
-import { EStoreReducerActions } from 'store/reducers/StoreReducer';
 import SearchBar from 'components/SearchBar/SearchBar';
 import CharacterFilters from './filters/CharacterFilters';
 import { ESortingOrder } from 'ts/enums';
+import { addCharactersAction } from 'store/reducers/characters/CharacterReducer';
+import {
+  setCurrentPageAction,
+  setPageLimitAction,
+  setTotalPagesAction,
+} from 'store/reducers/pagination/paginationReducer';
+import { setSearchACtion } from 'store/reducers/search/SearchReducer';
 
 interface IInnerContentProps {
   isLoading: boolean;
@@ -49,8 +55,8 @@ const Main = memo(() => {
   ) => {
     const response = await loadCharacters(limit, page, search, nameSort, races, gender);
     if (response) {
-      dispatch({ type: EStoreReducerActions.SetCharacters, payload: response.docs });
-      dispatch({ type: EStoreReducerActions.SetPagesTotal, payload: response.pages });
+      dispatch(addCharactersAction(response.docs));
+      dispatch(setTotalPagesAction(response.pages));
     }
   };
 
@@ -60,18 +66,18 @@ const Main = memo(() => {
 
   const onSearch = useCallback(
     (search: string) => {
-      dispatch({ type: EStoreReducerActions.SetSearch, payload: search });
-      dispatch({ type: EStoreReducerActions.SetCurrentPage, payload: 1 });
+      dispatch(setSearchACtion(search));
+      dispatch(setCurrentPageAction(1));
     },
     [dispatch]
   );
 
   const onPagination = useCallback((page: number) => {
-    dispatch({ type: EStoreReducerActions.SetCurrentPage, payload: page });
+    dispatch(setCurrentPageAction(page));
   }, []);
 
   const onLimitChange = useCallback((limit: string) => {
-    dispatch({ type: EStoreReducerActions.SetLimit, payload: Number(limit) });
+    dispatch(setPageLimitAction(Number(limit)));
   }, []);
 
   return (

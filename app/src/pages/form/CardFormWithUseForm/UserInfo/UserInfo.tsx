@@ -1,5 +1,7 @@
-import React, { memo, SyntheticEvent } from 'react';
+import React, { memo, SyntheticEvent, useContext } from 'react';
 import { FormState, UseFormRegister } from 'react-hook-form';
+import { setFormValueAction } from 'store/reducers/form/formReducer';
+import { StoreContext } from 'store/Store';
 import { emailReg, nameReg } from 'utils/regex/regex';
 import { ICardFormValues } from '../CardForm';
 import DatePicker from '../components/DatePicker/DatePicker';
@@ -10,11 +12,11 @@ interface IUserInfoProps {
   register: UseFormRegister<ICardFormValues>;
   formState: FormState<ICardFormValues>;
   today: string;
-  onFieldChange: <T extends keyof ICardFormValues>(field: T, value: ICardFormValues[T]) => void;
 }
 
-const UserInfo = memo<IUserInfoProps>(({ register, formState, today, onFieldChange }) => {
+const UserInfo = memo<IUserInfoProps>(({ register, formState, today }) => {
   const { errors } = formState;
+  const [store, dispatch] = useContext(StoreContext);
 
   return (
     <div>
@@ -25,7 +27,7 @@ const UserInfo = memo<IUserInfoProps>(({ register, formState, today, onFieldChan
           required: true,
           pattern: new RegExp(nameReg),
           onChange: (e: SyntheticEvent<HTMLInputElement>) => {
-            onFieldChange('name', e.currentTarget.value);
+            dispatch(setFormValueAction('name', e.currentTarget.value));
           },
         })}
       />
@@ -37,7 +39,7 @@ const UserInfo = memo<IUserInfoProps>(({ register, formState, today, onFieldChan
           required: true,
           pattern: new RegExp(nameReg),
           onChange: (e: SyntheticEvent<HTMLInputElement>) => {
-            onFieldChange('surname', e.currentTarget.value);
+            dispatch(setFormValueAction('surname', e.currentTarget.value));
           },
         })}
       />
@@ -49,7 +51,7 @@ const UserInfo = memo<IUserInfoProps>(({ register, formState, today, onFieldChan
           required: true,
           pattern: new RegExp(emailReg),
           onChange: (e: SyntheticEvent<HTMLInputElement>) => {
-            onFieldChange('email', e.currentTarget.value);
+            dispatch(setFormValueAction('email', e.currentTarget.value));
           },
         })}
       />
@@ -62,7 +64,7 @@ const UserInfo = memo<IUserInfoProps>(({ register, formState, today, onFieldChan
           valueAsDate: true,
           max: today, // It's not working
           onChange: (e: SyntheticEvent<HTMLInputElement>) => {
-            onFieldChange('birthday', e.currentTarget.value);
+            dispatch(setFormValueAction('birthday', e.currentTarget.value));
           },
         })}
         max={today}
@@ -72,7 +74,7 @@ const UserInfo = memo<IUserInfoProps>(({ register, formState, today, onFieldChan
         registration={register('gender', {
           required: true,
           onChange: (e: SyntheticEvent<HTMLInputElement>) => {
-            onFieldChange('gender', e.currentTarget.value as 'male' | 'female');
+            dispatch(setFormValueAction('gender', e.currentTarget.value as 'male' | 'female'));
           },
         })}
         values={['male', 'female']}

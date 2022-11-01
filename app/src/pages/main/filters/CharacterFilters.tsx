@@ -1,9 +1,13 @@
-import { EStoreReducerActions } from 'store/reducers/StoreReducer';
 import { StoreContext } from 'store/Store';
 import CheckboxInput from 'components/form/CheckboxInput/CheckboxInput';
 import SelectInput from 'components/form/SelectInput/SelectInput';
 import React, { memo, SyntheticEvent, useCallback, useContext } from 'react';
 import { ESortingOrder } from 'ts/enums';
+import {
+  setGendersAction,
+  setNameSortingAction,
+  setRacesAction,
+} from 'store/reducers/sorting/sortingReducer';
 
 const CharacterFilters = memo(() => {
   const [store, dispatch] = useContext(StoreContext);
@@ -15,10 +19,7 @@ const CharacterFilters = memo(() => {
 
   const onNameSortingChange = useCallback((e: SyntheticEvent<HTMLSelectElement>) => {
     const sorting = e.currentTarget.value;
-    dispatch({
-      type: EStoreReducerActions.SetNameSorting,
-      payload: sorting === 'A-Z' ? ESortingOrder.ASC : ESortingOrder.DESC,
-    });
+    dispatch(setNameSortingAction(sorting === 'A-Z' ? ESortingOrder.ASC : ESortingOrder.DESC));
   }, []);
 
   const onRaceChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
@@ -26,10 +27,7 @@ const CharacterFilters = memo(() => {
     const { name, checked } = target;
     checked ? races.add(name) : races.delete(name);
 
-    dispatch({
-      type: EStoreReducerActions.SetRacesSelected,
-      payload: races,
-    });
+    dispatch(setRacesAction(races));
   }, []);
 
   const onGenderChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
@@ -37,10 +35,7 @@ const CharacterFilters = memo(() => {
     const { name, checked } = target;
     checked ? gender.add(name) : gender.delete(name);
 
-    dispatch({
-      type: EStoreReducerActions.SetGenderSelected,
-      payload: gender,
-    });
+    dispatch(setGendersAction(gender));
   }, []);
 
   return (

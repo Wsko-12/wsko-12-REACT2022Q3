@@ -1,5 +1,7 @@
-import React, { memo, SyntheticEvent } from 'react';
+import React, { memo, SyntheticEvent, useContext } from 'react';
 import { UseFormRegister, FormState } from 'react-hook-form';
+import { setFormValueAction } from 'store/reducers/form/formReducer';
+import { StoreContext } from 'store/Store';
 import { ICardFormValues } from '../CardForm';
 import CheckboxInput from '../components/CheckboxInput/CheckboxInput';
 import RadioSwitcher from '../components/RadioSwitcher/RadioSwitcher';
@@ -7,11 +9,11 @@ import RadioSwitcher from '../components/RadioSwitcher/RadioSwitcher';
 interface IPermissionsInfoProps {
   register: UseFormRegister<ICardFormValues>;
   formState: FormState<ICardFormValues>;
-  onFieldChange: <T extends keyof ICardFormValues>(field: T, value: ICardFormValues[T]) => void;
 }
 
-const PermissionsInfo = memo<IPermissionsInfoProps>(({ register, formState, onFieldChange }) => {
+const PermissionsInfo = memo<IPermissionsInfoProps>(({ register, formState }) => {
   const { errors } = formState;
+  const [store, dispatch] = useContext(StoreContext);
 
   return (
     <div>
@@ -19,7 +21,7 @@ const PermissionsInfo = memo<IPermissionsInfoProps>(({ register, formState, onFi
         registration={register('notifications', {
           required: true,
           onChange: (e: SyntheticEvent<HTMLInputElement>) => {
-            onFieldChange('notifications', e.currentTarget.value);
+            dispatch(setFormValueAction('notifications', e.currentTarget.value));
           },
         })}
         values={[
@@ -34,7 +36,7 @@ const PermissionsInfo = memo<IPermissionsInfoProps>(({ register, formState, onFi
         label="Install Amigo and Yandex browser"
         registration={register('installBrowsers', {
           onChange: (e: SyntheticEvent<HTMLInputElement>) => {
-            onFieldChange('installBrowsers', e.currentTarget.checked);
+            dispatch(setFormValueAction('installBrowsers', e.currentTarget.checked));
           },
         })}
       />
@@ -43,7 +45,7 @@ const PermissionsInfo = memo<IPermissionsInfoProps>(({ register, formState, onFi
         label="I consent to my personal data"
         registration={register('consent', {
           onChange: (e: SyntheticEvent<HTMLInputElement>) => {
-            onFieldChange('consent', e.currentTarget.checked);
+            dispatch(setFormValueAction('consent', e.currentTarget.checked));
           },
         })}
       />

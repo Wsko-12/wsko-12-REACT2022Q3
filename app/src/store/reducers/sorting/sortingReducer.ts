@@ -25,3 +25,24 @@ const sortingReducer = (state: IStore['sorting'], action: TStoreReducerAction) =
 };
 
 export default sortingReducer;
+
+export const setNameSortingAction: (payload: ESortingOrder) => TStoreReducerAction = (payload) => {
+  return {
+    type: EStoreReducerActions.SetNameSorting,
+    payload,
+  };
+};
+
+export const setRacesAction: (payload: Set<string>) => TStoreReducerAction = (payload) => {
+  return {
+    type: EStoreReducerActions.SetRacesSelected,
+    payload,
+  };
+};
+
+export const setGendersAction: (payload: Set<string>) => TStoreReducerAction = (payload) => {
+  return {
+    type: EStoreReducerActions.SetGenderSelected,
+    payload,
+  };
+};

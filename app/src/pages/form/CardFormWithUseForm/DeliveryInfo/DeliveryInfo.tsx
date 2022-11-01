@@ -1,5 +1,7 @@
-import React, { memo, SyntheticEvent } from 'react';
+import React, { memo, SyntheticEvent, useContext } from 'react';
 import { UseFormRegister, FormState } from 'react-hook-form';
+import { setFormValueAction } from 'store/reducers/form/formReducer';
+import { StoreContext } from 'store/Store';
 import { zipCodeReg } from 'utils/regex/regex';
 import { ICardFormValues } from '../CardForm';
 import DatePicker from '../components/DatePicker/DatePicker';
@@ -9,10 +11,10 @@ interface IDeliveryInfoProps {
   register: UseFormRegister<ICardFormValues>;
   formState: FormState<ICardFormValues>;
   today: string;
-  onFieldChange: <T extends keyof ICardFormValues>(field: T, value: ICardFormValues[T]) => void;
 }
-const DeliveryInfo = memo<IDeliveryInfoProps>(({ register, formState, today, onFieldChange }) => {
+const DeliveryInfo = memo<IDeliveryInfoProps>(({ register, formState, today }) => {
   const { errors } = formState;
+  const [store, dispatch] = useContext(StoreContext);
 
   return (
     <div>
@@ -24,7 +26,7 @@ const DeliveryInfo = memo<IDeliveryInfoProps>(({ register, formState, today, onF
           valueAsDate: true,
           min: today, // It's not working
           onChange: (e: SyntheticEvent<HTMLInputElement>) => {
-            onFieldChange('delivery', e.currentTarget.value);
+            dispatch(setFormValueAction('delivery', e.currentTarget.value));
           },
         })}
         min={today}
@@ -37,7 +39,7 @@ const DeliveryInfo = memo<IDeliveryInfoProps>(({ register, formState, today, onF
           required: true,
           pattern: new RegExp(zipCodeReg),
           onChange: (e: SyntheticEvent<HTMLInputElement>) => {
-            onFieldChange('zip', e.currentTarget.value);
+            dispatch(setFormValueAction('zip', e.currentTarget.value));
           },
         })}
       />
@@ -47,7 +49,7 @@ const DeliveryInfo = memo<IDeliveryInfoProps>(({ register, formState, today, onF
           required: true,
           value: '',
           onChange: (e: SyntheticEvent<HTMLInputElement>) => {
-            onFieldChange('country', e.currentTarget.value);
+            dispatch(setFormValueAction('country', e.currentTarget.value));
           },
         })}
         label="Country"

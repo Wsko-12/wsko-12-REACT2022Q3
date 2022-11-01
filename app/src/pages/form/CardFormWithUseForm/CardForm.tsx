@@ -46,7 +46,7 @@ const parseFormValues = (values: ICardFormValues) => {
 
 const CardForm = memo<ICardFormProps>(({ createCard }) => {
   const today = new Date().toLocaleDateString('en-CA');
-  const [store, dispatch] = useContext(StoreContext);
+  const [store] = useContext(StoreContext);
 
   const defaultValues = store.form;
 
@@ -74,36 +74,13 @@ const CardForm = memo<ICardFormProps>(({ createCard }) => {
     setButtonEnabled(value);
   }, [isSubmitClicked, isDirty, isValid]);
 
-  const onFieldChange = useCallback(
-    <T extends keyof ICardFormValues>(field: T, value: ICardFormValues[T]) => {
-      dispatch({
-        type: EStoreReducerActions.SetFormValue,
-        payload: {
-          field,
-          value,
-        },
-      });
-    },
-    []
-  );
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
       {/* if i pass errors from formState they are not shown */}
       <div className={styles.body}>
-        <UserInfo
-          register={register}
-          formState={formState}
-          today={today}
-          onFieldChange={onFieldChange}
-        />
-        <PermissionsInfo register={register} formState={formState} onFieldChange={onFieldChange} />
-        <DeliveryInfo
-          register={register}
-          formState={formState}
-          today={today}
-          onFieldChange={onFieldChange}
-        />
+        <UserInfo register={register} formState={formState} today={today} />
+        <PermissionsInfo register={register} formState={formState} />
+        <DeliveryInfo register={register} formState={formState} today={today} />
       </div>
 
       <footer className={styles.footer}>

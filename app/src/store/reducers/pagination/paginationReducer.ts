@@ -24,3 +24,24 @@ const paginationReducer = (state: IStore['pagination'], action: TStoreReducerAct
 };
 
 export default paginationReducer;
+
+export const setCurrentPageAction: (payload: number) => TStoreReducerAction = (payload) => {
+  return {
+    type: EStoreReducerActions.SetCurrentPage,
+    payload,
+  };
+};
+
+export const setTotalPagesAction: (payload: number) => TStoreReducerAction = (payload) => {
+  return {
+    type: EStoreReducerActions.SetPagesTotal,
+    payload,
+  };
+};
+
+export const setPageLimitAction: (payload: number) => TStoreReducerAction = (payload) => {
+  return {
+    type: EStoreReducerActions.SetLimit,
+    payload,
+  };
+};

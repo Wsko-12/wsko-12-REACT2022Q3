@@ -18,3 +18,8 @@ const characterReducer = (state: ICharacter[] | null, action: TStoreReducerActio
 };
 
 export default characterReducer;
+
+export const addCharactersAction: (payload: ICharacter[]) => TStoreReducerAction = (payload) => ({
+  type: EStoreReducerActions.SetCharacters,
+  payload,
+});
