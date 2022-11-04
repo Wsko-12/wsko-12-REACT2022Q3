@@ -42,6 +42,7 @@ const Main = memo(() => {
   const {
     search,
     sorting: { name: nameSort, races, gender },
+    characters,
   } = store;
   const { limit, page, total } = store.pagination;
 
@@ -61,8 +62,10 @@ const Main = memo(() => {
   };
 
   useEffect(() => {
-    fetchCharacters(limit, page, search, nameSort, races, gender);
-  }, [search, page, limit, nameSort, races, gender]);
+    if (!characters) {
+      fetchCharacters(limit, page, search, nameSort, races, gender);
+    }
+  }, [search, page, limit, nameSort, races, gender, characters]);
 
   const onSearch = useCallback(
     (search: string) => {
