@@ -1,41 +1,41 @@
-import { StoreContext } from 'store/Store';
 import CheckboxInput from 'components/form/CheckboxInput/CheckboxInput';
 import SelectInput from 'components/form/SelectInput/SelectInput';
-import React, { memo, SyntheticEvent, useCallback, useContext } from 'react';
+import React, { memo, SyntheticEvent, useCallback, useEffect } from 'react';
 import { ESortingOrder } from 'ts/enums';
+
 import {
-  setGendersAction,
-  setNameSortingAction,
-  setRacesAction,
-} from 'store/reducers/sorting/sortingReducer';
+  addGender,
+  addRace,
+  filtersSelector,
+  removeGender,
+  removeRace,
+  setSortingOrder,
+} from 'store-redux/slices/filtersSlice';
+import { useAppDispatch, useAppSelector } from 'store-redux/hooks';
+
+const allRaces = ['Hobbit', 'Orc', 'Goblin', 'Human', 'Elf', 'Maiar'];
+const sortingOptions = ['A-Z', 'Z-A'];
+const genders = ['Male', 'Female'];
 
 const CharacterFilters = memo(() => {
-  const [store, dispatch] = useContext(StoreContext);
-  const {
-    sorting: { name, races, gender },
-  } = store;
-
-  const allRaces = ['Hobbit', 'Orc', 'Goblin', 'Human', 'Elf', 'Maiar'];
+  const dispatch = useAppDispatch();
+  const { races, gender, name } = useAppSelector(filtersSelector);
 
   const onNameSortingChange = useCallback((e: SyntheticEvent<HTMLSelectElement>) => {
     const sorting = e.currentTarget.value;
-    dispatch(setNameSortingAction(sorting === 'A-Z' ? ESortingOrder.ASC : ESortingOrder.DESC));
+    dispatch(setSortingOrder(sorting === 'A-Z' ? ESortingOrder.ASC : ESortingOrder.DESC));
   }, []);
 
   const onRaceChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     const { name, checked } = target;
-    checked ? races.add(name) : races.delete(name);
-
-    dispatch(setRacesAction(races));
+    dispatch(checked ? addRace(name) : removeRace(name));
   }, []);
 
   const onGenderChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
     const target = e.currentTarget;
     const { name, checked } = target;
-    checked ? gender.add(name) : gender.delete(name);
-
-    dispatch(setGendersAction(gender));
+    dispatch(checked ? addGender(name) : removeGender(name));
   }, []);
 
   return (
@@ -43,7 +43,7 @@ const CharacterFilters = memo(() => {
       <SelectInput
         label="Sort by name"
         placeholder="Select sort"
-        options={['A-Z', 'Z-A']}
+        options={sortingOptions}
         defaultValue={name === ESortingOrder.ASC ? 'A-Z' : 'Z-A'}
         onChange={onNameSortingChange}
       />
@@ -55,19 +55,19 @@ const CharacterFilters = memo(() => {
             name={name}
             label={name}
             onChange={onRaceChange}
-            checked={races.has(name)}
+            checked={races.includes(name)}
           />
         ))}
       </div>
       <div>
         <p>Gender: </p>
-        {['Male', 'Female'].map((name) => (
+        {genders.map((name) => (
           <CheckboxInput
             key={name}
             name={name}
             label={name}
             onChange={onGenderChange}
-            checked={gender.has(name)}
+            checked={gender.includes(name)}
           />
         ))}
       </div>

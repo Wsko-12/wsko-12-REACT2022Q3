@@ -45,6 +45,8 @@ import { ICharacter, TApiResponse } from 'ts/interfaces';
 // }
 
 const url = 'https://the-one-api.dev/v2';
+// dfQrz_hlA_t5EU1LbcIa
+// bGXaFQ6sAakgf2HO6b3K
 
 export default class API {
   private static async fetchData<T>(url: string): Promise<T> {
@@ -66,8 +68,8 @@ export default class API {
     page: number,
     name: string,
     nameSort: ESortingOrder,
-    races: Set<string>,
-    gender: Set<string>
+    races: string[],
+    gender: string[]
   ) => {
     const racesSelected = Array.from(races);
     const gendersSelected = Array.from(gender);

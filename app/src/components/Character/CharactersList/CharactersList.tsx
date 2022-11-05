@@ -11,9 +11,11 @@ interface ICharactersListProps {
 const CharactersList = memo<ICharactersListProps>(({ characters, openModal = () => {} }) => {
   return (
     <div className={styles.list}>
-      {characters.map((character) => (
-        <CharacterCard key={character._id} characterData={character} openModal={openModal} />
-      ))}
+      {characters.length === 0
+        ? 'Nothing found'
+        : characters.map((character) => (
+            <CharacterCard key={character._id} characterData={character} openModal={openModal} />
+          ))}
     </div>
   );
 });
