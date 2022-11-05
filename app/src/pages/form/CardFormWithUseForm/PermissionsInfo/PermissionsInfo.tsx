@@ -1,7 +1,7 @@
-import React, { memo, SyntheticEvent, useCallback, useContext } from 'react';
+import React, { memo, SyntheticEvent, useCallback } from 'react';
 import { UseFormRegister, FormState } from 'react-hook-form';
-import { setFormValueAction } from 'store/reducers/form/formReducer';
-import { StoreContext } from 'store/Store';
+import { useAppDispatch } from 'store-redux/hooks';
+import { setBooleanValue, setStringValue } from 'store-redux/slices/formSlice';
 import { ICardFormValues } from '../CardForm';
 import CheckboxInput from '../components/CheckboxInput/CheckboxInput';
 import RadioSwitcher from '../components/RadioSwitcher/RadioSwitcher';
@@ -13,18 +13,25 @@ interface IPermissionsInfoProps {
 
 const PermissionsInfo = memo<IPermissionsInfoProps>(({ register, formState }) => {
   const { errors } = formState;
-  const [store, dispatch] = useContext(StoreContext);
+  const dispatch = useAppDispatch();
 
-  const onNotificationChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
-    dispatch(setFormValueAction('notifications', e.currentTarget.value));
-  }, []);
+  const onChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
+    const field = e.currentTarget.name;
 
-  const onInstallBrowsersChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
-    dispatch(setFormValueAction('installBrowsers', e.currentTarget.checked));
-  }, []);
-
-  const onConsentChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
-    dispatch(setFormValueAction('consent', e.currentTarget.checked));
+    switch (field) {
+      case 'notifications':
+        dispatch(setStringValue({ field, value: e.currentTarget.value }));
+        break;
+      case 'consent':
+      case 'installBrowsers':
+        dispatch(
+          setBooleanValue({
+            field,
+            value: e.currentTarget.checked,
+          })
+        );
+        break;
+    }
   }, []);
 
   return (
@@ -32,7 +39,7 @@ const PermissionsInfo = memo<IPermissionsInfoProps>(({ register, formState }) =>
       <RadioSwitcher
         registration={register('notifications', {
           required: true,
-          onChange: onNotificationChange,
+          onChange: onChange,
         })}
         values={[
           'I want to receive notifications about promo, sales, etc.',
@@ -45,14 +52,14 @@ const PermissionsInfo = memo<IPermissionsInfoProps>(({ register, formState }) =>
       <CheckboxInput
         label="Install Amigo and Yandex browser"
         registration={register('installBrowsers', {
-          onChange: onInstallBrowsersChange,
+          onChange: onChange,
         })}
       />
 
       <CheckboxInput
         label="I consent to my personal data"
         registration={register('consent', {
-          onChange: onConsentChange,
+          onChange: onChange,
         })}
       />
     </div>

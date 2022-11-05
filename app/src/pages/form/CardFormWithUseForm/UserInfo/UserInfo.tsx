@@ -1,7 +1,7 @@
-import React, { memo, SyntheticEvent, useCallback, useContext } from 'react';
+import React, { memo, SyntheticEvent, useCallback } from 'react';
 import { FormState, UseFormRegister } from 'react-hook-form';
-import { setFormValueAction } from 'store/reducers/form/formReducer';
-import { StoreContext } from 'store/Store';
+import { useAppDispatch } from 'store-redux/hooks';
+import { isFormFieldWithString, setStringValue } from 'store-redux/slices/formSlice';
 import { emailReg, nameReg } from 'utils/regex/regex';
 import { ICardFormValues } from '../CardForm';
 import DatePicker from '../components/DatePicker/DatePicker';
@@ -13,29 +13,17 @@ interface IUserInfoProps {
   formState: FormState<ICardFormValues>;
   today: string;
 }
+const genders = ['male', 'female'];
 
 const UserInfo = memo<IUserInfoProps>(({ register, formState, today }) => {
   const { errors } = formState;
-  const [store, dispatch] = useContext(StoreContext);
+  const dispatch = useAppDispatch();
 
-  const onNameChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
-    dispatch(setFormValueAction('name', e.currentTarget.value));
-  }, []);
-
-  const onSurnameChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
-    dispatch(setFormValueAction('surname', e.currentTarget.value));
-  }, []);
-
-  const onEmailChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
-    dispatch(setFormValueAction('email', e.currentTarget.value));
-  }, []);
-
-  const onBirthdayChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
-    dispatch(setFormValueAction('birthday', e.currentTarget.value));
-  }, []);
-
-  const onGenderChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
-    dispatch(setFormValueAction('gender', e.currentTarget.value as 'male' | 'female'));
+  const onChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
+    const { name: field, value } = e.currentTarget;
+    if (isFormFieldWithString(field)) {
+      dispatch(setStringValue({ field, value }));
+    }
   }, []);
 
   return (
@@ -46,7 +34,7 @@ const UserInfo = memo<IUserInfoProps>(({ register, formState, today }) => {
         registration={register('name', {
           required: true,
           pattern: new RegExp(nameReg),
-          onChange: onNameChange,
+          onChange: onChange,
         })}
       />
 
@@ -56,7 +44,7 @@ const UserInfo = memo<IUserInfoProps>(({ register, formState, today }) => {
         registration={register('surname', {
           required: true,
           pattern: new RegExp(nameReg),
-          onChange: onSurnameChange,
+          onChange: onChange,
         })}
       />
 
@@ -66,7 +54,7 @@ const UserInfo = memo<IUserInfoProps>(({ register, formState, today }) => {
         registration={register('email', {
           required: true,
           pattern: new RegExp(emailReg),
-          onChange: onEmailChange,
+          onChange: onChange,
         })}
       />
 
@@ -77,7 +65,7 @@ const UserInfo = memo<IUserInfoProps>(({ register, formState, today }) => {
           required: true,
           valueAsDate: true,
           max: today, // It's not working
-          onChange: onBirthdayChange,
+          onChange: onChange,
         })}
         max={today}
       />
@@ -85,9 +73,9 @@ const UserInfo = memo<IUserInfoProps>(({ register, formState, today }) => {
       <RadioSwitcher
         registration={register('gender', {
           required: true,
-          onChange: onGenderChange,
+          onChange: onChange,
         })}
-        values={['male', 'female']}
+        values={genders}
         isValid={!errors.gender}
         label="gender"
       />

@@ -2,14 +2,16 @@ import { Action, configureStore, ThunkDispatch } from '@reduxjs/toolkit';
 import charactersReducer from './slices/characterSlice';
 import searchReducer from './slices/searchSlice';
 import filtersReducer from './slices/filtersSlice';
-import paginationSlice from './slices/paginationSlice';
+import paginationReducer from './slices/paginationSlice';
+import formReducer from './slices/formSlice';
 
 export const store = configureStore({
   reducer: {
     characters: charactersReducer,
     search: searchReducer,
     filters: filtersReducer,
-    pagination: paginationSlice,
+    pagination: paginationReducer,
+    form: formReducer,
   },
 });
 

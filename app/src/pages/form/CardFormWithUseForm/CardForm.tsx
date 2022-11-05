@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useContext, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IUserCardData } from 'ts/interfaces';
 import styles from './card-form.module.css';
@@ -6,12 +6,14 @@ import { isUserCardData } from 'ts/typeguards';
 import UserInfo from './UserInfo/UserInfo';
 import DeliveryInfo from './DeliveryInfo/DeliveryInfo';
 import PermissionsInfo from './PermissionsInfo/PermissionsInfo';
-import { StoreContext } from 'store/Store';
-import { EStoreReducerActions } from 'store/reducers/StoreReducer';
+import { useAppSelector } from 'store-redux/hooks';
+import { formSelector } from 'store-redux/slices/formSlice';
 
 interface ICardFormProps {
   createCard?: (data: IUserCardData) => void;
 }
+
+export type TGender = 'male' | 'female';
 
 export interface ICardFormValues {
   name: string;
@@ -20,7 +22,7 @@ export interface ICardFormValues {
   birthday: string | Date;
   delivery: string | Date;
   avatar?: FileList;
-  gender?: 'male' | 'female';
+  gender?: TGender;
 
   country: string;
   zip: string;
@@ -46,9 +48,8 @@ const parseFormValues = (values: ICardFormValues) => {
 
 const CardForm = memo<ICardFormProps>(({ createCard }) => {
   const today = new Date().toLocaleDateString('en-CA');
-  const [store] = useContext(StoreContext);
 
-  const defaultValues = store.form;
+  const defaultValues = useAppSelector(formSelector);
 
   const { handleSubmit, register, reset, formState } = useForm<ICardFormValues>({ defaultValues });
   const { isDirty, isValid, isSubmitSuccessful } = formState;

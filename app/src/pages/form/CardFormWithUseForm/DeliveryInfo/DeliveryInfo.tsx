@@ -1,7 +1,7 @@
-import React, { memo, SyntheticEvent, useCallback, useContext } from 'react';
+import React, { memo, SyntheticEvent, useCallback } from 'react';
 import { UseFormRegister, FormState } from 'react-hook-form';
-import { setFormValueAction } from 'store/reducers/form/formReducer';
-import { StoreContext } from 'store/Store';
+import { useAppDispatch } from 'store-redux/hooks';
+import { isFormFieldWithString, setStringValue } from 'store-redux/slices/formSlice';
 import { zipCodeReg } from 'utils/regex/regex';
 import { ICardFormValues } from '../CardForm';
 import DatePicker from '../components/DatePicker/DatePicker';
@@ -14,18 +14,13 @@ interface IDeliveryInfoProps {
 }
 const DeliveryInfo = memo<IDeliveryInfoProps>(({ register, formState, today }) => {
   const { errors } = formState;
-  const [store, dispatch] = useContext(StoreContext);
+  const dispatch = useAppDispatch();
 
-  const onDeliveryChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
-    dispatch(setFormValueAction('delivery', e.currentTarget.value));
-  }, []);
-
-  const onZipChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
-    dispatch(setFormValueAction('zip', e.currentTarget.value));
-  }, []);
-
-  const onCountryChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
-    dispatch(setFormValueAction('country', e.currentTarget.value));
+  const onChange = useCallback((e: SyntheticEvent<HTMLInputElement>) => {
+    const { name: field, value } = e.currentTarget;
+    if (isFormFieldWithString(field)) {
+      dispatch(setStringValue({ field, value }));
+    }
   }, []);
 
   return (
@@ -37,7 +32,7 @@ const DeliveryInfo = memo<IDeliveryInfoProps>(({ register, formState, today }) =
           required: true,
           valueAsDate: true,
           min: today, // It's not working
-          onChange: onDeliveryChange,
+          onChange: onChange,
         })}
         min={today}
       />
@@ -48,7 +43,7 @@ const DeliveryInfo = memo<IDeliveryInfoProps>(({ register, formState, today }) =
         registration={register('zip', {
           required: true,
           pattern: new RegExp(zipCodeReg),
-          onChange: onZipChange,
+          onChange: onChange,
         })}
       />
 
@@ -56,7 +51,7 @@ const DeliveryInfo = memo<IDeliveryInfoProps>(({ register, formState, today }) =
         registration={register('country', {
           required: true,
           value: '',
-          onChange: onCountryChange,
+          onChange: onChange,
         })}
         label="Country"
         options={['Belarus', 'Ukraine', 'Georgia', 'Poland', 'Lithuania', 'Latvia']}
