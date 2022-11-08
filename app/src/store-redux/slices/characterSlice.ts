@@ -1,7 +1,14 @@
-import { AnyAction, createSlice, PayloadAction, ThunkAction } from '@reduxjs/toolkit';
+import {
+  AnyAction,
+  createAsyncThunk,
+  createSlice,
+  PayloadAction,
+  ThunkAction,
+} from '@reduxjs/toolkit';
 import API from 'api/API';
-import { RootState } from 'store-redux';
-import { ICharacter } from 'ts/interfaces';
+import { AppDispatch, RootState } from 'store-redux';
+import { ESortingOrder } from 'ts/enums';
+import { ICharacter, TApiResponse } from 'ts/interfaces';
 import { setPage, setTotal } from './paginationSlice';
 
 interface ICharactersState {
@@ -36,29 +43,35 @@ export const charactersSlice = createSlice({
       state.isError = true;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchCharacters.pending, (state) => {
+      console.log('pending');
+      state.isLoading = true;
+    });
+    builder.addCase(fetchCharacters.fulfilled, (state, action) => {
+      state.characters = action.payload?.docs || [];
+      state.isLoading = false;
+    });
+    builder.addCase(fetchCharacters.rejected, (state) => {
+      state.isLoading = false;
+      state.isError = true;
+    });
+  },
 });
 
 export const { setCharacters, setError, setLoading } = charactersSlice.actions;
 export const selectCharacters = (state: RootState) => state.characters;
 
-export const fetchCharacters = (): ThunkAction<void, RootState, unknown, AnyAction> => {
-  return async (dispatch, getState) => {
-    const search = getState().search.value;
-    const { limit, page } = getState().pagination;
-    const { gender, name, races } = getState().filters;
-    dispatch(setLoading());
+export const fetchCharacters = createAsyncThunk(
+  'characters/fetchCharacters',
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    const search = state.search.value;
+    const { limit, page } = state.pagination;
+    const { gender, name, races } = state.filters;
     const response = await API.getCharacters(limit, page, search, name, races, gender);
-    if (response) {
-      if (response.pages < page) {
-        dispatch(setPage(response.pages));
-        return;
-      }
-      dispatch(setCharacters(response.docs));
-      dispatch(setTotal(response.pages));
-    } else {
-      dispatch(setError());
-    }
-  };
-};
+    return response;
+  }
+);
 
 export default charactersSlice.reducer;

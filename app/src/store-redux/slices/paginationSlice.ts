@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'store-redux';
+import { fetchCharacters } from './characterSlice';
 
 interface IPaginationState {
   page: number;
@@ -26,6 +27,14 @@ const paginationSlice = createSlice({
     setTotal: (state, action: PayloadAction<number>) => {
       state.total = action.payload;
     },
+  },
+
+  extraReducers: (builder) => {
+    builder.addCase(fetchCharacters.fulfilled, (state, action) => {
+      state.page = action.payload?.page || 1;
+      state.limit = action.payload?.limit || 1;
+      state.total = action.payload?.pages || 1;
+    });
   },
 });
 
