@@ -1,10 +1,4 @@
-import {
-  createAsyncThunk,
-  createEntityAdapter,
-  createSlice,
-  EntityId,
-  PayloadAction,
-} from '@reduxjs/toolkit';
+import { createAsyncThunk, createEntityAdapter, createSlice, EntityId } from '@reduxjs/toolkit';
 import API from 'api/API';
 import { RootState } from 'store-redux';
 import { ICharacter } from 'ts/interfaces';
