@@ -1,15 +1,7 @@
-import {
-  AnyAction,
-  createAsyncThunk,
-  createSlice,
-  PayloadAction,
-  ThunkAction,
-} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import API from 'api/API';
-import { AppDispatch, RootState } from 'store-redux';
-import { ESortingOrder } from 'ts/enums';
-import { ICharacter, TApiResponse } from 'ts/interfaces';
-import { setPage, setTotal } from './paginationSlice';
+import { RootState } from 'store-redux';
+import { ICharacter } from 'ts/interfaces';
 
 interface ICharactersState {
   characters: ICharacter[];
@@ -45,7 +37,6 @@ export const charactersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCharacters.pending, (state) => {
-      console.log('pending');
       state.isLoading = true;
     });
     builder.addCase(fetchCharacters.fulfilled, (state, action) => {

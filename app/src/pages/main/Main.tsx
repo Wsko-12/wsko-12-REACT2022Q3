@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect } from 'react';
+import React, { memo, useCallback } from 'react';
 import styles from './main-page.module.css';
 import CharactersList from 'components/Character/CharactersList/CharactersList';
 import { ICharacter } from 'ts/interfaces';
@@ -7,10 +7,9 @@ import Loader from 'components/Loader/Loader';
 
 import SearchBar from 'components/SearchBar/SearchBar';
 import CharacterFilters from './filters/CharacterFilters';
-import { useAppDispatch, useAppSelector } from 'store-redux/hooks';
-import { fetchCharacters, selectCharacters } from 'store-redux/slices/characterSlice';
+import { useAppDispatch, useAppSelector, useFirstDownload } from 'store-redux/hooks';
+import { selectCharacters } from 'store-redux/slices/characterSlice';
 import { selectSearch, setSearch } from 'store-redux/slices/searchSlice';
-import { filtersSelector } from 'store-redux/slices/filtersSlice';
 import { paginationSelector, setLimit, setPage } from 'store-redux/slices/paginationSlice';
 
 interface IInnerContentProps {
@@ -34,20 +33,17 @@ const Main = memo(() => {
   const { characters, isLoading, isError } = useAppSelector(selectCharacters);
   const { page, total, limit } = useAppSelector(paginationSelector);
   const search = useAppSelector(selectSearch);
-  const { races, gender, name } = useAppSelector(filtersSelector);
 
   const dispatch = useAppDispatch();
+
+  useFirstDownload();
+
   const onSearch = useCallback(
     (search: string) => {
-      dispatch(setPage(1));
       dispatch(setSearch(search));
     },
     [dispatch]
   );
-
-  useEffect(() => {
-    dispatch(fetchCharacters());
-  }, [search, races, gender, name, page, limit]);
 
   const onPagination = useCallback((page: number) => {
     dispatch(setPage(page));
