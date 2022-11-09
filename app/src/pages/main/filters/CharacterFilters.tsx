@@ -1,6 +1,6 @@
 import CheckboxInput from 'components/form/CheckboxInput/CheckboxInput';
 import SelectInput from 'components/form/SelectInput/SelectInput';
-import React, { memo, SyntheticEvent, useCallback, useEffect } from 'react';
+import React, { memo, SyntheticEvent, useCallback } from 'react';
 import { ESortingOrder } from 'ts/enums';
 
 import {
