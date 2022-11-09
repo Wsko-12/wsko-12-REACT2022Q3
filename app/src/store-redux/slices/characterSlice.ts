@@ -21,23 +21,7 @@ const initialState = charactersAdapter.getInitialState({
 export const charactersSlice = createSlice({
   name: 'characters',
   initialState,
-  reducers: {
-    setCharacters: (state, action: PayloadAction<ICharacter[]>) => {
-      state.isLoading = false;
-      state.isError = false;
-      charactersAdapter.setAll(state, action.payload);
-    },
-
-    setLoading: (state) => {
-      state.isLoading = true;
-      state.isError = false;
-    },
-
-    setError: (state) => {
-      state.isLoading = false;
-      state.isError = true;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchCharacters.pending, (state) => {
       state.isLoading = true;
@@ -52,8 +36,6 @@ export const charactersSlice = createSlice({
     });
   },
 });
-
-export const { setCharacters, setError, setLoading } = charactersSlice.actions;
 
 export const fetchCharacters = createAsyncThunk(
   'characters/fetchCharacters',
