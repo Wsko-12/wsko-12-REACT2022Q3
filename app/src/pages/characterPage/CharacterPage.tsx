@@ -1,19 +1,22 @@
-import { StoreContext } from 'store/Store';
-import React, { memo, useContext } from 'react';
+import React, { memo } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useAppSelector } from 'store-redux/hooks';
+import { charactersSelectors } from 'store-redux/slices/characterSlice';
+
+const errorMessage = (
+  <Link to="/">
+    <p>Sorry, something went wrong</p>
+    <button>Back</button>
+  </Link>
+);
 
 const CharacterPage = memo(() => {
   const { id } = useParams();
-  const [store, dispatch] = useContext(StoreContext);
 
-  const data = store.characters?.find((character) => character._id === id);
+  const data = useAppSelector((state) => charactersSelectors.selectById(state, id!));
+
   if (!data) {
-    return (
-      <Link to="/">
-        <p>Sorry, something went wrong</p>
-        <button>Back</button>
-      </Link>
-    );
+    return errorMessage;
   }
 
   return (

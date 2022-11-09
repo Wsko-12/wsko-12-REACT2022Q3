@@ -1,19 +1,21 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createEntityAdapter,
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 import API from 'api/API';
 import { RootState } from 'store-redux';
 import { ICharacter } from 'ts/interfaces';
 
-interface ICharactersState {
-  characters: ICharacter[];
-  isError: boolean;
-  isLoading: boolean;
-}
+const charactersAdapter = createEntityAdapter<ICharacter>({
+  selectId: (character) => character._id,
+});
 
-const initialState: ICharactersState = {
-  characters: [],
+const initialState = charactersAdapter.getInitialState({
   isError: false,
   isLoading: false,
-};
+});
 
 export const charactersSlice = createSlice({
   name: 'characters',
@@ -22,7 +24,7 @@ export const charactersSlice = createSlice({
     setCharacters: (state, action: PayloadAction<ICharacter[]>) => {
       state.isLoading = false;
       state.isError = false;
-      state.characters = action.payload;
+      charactersAdapter.setAll(state, action.payload);
     },
 
     setLoading: (state) => {
@@ -40,7 +42,7 @@ export const charactersSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(fetchCharacters.fulfilled, (state, action) => {
-      state.characters = action.payload?.docs || [];
+      charactersAdapter.setAll(state, action.payload?.docs || []);
       state.isLoading = false;
     });
     builder.addCase(fetchCharacters.rejected, (state) => {
@@ -51,7 +53,6 @@ export const charactersSlice = createSlice({
 });
 
 export const { setCharacters, setError, setLoading } = charactersSlice.actions;
-export const selectCharacters = (state: RootState) => state.characters;
 
 export const fetchCharacters = createAsyncThunk(
   'characters/fetchCharacters',
@@ -65,4 +66,12 @@ export const fetchCharacters = createAsyncThunk(
   }
 );
 
+export const charactersSelectors = charactersAdapter.getSelectors<RootState>(
+  (state) => state.characters
+);
+
+export const charactersFlagsSelectors = (state: RootState) => ({
+  isError: state.characters.isError,
+  isLoading: state.characters.isLoading,
+});
 export default charactersSlice.reducer;

@@ -1,36 +1,35 @@
 import React, { memo, useCallback } from 'react';
 import styles from './main-page.module.css';
 import CharactersList from 'components/Character/CharactersList/CharactersList';
-import { ICharacter } from 'ts/interfaces';
 import Pagination from 'components/Pagination/Pagination';
 import Loader from 'components/Loader/Loader';
 
 import SearchBar from 'components/SearchBar/SearchBar';
 import CharacterFilters from './filters/CharacterFilters';
 import { useAppDispatch, useAppSelector, useFirstDownload } from 'store-redux/hooks';
-import { selectCharacters } from 'store-redux/slices/characterSlice';
+import { charactersFlagsSelectors } from 'store-redux/slices/characterSlice';
 import { selectSearch, setSearch } from 'store-redux/slices/searchSlice';
 import { paginationSelector, setLimit, setPage } from 'store-redux/slices/paginationSlice';
 
 interface IInnerContentProps {
   isLoading: boolean;
   isError: boolean;
-  characters: ICharacter[] | null;
 }
-const InnerContent = memo<IInnerContentProps>(({ isLoading, characters, isError }) => {
+const InnerContent = memo<IInnerContentProps>(({ isLoading, isError }) => {
   if (isLoading) {
     return <Loader />;
   }
 
-  if (isError || !characters) {
+  if (isError) {
     return <div>Sorry, something went wrong</div>;
   }
 
-  return <CharactersList characters={characters} />;
+  return <CharactersList />;
 });
 
 const Main = memo(() => {
-  const { characters, isLoading, isError } = useAppSelector(selectCharacters);
+  const { isLoading, isError } = useAppSelector(charactersFlagsSelectors);
+
   const { page, total, limit } = useAppSelector(paginationSelector);
   const search = useAppSelector(selectSearch);
 
@@ -57,7 +56,7 @@ const Main = memo(() => {
     <section className={styles.wrapper}>
       <SearchBar defaultValue={search} onSearch={onSearch} />
       <CharacterFilters />
-      <InnerContent isError={isError} isLoading={isLoading} characters={characters} />
+      <InnerContent isError={isError} isLoading={isLoading} />
       <Pagination
         limit={limit}
         page={page}

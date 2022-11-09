@@ -1,19 +1,26 @@
+import { EntityId } from '@reduxjs/toolkit';
 import React, { memo } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from 'store-redux/hooks';
+import { charactersSelectors } from 'store-redux/slices/characterSlice';
 import { ICharacter } from 'ts/interfaces';
 import styles from './character-cart.module.css';
 
 interface ICharacterCardProps {
-  characterData: ICharacter;
+  characterIDs: EntityId;
   openModal: (data: ICharacter) => void;
 }
 
-const CharacterCard = memo<ICharacterCardProps>(({ characterData, openModal }) => {
-  const { name } = characterData;
+const CharacterCard = memo<ICharacterCardProps>(({ characterIDs, openModal }) => {
+  const data = useAppSelector((state) => charactersSelectors.selectById(state, characterIDs));
+  if (!data) {
+    return null;
+  }
   return (
-    <Link to={`/${characterData._id}`}>
-      <div className={styles.card} onClick={() => openModal(characterData)}>
-        <span className={styles.title}>{name}</span>
+    <Link to={`/${data._id}`}>
+      <div className={styles.card} onClick={() => openModal(data)}>
+        <span className={styles.title}>{data.name}</span>
       </div>
     </Link>
   );
