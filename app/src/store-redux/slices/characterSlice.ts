@@ -2,6 +2,7 @@ import {
   createAsyncThunk,
   createEntityAdapter,
   createSlice,
+  EntityId,
   PayloadAction,
 } from '@reduxjs/toolkit';
 import API from 'api/API';
@@ -74,4 +75,7 @@ export const charactersFlagsSelectors = (state: RootState) => ({
   isError: state.characters.isError,
   isLoading: state.characters.isLoading,
 });
+
+export const selectCharacterByID = (id: EntityId) => (state: RootState) =>
+  charactersSelectors.selectById(state, id);
 export default charactersSlice.reducer;

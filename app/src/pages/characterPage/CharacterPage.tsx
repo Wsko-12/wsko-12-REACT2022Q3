@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useAppSelector } from 'store-redux/hooks';
-import { charactersSelectors } from 'store-redux/slices/characterSlice';
+import { selectCharacterByID } from 'store-redux/slices/characterSlice';
 
 const errorMessage = (
   <Link to="/">
@@ -13,7 +13,7 @@ const errorMessage = (
 const CharacterPage = memo(() => {
   const { id } = useParams();
 
-  const data = useAppSelector((state) => charactersSelectors.selectById(state, id!));
+  const data = useAppSelector(selectCharacterByID(id!));
 
   if (!data) {
     return errorMessage;

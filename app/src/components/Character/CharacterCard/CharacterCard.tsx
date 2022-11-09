@@ -1,9 +1,8 @@
 import { EntityId } from '@reduxjs/toolkit';
 import React, { memo } from 'react';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from 'store-redux/hooks';
-import { charactersSelectors } from 'store-redux/slices/characterSlice';
+import { selectCharacterByID } from 'store-redux/slices/characterSlice';
 import { ICharacter } from 'ts/interfaces';
 import styles from './character-cart.module.css';
 
@@ -13,7 +12,7 @@ interface ICharacterCardProps {
 }
 
 const CharacterCard = memo<ICharacterCardProps>(({ characterIDs, openModal }) => {
-  const data = useAppSelector((state) => charactersSelectors.selectById(state, characterIDs));
+  const data = useAppSelector(selectCharacterByID(characterIDs));
   if (!data) {
     return null;
   }
