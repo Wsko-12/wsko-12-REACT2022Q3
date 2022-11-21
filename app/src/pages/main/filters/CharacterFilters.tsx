@@ -1,6 +1,6 @@
 import CheckboxInput from 'components/form/CheckboxInput/CheckboxInput';
 import SelectInput from 'components/form/SelectInput/SelectInput';
-import React, { memo, SyntheticEvent, useCallback } from 'react';
+import React, { CSSProperties, memo, SyntheticEvent, useCallback } from 'react';
 import { ESortingOrder } from 'ts/enums';
 
 import {
@@ -13,9 +13,12 @@ import {
 } from 'store-redux/slices/filtersSlice';
 import { useAppDispatch, useAppSelector } from 'store-redux/hooks';
 
+// why not enums?
 const allRaces = ['Hobbit', 'Orc', 'Goblin', 'Human', 'Elf', 'Maiar'];
 const sortingOptions = ['A-Z', 'Z-A'];
 const genders = ['Male', 'Female'];
+
+const style: CSSProperties = { display: 'flex', gap: '30px' };
 
 const CharacterFilters = memo(() => {
   const dispatch = useAppDispatch();
@@ -39,7 +42,8 @@ const CharacterFilters = memo(() => {
   }, []);
 
   return (
-    <div style={{ display: 'flex', gap: '30px' }}>
+    // inline styles cause extra rerenders, at least take out object from component, better - make class
+    <div style={style}>
       <SelectInput
         label="Sort by name"
         placeholder="Select sort"

@@ -27,15 +27,10 @@ const InnerContent = memo<IInnerContentProps>(({ isLoading, isError }) => {
   return <CharactersList />;
 });
 
-const Main = memo(() => {
-  const { isLoading, isError } = useAppSelector(charactersFlagsSelectors);
-
-  const { page, total, limit } = useAppSelector(paginationSelector);
-  const search = useAppSelector(selectSearch);
-
+// segregate big components for smaller - its best time/complexity solution to improve performance
+const SearchContainer = () => {
   const dispatch = useAppDispatch();
-
-  useFirstDownload();
+  const search = useAppSelector(selectSearch);
 
   const onSearch = useCallback(
     (search: string) => {
@@ -43,6 +38,18 @@ const Main = memo(() => {
     },
     [dispatch]
   );
+
+  return <SearchBar defaultValue={search} onSearch={onSearch} />;
+};
+
+const Main = memo(() => {
+  const { isLoading, isError } = useAppSelector(charactersFlagsSelectors);
+
+  const { page, total, limit } = useAppSelector(paginationSelector);
+
+  const dispatch = useAppDispatch();
+
+  useFirstDownload();
 
   const onPagination = useCallback((page: number) => {
     dispatch(setPage(page));
@@ -54,7 +61,7 @@ const Main = memo(() => {
 
   return (
     <section className={styles.wrapper}>
-      <SearchBar defaultValue={search} onSearch={onSearch} />
+      <SearchContainer />
       <CharacterFilters />
       <InnerContent isError={isError} isLoading={isLoading} />
       <Pagination

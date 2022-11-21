@@ -3,20 +3,20 @@ import { Link, useParams } from 'react-router-dom';
 import { useAppSelector } from 'store-redux/hooks';
 import { selectCharacterByID } from 'store-redux/slices/characterSlice';
 
-const errorMessage = (
+const ErrorMessage = memo(() => (
   <Link to="/">
     <p>Sorry, something went wrong</p>
     <button>Back</button>
   </Link>
-);
+));
 
 const CharacterPage = memo(() => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
 
   const data = useAppSelector(selectCharacterByID(id!));
 
   if (!data) {
-    return errorMessage;
+    return <ErrorMessage />;
   }
 
   return (
