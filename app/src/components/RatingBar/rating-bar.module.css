@@ -1,0 +1,8 @@
+.star{
+    color: gold;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+}

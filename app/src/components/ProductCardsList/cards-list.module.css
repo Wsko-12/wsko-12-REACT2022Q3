@@ -1,0 +1,8 @@
+.list{
+    display: grid;
+    width: 100%;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    font-size: 2rem;
+    display: flex;
+}
