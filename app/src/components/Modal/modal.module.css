@@ -1,0 +1,36 @@
+.overlay{
+    z-index: 1000;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    top: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.container{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    cursor: auto;
+    border-radius: 20px;
+}
+
+.close{
+    flex: 0 0 auto;
+    align-self: flex-end;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    /* position: absolute; */
+}
+
+.close:hover > span {
+    font-weight: bold;
+}
