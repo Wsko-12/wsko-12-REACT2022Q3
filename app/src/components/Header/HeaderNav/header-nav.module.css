@@ -1,0 +1,26 @@
+.header-nav{
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.header-nav__link{
+    padding: 0 10px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+.header-nav__link:visited{
+    color: white;
+}
+
+.header-nav__link.active{
+    background-color: #404040;
+}
+
+.header-nav__link:hover{
+    background-color: #505050;
+}
