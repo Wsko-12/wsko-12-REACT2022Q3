@@ -1,0 +1,38 @@
+.form{
+    padding: 15px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+.body{
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+}
+
+.button {
+    display: block;
+    background-color: #0075ff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    min-width: 100px;
+}
+
+.button:disabled{
+    cursor: not-allowed;
+    background-color: #cae3ff;
+}
+.button:disabled:hover{
+    background-color: #cae3ff;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,21 @@
+.form-page__wrapper{
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+
+    margin: auto;
+    padding-top: 20px;
+}
+
+.content{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 2rem;
+    color: #303030;
+    width: 100%;
+    padding: 15px;
+    gap: 30px;
+    flex-wrap: wrap;
+    padding-left: 40px;
+}

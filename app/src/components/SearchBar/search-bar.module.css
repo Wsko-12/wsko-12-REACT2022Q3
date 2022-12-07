@@ -1,0 +1,41 @@
+.bar{
+    display: flex;
+    align-items: center;
+    position: relative;
+    color: #303030;
+}
+
+.icon{
+    font-size: 2.5rem;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+}
+
+.input{
+    font-size: 2rem;
+    padding: 5px 0px 5px 3.5rem;
+    background-color: none;
+    border: 2px solid #505050;
+    border-radius: 2rem;
+    color: inherit;
+    margin-right: 10px;
+}
+
+.button{
+    font-size: 2rem;
+    padding: 5px 20px;
+    background-color: none;
+    border: 2px solid #505050;
+    border-radius: 2rem;
+    color: inherit;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+.button:hover{
+    border: 2px solid #505050;
+    background-color: #505050;
+    color: white;
+
+}
