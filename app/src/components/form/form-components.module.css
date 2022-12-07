@@ -1,0 +1,66 @@
+.form__item{
+    margin: 0 0 15px;
+}
+.form__label {
+    display: block;
+    font-size: 1.4rem;
+}
+
+.form__label_file p {
+    font-size: 1.4rem;
+    text-transform: lowercase;
+    margin: 0px;
+    margin-top: 5px;
+    text-align: center;
+    color: #0075ff;
+}
+
+.form__label::first-letter {
+    text-transform: uppercase; 
+}
+
+.form__input {
+    display: block;
+    margin: 5px 0px;
+}
+
+.form__input_file{
+    display: none;
+}
+
+.form__button_add{
+    display: block;
+    background-color: none;
+    color: white;
+    border: none;
+    text-align: center;
+    font-size: 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 12px 20px;
+
+    color: #0075ff;
+    border: 1px solid #0075ff;
+}
+
+.form__button_add:hover{
+    background-color: #3d98ff;
+    border: 1px solid #0075ff;
+    color: white;
+}
+
+.form__label_checkbox {
+    display: block;
+    font-size: 1.4rem;
+    margin: 5px 0px 15px;
+}
+
+.form__label_checkbox::first-letter{
+    text-transform: uppercase; 
+}
+
+.form__message {
+    margin: 0;
+    font-size: 1rem;
+    color: crimson;
+}

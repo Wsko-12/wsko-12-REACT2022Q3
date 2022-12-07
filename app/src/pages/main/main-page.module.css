@@ -1,0 +1,17 @@
+.main__wrapper{
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+
+    margin: auto;
+    padding-top: 20px;
+}
+
+.main__content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-direction: column;
+    color: #303030;
+}
